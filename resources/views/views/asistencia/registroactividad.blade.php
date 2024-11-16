@@ -25,6 +25,12 @@
         <div class="separacionFormulario">
             <h3>Datos actividad</h3>
 
+            <label for="actEstado">Estado de la actividad:</label>
+            <select name="actEstado" id="actEstado">
+                <option value="En progreso">En progreso</option>
+                <option value="Finalizada">Finalizada</option>
+            </select>
+
             <!-- Nombre actividad -->
             <label for="actNombre">Nombre:</label>
             <input type="text" name="actNombre" id="actNombre">

@@ -16,7 +16,7 @@
   </div>
   <hr>
   <div class="fila2">
-    <a class="boton-primario" id="benAgregar" href="{{ route('verBeneficiario') }}">
+    <a class="boton-quintiario" id="benAgregar" href="{{ route('verBeneficiario') }}">
       <p>Modificar</p>
     </a>
     <a class="boton-terciario" id="benEliminar" href="{{ route('verBeneficiario') }}"><i class='bx bx-trash'></i>
@@ -27,6 +27,7 @@
   <div class="card">
     <div class="cuadrado">
       <h3>Juan Enrique Manzo Gárate</h3>
+      <p><span class="letraNegrita">Estado: </span> ACTIVO</p>
       <p><span class="letraNegrita">Rut: </span> 9835803-k</p>
       <p><span class="letraNegrita">Fecha de nacimiento: </span> 16/10/1663</p>
       <p><span class="letraNegrita">Teléfono 1: </span> 9 8126 7512</p>

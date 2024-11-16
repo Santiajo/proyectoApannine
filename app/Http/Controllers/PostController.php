@@ -46,4 +46,44 @@ class PostController extends Controller
     {
         return view('views.asistencia.registroactividad'); 
     }
+
+    public function asistenciaBeneficiarios()
+    {
+        return view('views.asistencia.asistenciaBeneficiarios'); 
+    }
+
+    public function buscarBeneficiario()
+    {
+        return view('views.asistencia.buscarBeneficiario'); 
+    }
+
+    public function asistenciaTallerYoga()
+    {
+        return view('views.asistencia.asistenciaTallerYoga'); 
+    }
+
+    public function especialistas()
+    {
+        return view('views.asistencia.especialistas'); 
+    }
+
+    public function dia()
+    {
+        return view('views.asistencia.dia'); 
+    }
+
+    public function registrofecha()
+    {
+        return view('views.asistencia.registrofecha'); 
+    }
+
+    public function yogaTodos()
+    {
+        return view('views.asistencia.yogaTodos'); 
+    }
+    public function yogaDia()
+    {
+        return view('views.asistencia.yogaDia'); 
+    }
+    
 }

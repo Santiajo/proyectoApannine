@@ -25,6 +25,14 @@
         <div class="separacionFormulario">
             <h3>Datos beneficiario</h3>
 
+            <!-- Estado del beneficiario -->
+            <label for="benEstado">Estado del beneficiario:</label>
+            <select name="benEstado" id="benEstado">
+                <option value="Activo">Activo</option>
+                <option value="Posible desertor">Posible desertor</option>
+                <option value="Desertor">Desertor</option>
+            </select>
+
             <!-- Run beneficiario -->
             <section class="layoutTelefono">
                 <div>
@@ -179,8 +187,8 @@
             <!-- Rut familiar -->
             <section class="layoutTelefono">
                 <div>
-                <label for="famRut">Rut:</label>
-                <input type="number" name="famRut" id="famRut">
+                    <label for="famRut">Rut:</label>
+                    <input type="number" name="famRut" id="famRut">
                 </div>
                 <div>
                     <label for="famDv">Dv:</label>

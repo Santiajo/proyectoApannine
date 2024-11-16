@@ -86,6 +86,7 @@
 
         <!-- Contenido específico de cada página -->
         <main>
+            @yield('navbar') <!-- Contenido dinámico de cada vista -->
             @yield('content') <!-- Contenido dinámico de cada vista -->
         </main>
     </div>

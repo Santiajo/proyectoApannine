@@ -22,8 +22,20 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 
 
 // rutas views
+
+// RUTAS DE BENEFICIARIO
 Route::get('/views/fichabeneficiario', [PostController::class, 'fichabeneficiario'])->name('fichabeneficiario');
 Route::get('/views/formularioBeneficiario', [PostController::class, 'formularioBeneficiario'])->name('formularioBeneficiario');
 Route::get('/views/verBeneficiario', [PostController::class, 'verBeneficiario'])->name('verBeneficiario');
+
+// RUTAS DE ASISTENCIA
 Route::get('/views/asistencia', [PostController::class, 'asistencia'])->name('asistencia');
 Route::get('/views/registroactividad', [PostController::class, 'registroactividad'])->name('registroactividad');
+Route::get('/views/asistenciaTallerYoga', [PostController::class, 'asistenciaTallerYoga'])->name('asistenciaTallerYoga');
+Route::get('/views/asistenciaBeneficiarios', [PostController::class, 'asistenciaBeneficiarios'])->name('asistenciaBeneficiarios');
+Route::get('/views/buscarBeneficiario', [PostController::class, 'buscarBeneficiario'])->name('buscarBeneficiario');
+Route::get('/views/especialistas', [PostController::class, 'especialistas'])->name('especialistas');
+Route::get('/views/dia', [PostController::class, 'dia'])->name('dia');
+Route::get('/views/registrofecha', [PostController::class, 'registrofecha'])->name('registrofecha');
+Route::get('/views/yogaDia', [PostController::class, 'yogaDia'])->name('yogaDia');
+Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yogaTodos');
