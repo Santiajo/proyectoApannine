@@ -20,9 +20,15 @@
         <!-- Título formulario -->
         <h1>Registrar fecha actividad</h1>
 
-
         <!-- Subtítulo -->
         <div class="separacionFormulario">
+            <!-- Tipo de actividad -->
+            <label for="fecTipAct">Tipo de actividad:</label>
+            <select name="fecTipAct" id="fecTipAct">
+                <option value="Taller de yoga">Taller de yoga</option>
+                <option value="Beneficiarios">Beneficiarios</option>
+            </select>
+            
             <!-- Día de la semana -->
             <label for="fecDiaSemana">Día de la semana:</label>
             <select name="fecDiaSemana" id="fecDiaSemana">
@@ -100,7 +106,10 @@
 
             <!-- Especialista encargado -->
             <label for="fecEspecialista">Especialista encargado:</label>
-            <input type="text" name="fecEspecialista" id="fecEspecialista">
+            <select name="fecEspecialista" id="fecEspecialista">
+                <option value="Simón Hernández TO">Simón Hernández TO</option>
+                <option value="Joaquín Muñoz KINE">Joaquín Muñoz KINE</option>
+            </select>
 
             <!-- Objetivos de la sesion -->
             <label for="fecObjetivo">Objetivos de la sesión:</label>
@@ -110,7 +119,6 @@
             <a class="boton-primario" href="{{ route('registrofecha') }}">Añadir</a>
             <a class="boton-secundario" href="{{ route('registrofecha') }}">Cancelar</a>
         </div>
-
     </form>
 </div>
 @endsection

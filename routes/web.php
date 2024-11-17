@@ -39,3 +39,8 @@ Route::get('/views/dia', [PostController::class, 'dia'])->name('dia');
 Route::get('/views/registrofecha', [PostController::class, 'registrofecha'])->name('registrofecha');
 Route::get('/views/yogaDia', [PostController::class, 'yogaDia'])->name('yogaDia');
 Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yogaTodos');
+
+// RUTAS ESPECIALISTAS
+Route::get('/views/fichaespecialista', [PostController::class, 'fichaespecialista'])->name('fichaespecialista');
+Route::get('/views/formEspecialidad', [PostController::class, 'formEspecialidad'])->name('formEspecialidad');
+Route::get('/views/formEspecialista', [PostController::class, 'formEspecialista'])->name('formEspecialista');

@@ -42,19 +42,19 @@
                             <li class="nav-link">
                                 <a href="{{ route('fichabeneficiario') }}">
                                     <i class='bx bx-notepad icon'></i>
-                                    <span class="text nav-text">Ficha Beneficiario</span>
+                                    <span class="text nav-text">Beneficiarios</span>
                                 </a>
                             </li>
                             <li class="nav-link">
                                 <a href="{{ route('asistencia') }}">
                                     <i class='bx bx-user-check icon'></i>
-                                    <span class="text nav-text">Asistencia</span>
+                                    <span class="text nav-text">Asistencias</span>
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="{{ route('registroactividad') }}">
-                                    <i class='bx bx-wallet icon'></i>
-                                    <span class="text nav-text">Registro/actividad</span>
+                                <a href="{{ route('fichaespecialista') }}">
+                                    <i class='bx bx-band-aid icon'></i>
+                                    <span class="text nav-text">Especialistas</span>
                                 </a>
                             </li>
                         </ul>
@@ -64,7 +64,7 @@
                         <li>
                             <a href="#">
                                 <i class='bx bx-log-out icon'></i>
-                                <span class="text nav-text">Salir</span>
+                                <span class="text nav-text">Cerrar sesión</span>
                             </a>
                         </li>
 

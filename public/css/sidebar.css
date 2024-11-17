@@ -678,6 +678,24 @@ hr {
     padding: 20px 0 20px 0;
 }
 
+.fiftyfifty {
+    display: flex;
+    width: 100%;
+    height: max-content;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.fiftyfifty form{
+    min-height: 100%;
+    width: 40%;
+}
+
+.fiftyfifty table{
+    width: 60%;
+}
+
 /* CARD */
 .card {
     min-height: 100dvh;

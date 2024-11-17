@@ -19,7 +19,6 @@ class PostController extends Controller
         return view('posts.show', compact('post'));
     }
     
-    // Vistas sidebar
     // VIEWS DEL BENEFICIARIO
     public function fichabeneficiario()
     {
@@ -85,5 +84,20 @@ class PostController extends Controller
     {
         return view('views.asistencia.yogaDia'); 
     }
-    
+
+    // VIEWS DE ESPECIALISTAS
+    public function fichaespecialista()
+    {
+        return view('views.especialistas.fichaespecialista'); 
+    }
+
+    public function formEspecialidad()
+    {
+        return view('views.especialistas.formEspecialidad'); 
+    }
+
+    public function formEspecialista()
+    {
+        return view('views.especialistas.formEspecialista'); 
+    }
 }
