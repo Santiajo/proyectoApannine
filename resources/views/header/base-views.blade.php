@@ -40,15 +40,15 @@
                         </li>
                         <ul class="menu-links">
                             <li class="nav-link">
-                                <a href="{{ route('fichabeneficiario') }}">
-                                    <i class='bx bx-notepad icon'></i>
-                                    <span class="text nav-text">Beneficiarios</span>
+                                <a href="{{ route('fichausuarios') }}">
+                                    <i class='bx bx-user icon'></i>
+                                    <span class="text nav-text">Usuarios</span>
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="{{ route('asistencia') }}">
-                                    <i class='bx bx-user-check icon'></i>
-                                    <span class="text nav-text">Asistencias</span>
+                                <a href="{{ route('fichabeneficiario') }}">
+                                    <i class='bx bx-notepad icon'></i>
+                                    <span class="text nav-text">Beneficiarios</span>
                                 </a>
                             </li>
                             <li class="nav-link">
@@ -57,9 +57,15 @@
                                     <span class="text nav-text">Especialistas</span>
                                 </a>
                             </li>
+                            <li class="nav-link">
+                                <a href="{{ route('asistencia') }}">
+                                    <i class='bx bx-user-check icon'></i>
+                                    <span class="text nav-text">Asistencias</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
-
+                    <hr>
                     <div class="bottom-content">
                         <li>
                             <a href="#">

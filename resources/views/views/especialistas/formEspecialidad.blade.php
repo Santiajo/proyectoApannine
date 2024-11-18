@@ -11,7 +11,7 @@
         <a class="boton-primario" id="volver1" href="{{ route('fichaespecialista') }}">
             < Volver</a>
     </div>
-    <div class="fila2">
+    <div class="fila2" id="fila1Perso">
         <a class="boton-primario" href="{{ route('formEspecialista') }}">
             <p><i class='bx bx-plus-medical'></i> Agregar especialista</p>
         </a>

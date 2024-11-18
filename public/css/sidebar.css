@@ -685,15 +685,17 @@ hr {
     flex-direction: row;
     justify-content: space-between;
     column-gap: 10px;
+    flex-wrap: wrap;
+    row-gap: 20px;
 }
 
 .fiftyfifty form{
     min-height: 100%;
-    width: 40%;
+    width: 43%;
 }
 
 .fiftyfifty table{
-    width: 60%;
+    width: 55%;
 }
 
 /* CARD */
@@ -1042,6 +1044,14 @@ fieldset {
     .separacionFormulario .layoutNombre input {
         grid-template-rows: 2fr;
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fiftyfifty form{
+        width: 100%;
+    }
+
+    .fiftyfifty table {
+        width: 100%;
     }
 }
 

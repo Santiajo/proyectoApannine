@@ -20,9 +20,6 @@ Route::get('/posts/sidebar', [PostController::class, 'sidebar']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
 
 
-
-// rutas views
-
 // RUTAS DE BENEFICIARIO
 Route::get('/views/fichabeneficiario', [PostController::class, 'fichabeneficiario'])->name('fichabeneficiario');
 Route::get('/views/formularioBeneficiario', [PostController::class, 'formularioBeneficiario'])->name('formularioBeneficiario');
@@ -44,3 +41,7 @@ Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yoga
 Route::get('/views/fichaespecialista', [PostController::class, 'fichaespecialista'])->name('fichaespecialista');
 Route::get('/views/formEspecialidad', [PostController::class, 'formEspecialidad'])->name('formEspecialidad');
 Route::get('/views/formEspecialista', [PostController::class, 'formEspecialista'])->name('formEspecialista');
+
+// RUTAS DEL CRUD PARA EL LOGIN
+Route::get('/views/fichausuarios', [PostController::class, 'fichausuarios'])->name('fichausuarios');
+Route::get('/views/formulariousuario', [PostController::class, 'formulariousuario'])->name('formulariousuario');

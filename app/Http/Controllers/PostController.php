@@ -100,4 +100,15 @@ class PostController extends Controller
     {
         return view('views.especialistas.formEspecialista'); 
     }
+
+    // VIEWS DE CRUD USUARIOS
+    public function fichausuarios()
+    {
+        return view('views.usuarios.fichausuarios'); 
+    }
+
+    public function formulariousuario()
+    {
+        return view('views.usuarios.formulariousuario'); 
+    }
 }
