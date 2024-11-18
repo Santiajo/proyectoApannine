@@ -111,4 +111,9 @@ class PostController extends Controller
     {
         return view('views.usuarios.formulariousuario'); 
     }
+
+    public function vistaUsuario()
+    {
+        return view('views.usuarios.vistaUsuario'); 
+    }
 }

@@ -45,3 +45,4 @@ Route::get('/views/formEspecialista', [PostController::class, 'formEspecialista'
 // RUTAS DEL CRUD PARA EL LOGIN
 Route::get('/views/fichausuarios', [PostController::class, 'fichausuarios'])->name('fichausuarios');
 Route::get('/views/formulariousuario', [PostController::class, 'formulariousuario'])->name('formulariousuario');
+Route::get('/views/vistaUsuario', [PostController::class, 'vistaUsuario'])->name('vistaUsuario');
