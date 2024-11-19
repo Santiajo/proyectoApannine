@@ -11,7 +11,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 //Aqui se llama a las rutas
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [PostController::class, 'login']);
 
 Route::get('/login/login', [PostController::class, 'login']);
 
