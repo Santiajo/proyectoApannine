@@ -24,6 +24,7 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::get('/views/fichabeneficiario', [PostController::class, 'fichabeneficiario'])->name('fichabeneficiario');
 Route::get('/views/formularioBeneficiario', [PostController::class, 'formularioBeneficiario'])->name('formularioBeneficiario');
 Route::get('/views/verBeneficiario', [PostController::class, 'verBeneficiario'])->name('verBeneficiario');
+Route::get('/views/exportarBeneficiario', [PostController::class, 'exportarBeneficiario'])->name('exportarBeneficiario');
 
 // RUTAS DE ASISTENCIA
 Route::get('/views/asistencia', [PostController::class, 'asistencia'])->name('asistencia');
@@ -36,13 +37,17 @@ Route::get('/views/dia', [PostController::class, 'dia'])->name('dia');
 Route::get('/views/registrofecha', [PostController::class, 'registrofecha'])->name('registrofecha');
 Route::get('/views/yogaDia', [PostController::class, 'yogaDia'])->name('yogaDia');
 Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yogaTodos');
+Route::get('/views/exportarAsistencia', [PostController::class, 'exportarAsistencia'])->name('exportarAsistencia');
 
 // RUTAS ESPECIALISTAS
 Route::get('/views/fichaespecialista', [PostController::class, 'fichaespecialista'])->name('fichaespecialista');
 Route::get('/views/formEspecialidad', [PostController::class, 'formEspecialidad'])->name('formEspecialidad');
 Route::get('/views/formEspecialista', [PostController::class, 'formEspecialista'])->name('formEspecialista');
+Route::get('/views/exportarEspecialistas', [PostController::class, 'exportarEspecialistas'])->name('exportarEspecialistas');
 
 // RUTAS DEL CRUD PARA EL LOGIN
 Route::get('/views/fichausuarios', [PostController::class, 'fichausuarios'])->name('fichausuarios');
 Route::get('/views/formulariousuario', [PostController::class, 'formulariousuario'])->name('formulariousuario');
 Route::get('/views/vistaUsuario', [PostController::class, 'vistaUsuario'])->name('vistaUsuario');
+Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
+Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');

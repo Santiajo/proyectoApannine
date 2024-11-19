@@ -20,8 +20,6 @@
         <a class="boton-primario" id="benAgregar" href="{{ route('registrofecha') }}">
             <p><i class='bx bxs-calendar-plus'></i> Agendar fecha</p>
         </a>
-        <a class="boton-secundario" id="benExportar" href="{{ route('fichabeneficiario') }}"><i
-                class='bx bx-export'></i> Exportar</a>
     </div>
     <div class="fila1" id="fila1Perso2">
         <div class="navPiola">

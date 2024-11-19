@@ -14,7 +14,7 @@
         <a class="boton-primario" id="benAgregar" href="{{ route('formulariousuario') }}">
             <p><i class='bx bx-user-plus'></i> Agregar usuario</p>
         </a>
-        <a class="boton-secundario" id="benExportar" href="{{ route('fichausuarios') }}"><i class='bx bx-export'></i>
+        <a class="boton-secundario" id="benExportar" href="{{ route('exportarUsuarios') }}"><i class='bx bx-export'></i>
             Exportar</a>
         <!-- Para buscar productos por texto -->
         <form method="POST">
@@ -29,6 +29,7 @@
                 <th>Nombre</th>
                 <th>Teléfono</th>
                 <th>Correo electrónico</th>
+                <th>Fecha de registro</th>
                 <th>Detalles</th>
                 <th>Modificar</th>
                 <th>Eliminar</th>
@@ -40,6 +41,7 @@
                 <td data-label="Nombre">Simón Hernández</td>
                 <td data-label="Teléfono">9 6687 6669</td>
                 <td data-label="Correo electrónico">simon.hernandez.2001@gmail.com</td>
+                <td data-label="Fecha de registro">13/11/2024</td>
                 <td data-label="Acciones"><a class="detalles" href="{{ route('vistaUsuario') }}"><i
                             class='bx bxs-file-doc'></i></a></td>
                 <td data-label="Modificar"><a class="boton-quintiario" href="{{ route('formulariousuario') }}">
@@ -53,6 +55,7 @@
                 <td data-label="Nombre">Joaquín Muñoz</td>
                 <td data-label="Teléfono">9 9412 6722</td>
                 <td data-label="Correo electrónico">joaquin.muñoz.2001@gmail.com</td>
+                <td data-label="Fecha de registro">13/11/2024</td>
                 <td data-label="Acciones"><a class="detalles" href="{{ route('vistaUsuario') }}"><i
                             class='bx bxs-file-doc'></i></a></td>
                 <td data-label="Modificar"><a class="boton-quintiario" href="{{ route('formulariousuario') }}">

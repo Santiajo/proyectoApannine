@@ -12,7 +12,7 @@
   <hr>
   <div class="fila2">
     <a class="boton-primario" id="benAgregar" href="{{ route('formularioBeneficiario') }}"><p><i class='bx bxs-user-plus'></i> Agregar beneficiario</p></a>
-    <a class="boton-secundario" id="benExportar" href="{{ route('fichabeneficiario') }}"><i class='bx bx-export' ></i> Exportar</a>
+    <a class="boton-secundario" id="benExportar" href="{{ route('exportarBeneficiario') }}"><i class='bx bx-export' ></i> Exportar</a>
     <!-- Para buscar productos por texto -->
     <form method="POST">
       <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar...">

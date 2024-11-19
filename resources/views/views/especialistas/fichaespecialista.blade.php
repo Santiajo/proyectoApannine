@@ -17,7 +17,7 @@
         <a class="boton-primario" id="benAgregar" href="{{ route('formEspecialidad') }}">
             <p><i class='bx bx-plus-medical'></i> Agregar especialidad</p>
         </a>
-        <a class="boton-secundario" id="benExportar" href="{{ route('fichabeneficiario') }}"><i
+        <a class="boton-secundario" id="benExportar" href="{{ route('exportarEspecialistas') }}"><i
                 class='bx bx-export'></i> Exportar</a>
         <!-- Para buscar productos por texto -->
         <form method="POST">
@@ -34,6 +34,7 @@
                 <th>Correo electrónico</th>
                 <th>Especialidad</th>
                 <th>Abreviación</th>
+                <th>Fecha de registro</th>
                 <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
@@ -46,12 +47,12 @@
                 <td data-label="Correo electrónico">simon.hernandez.2001@gmail.com</td>
                 <td data-label="Especialidad">Terapia Ocupacional</td>
                 <td data-label="Abreviación">TO</td>
+                <td data-label="Fecha de registro">19/11/2024</td>
                 <td data-label="Modificar"><a class="boton-quintiario" id="benAgregar"
                         href="{{ route('verBeneficiario') }}">
                         Modificar</a></td>
                 <td data-label="Eliminar"><a class="boton-terciario" id="benEliminar"
-                        href="{{ route('formEspecialidad') }}"><i class='bx bx-trash'></i>
-                        Eliminar</a></td>
+                        href="{{ route('formEspecialidad') }}"><i class='bx bx-trash'></i></a></td>
             </tr>
             <tr>
                 <td data-label="Rut">18487992-1</td>
@@ -60,12 +61,11 @@
                 <td data-label="Correo electrónico">joaquin.muñoz.2001@gmail.com</td>
                 <td data-label="Especialidad">Kinesiología</td>
                 <td data-label="Abreviación">KINE</td>
-                <td data-label="Modificar"><a class="boton-quintiario"
-                        href="{{ route('verBeneficiario') }}">
+                <td data-label="Fecha de registro">19/11/2024</td>
+                <td data-label="Modificar"><a class="boton-quintiario" href="{{ route('verBeneficiario') }}">
                         Modificar</a></td>
-                <td data-label="Eliminar"><a class="boton-terciario"
-                        href="{{ route('formEspecialidad') }}"><i class='bx bx-trash'></i>
-                        Eliminar</a></td>
+                <td data-label="Eliminar"><a class="boton-terciario" href="{{ route('formEspecialidad') }}"><i
+                            class='bx bx-trash'></i></a></td>
             </tr>
         </tbody>
     </table>

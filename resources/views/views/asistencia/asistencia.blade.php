@@ -16,6 +16,8 @@
         <a class="boton-primario" href="{{ route('registrofecha') }}">
             <p><i class='bx bxs-calendar-plus'></i> Agendar fecha</p>
         </a>
+        <a class="boton-secundario" id="benExportar" href="{{ route('exportarAsistencia') }}"><i
+                class='bx bx-export'></i> Exportar</a>
         <!-- Para buscar productos por texto -->
         <form method="POST">
             <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar...">

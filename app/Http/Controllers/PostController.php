@@ -35,6 +35,11 @@ class PostController extends Controller
         return view('views.beneficiario.verBeneficiario'); 
     }
 
+    public function exportarBeneficiario()
+    {
+        return view('views.beneficiario.exportarBeneficiario'); 
+    }
+
     // VIEWS DE ASISTENCIA
     public function asistencia()
     {
@@ -85,6 +90,11 @@ class PostController extends Controller
         return view('views.asistencia.yogaDia'); 
     }
 
+    public function exportarAsistencia()
+    {
+        return view('views.asistencia.exportarAsistencia'); 
+    }
+
     // VIEWS DE ESPECIALISTAS
     public function fichaespecialista()
     {
@@ -101,6 +111,11 @@ class PostController extends Controller
         return view('views.especialistas.formEspecialista'); 
     }
 
+    public function exportarEspecialistas()
+    {
+        return view('views.especialistas.exportarEspecialistas'); 
+    }
+
     // VIEWS DE CRUD USUARIOS
     public function fichausuarios()
     {
@@ -115,5 +130,10 @@ class PostController extends Controller
     public function vistaUsuario()
     {
         return view('views.usuarios.vistaUsuario'); 
+    }
+
+    public function exportarUsuarios()
+    {
+        return view('views.usuarios.exportarUsuarios'); 
     }
 }
