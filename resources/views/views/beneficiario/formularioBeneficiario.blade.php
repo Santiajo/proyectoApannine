@@ -18,7 +18,7 @@
     <form class="formularioPiola" method="POST">
 
         <!-- Título formulario -->
-        <h1>Registrar beneficiario</h1>
+        <h1>Agregar beneficiario</h1>
 
 
         <!-- Subtítulo -->
@@ -29,8 +29,7 @@
             <label for="benEstado">Estado del beneficiario:</label>
             <select name="benEstado" id="benEstado">
                 <option value="Activo">Activo</option>
-                <option value="Posible desertor">Posible desertor</option>
-                <option value="Desertor">Desertor</option>
+                <option value="Desertor">Inactivo</option>
             </select>
 
             <!-- Run beneficiario -->
@@ -273,6 +272,10 @@
             <!-- Descripción cirugías -->
             <label for="benCirugiaNom">¿Cuales?</label>
             <textarea name="benCirugiaNom" id="benCirugiaNom" rows="4" cols="50"></textarea>
+
+            <!-- Documentos médicos -->
+             <label for="benEvidMed">Documentos:</label>
+            <input type="file" name="benEvidMed" id="benEvidMed">
         </div>
 
         <div class="separacionFormulario">

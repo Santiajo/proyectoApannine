@@ -22,42 +22,45 @@
   <table>
     <thead>
       <tr>
+        <th>Fecha ingreso</th>
         <th>Rut</th>
         <th>Nombre</th>
         <th>Fecha nacimiento</th>
-        <th>Teléfono</th>
-        <th>Cobertura médica</th>
-        <th>¿Asiste al colegio?</th>
-        <th>NEE</th>
-        <th>Enfermedades crónicas</th>
-        <th>¿Cirugias?</th>
+        <th>Nombre cuidador</th>
+        <th>Teléfono cuidador</th>
         <th>Detalles</th>
+        <th>Actividad</th>
+        <th>Historial médico</th>
+        <th>Horario</th>
+        <th>Asistencias</th>
       </tr>
     </thead>
     <tbody>
       <tr>
+        <td data-label="Fecha ingreso">03-12-2023</td>
         <td data-label="Rut">9835803-k</td>
         <td data-label="Nombre">Juan Manzo</td>
         <td data-label="Fecha nacimiento">16/10/1663</td>
+        <td data-label="Nombre cuidador">Juan Manzo</td>
         <td data-label="Teléfono">981267512</td>
-        <td data-label="Cobertura médica">Fonasa tramo b</td>
-        <td data-label="¿Asiste al colegio?">No</td>
-        <td data-label="NEE">Cáracter transitorio</td>
-        <td data-label="Enfermedades crónicas">Diabetes tipo 2</td>
-        <td data-label="¿Cirugias?">Sí</td>
         <td data-label="Acciones"><a class="detalles" href="{{ route('verBeneficiario') }}"><i class='bx bxs-file-doc' ></i></a></td>
+        <td data-label="Actividad"><a class="detalles" href="actividadBeneficiario"><i class='bx bx-line-chart' ></i></a></td>
+        <td data-label="Historial médico"><a class="detalles" href="histMedBeneficiario"><i class='bx bxs-capsule'></i></a></td>
+        <td data-label="Horario"><a class="detalles" href="#"><i class='bx bxs-calendar'></i></a></td>
+        <td data-label="Asistencia"><a class="detalles" href="{{ route('beneficiarioAsistencia') }}"><i class='bx bx-calendar-check' ></i></a></td>
       </tr>
       <tr>
+        <td data-label="Fecha ingreso">03-12-2023</td>
         <td data-label="Rut">9835803-k</td>
         <td data-label="Nombre">Juan Manzo</td>
         <td data-label="Fecha nacimiento">16/10/1663</td>
+        <td data-label="Nombre cuidador">Juan Manzo</td>
         <td data-label="Teléfono">981267512</td>
-        <td data-label="Cobertura médica">Fonasa tramo b</td>
-        <td data-label="¿Asiste al colegio?">No</td>
-        <td data-label="NEE">Cáracter transitorio</td>
-        <td data-label="Enfermedades crónicas">Diabetes tipo 2</td>
-        <td data-label="¿Cirugias?">Sí</td>
         <td data-label="Acciones"><a class="detalles" href="{{ route('verBeneficiario') }}"><i class='bx bxs-file-doc' ></i></a></td>
+        <td data-label="Actividad"><a class="detalles" href="actividadBeneficiario"><i class='bx bx-line-chart' ></i></a></td>
+        <td data-label="Historial médico"><a class="detalles" href="histMedBeneficiario"><i class='bx bxs-capsule'></i></a></td>
+        <td data-label="Horario"><a class="detalles" href="#"><i class='bx bxs-calendar'></i></a></td>
+        <td data-label="Asistencia"><a class="detalles" href="{{ route('beneficiarioAsistencia') }}"><i class='bx bx-calendar-check' ></i></a></td>
       </tr>
     </tbody>
   </table>

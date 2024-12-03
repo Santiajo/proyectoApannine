@@ -40,6 +40,26 @@ class PostController extends Controller
         return view('views.beneficiario.exportarBeneficiario'); 
     }
 
+    public function beneficiarioAsistencia()
+    {
+        return view('views.beneficiario.beneficiarioAsistencia'); 
+    }
+
+    public function registroAsistBeneficiario()
+    {
+        return view('views.beneficiario.registroAsistBeneficiario'); 
+    }
+
+    public function actividadBeneficiario()
+    {
+        return view('views.beneficiario.actividadBeneficiario'); 
+    }
+
+    public function histMedBeneficiario()
+    {
+        return view('views.beneficiario.histMedBeneficiario'); 
+    }
+
     // VIEWS DE ASISTENCIA
     public function asistencia()
     {
@@ -136,4 +156,6 @@ class PostController extends Controller
     {
         return view('views.usuarios.exportarUsuarios'); 
     }
+
+    
 }

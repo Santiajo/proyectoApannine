@@ -18,7 +18,7 @@
     <form class="formularioPiola" method="POST">
 
         <!-- Título formulario -->
-        <h1>Registrar actividad</h1>
+        <h1>Crear actividad</h1>
 
 
         <!-- Datos actividad -->

@@ -26,7 +26,7 @@
                     <input type="password" placeholder="Contraseña">
                     <div class="boton-ingresar">
                         <a href="#">Olvidaste tu contraseña?</a>
-                        <button >Ingresar</button>
+                        <button ><a href="{{ route('fichabeneficiario') }}">Ingresar</a></button>
                     </div>
                 </div>
             </form>

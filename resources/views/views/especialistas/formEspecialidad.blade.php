@@ -18,7 +18,7 @@
     </div>
     <div class="fiftyfifty">
         <form method="POST" class="formularioPiola">
-            <h1>Registrar especialidad</h1>
+            <h1>Agregar especialidad</h1>
             <div class="separacionFormulario">
                 <label for="especialidadNombre">Nombre: </label>
                 <input type="text" name="especialidadNombre" id="especialidadNombre">

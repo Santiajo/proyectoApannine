@@ -17,7 +17,7 @@
         </a>
     </div>
     <form method="POST" class="formularioPiola">
-        <h1>Registrar especialista</h1>
+        <h1>Agregar especialista</h1>
         <div class="separacionFormulario">
             <!-- Run especialista -->
             <section class="layoutTelefono">

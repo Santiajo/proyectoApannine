@@ -60,7 +60,7 @@
                             <li class="nav-link">
                                 <a href="{{ route('asistencia') }}">
                                     <i class='bx bx-user-check icon'></i>
-                                    <span class="text nav-text">Asistencias</span>
+                                    <span class="text nav-text">Talleres</span>
                                 </a>
                             </li>
                         </ul>

@@ -18,7 +18,7 @@
     <hr>
     <div class="fila2">
         <a class="boton-primario" id="benAgregar" href="{{ route('registrofecha') }}">
-            <p><i class='bx bxs-calendar-plus'></i> Agendar fecha</p>
+            <p><i class='bx bxs-calendar-plus'></i> Programar fecha</p>
         </a>
     </div>
     <div class="fila1" id="fila1Perso2">
@@ -45,7 +45,8 @@
                 <th>Rut</th>
                 <th>Nombre</th>
                 <th>Teléfono</th>
-                <th>Correo</th>
+                <th>Correo apoderado</th>
+                <th>%</th>
                 <th class="thRotado">03/12/2024</th>
                 <th class="thRotado">04/12/2024</th>
                 <th class="thRotado">05/12/2024</th>
@@ -54,14 +55,15 @@
         </thead>
         <tbody>
             <tr>
-                <td data-label="Rut">18487992-1</td>
-                <td data-label="Nombre">Juan Esteban Manzo</td>
-                <td data-label="Teléfono">9 7186 454</td>
-                <td data-label="Correo">juanmanzo93@gmail.com</td>
-                <td data-label="03/12/2024">P</td>
-                <td data-label="04/12/2024">A</td>
-                <td data-label="05/12/2024">P</td>
-                <td data-label="06/12/2024">J</td>
+                <td data-label="Rut">9835803-k</td>
+                <td data-label="Nombre">Juan Manzo</td>
+                <td data-label="Teléfono">981267512</td>
+                <td data-label="Correo apoderado">juanmanzo93@gmail.com</td>
+                <td data-label="%">50%</td>
+                <td data-label="Correo apoderado">P</td>
+                <td data-label="Correo apoderado">A</td>
+                <td data-label="Correo apoderado">P</td>
+                <td data-label="Correo apoderado">J</td>
             </tr>
         </tbody>
     </table>
