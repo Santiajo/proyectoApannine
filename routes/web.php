@@ -29,6 +29,9 @@ Route::get('/views/beneficiarioAsistencia', [PostController::class, 'beneficiari
 Route::get('/views/registroAsistBeneficiario', [PostController::class, 'registroAsistBeneficiario'])->name('registroAsistBeneficiario');
 Route::get('/views/actividadBeneficiario', [PostController::class, 'actividadBeneficiario'])->name('actividadBeneficiario');
 Route::get('/views/histMedBeneficiario', [PostController::class, 'histMedBeneficiario'])->name('histMedBeneficiario');
+Route::get('/views/detallesAsistencia', [PostController::class, 'detallesAsistencia'])->name('detallesAsistencia');
+Route::get('/views/detallesAusencia', [PostController::class, 'detallesAusencia'])->name('detallesAusencia');
+Route::get('/views/exportarAsistenciaBen', [PostController::class, 'exportarAsistenciaBen'])->name('exportarAsistenciaBen');
 
 // RUTAS DE ASISTENCIA
 Route::get('/views/asistencia', [PostController::class, 'asistencia'])->name('asistencia');

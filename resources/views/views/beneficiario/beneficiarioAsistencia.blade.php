@@ -8,7 +8,7 @@
 <div class="content">
     <div class="fila1" id="fila1Perso3">
         <!-- Botón para volver a la ficha principal -->
-        <a class="boton-primario" id="volver2" href="{{ route('asistencia') }}">
+        <a class="boton-primario" id="volver2" href="{{ route('fichabeneficiario') }}">
             < Volver</a>
     </div>
     <div class="fila1">
@@ -16,9 +16,7 @@
     </div>
     <hr>
     <div class="fila2">
-        <a class="boton-sextiario" id="benExportar" href="{{ route('registroAsistBeneficiario') }}"><i
-                class='bx bxs-calendar-edit'></i> Registrar asistencia</a>
-        <a class="boton-secundario" id="benExportar" href="{{ route('exportarBeneficiario') }}"><i
+        <a class="boton-secundario" id="benExportar" href="{{ route('exportarAsistenciaBen') }}"><i
                 class='bx bx-export'></i> Exportar</a>
     </div>
     <table>
@@ -28,11 +26,12 @@
                 <th>Nombre</th>
                 <th>Teléfono</th>
                 <th>Correo apoderado</th>
-                <th>%</th>
-                <th class="thRotado">03/12/2024</th>
-                <th class="thRotado">04/12/2024</th>
-                <th class="thRotado">05/12/2024</th>
-                <th class="thRotado">06/12/2024</th>
+                <th>N° Sesiones</th>
+                <th>TO</th>
+                <th>KINE</th>
+                <th>FONO</th>
+                <th>Total</th>
+                <th>Detalles</th>
             </tr>
         </thead>
         <tbody>
@@ -41,11 +40,12 @@
                 <td data-label="Nombre">Juan Manzo</td>
                 <td data-label="Teléfono">981267512</td>
                 <td data-label="Correo apoderado">juanmanzo93@gmail.com</td>
-                <td data-label="Correo apoderado">50%</td>
-                <td data-label="Correo apoderado">P</td>
-                <td data-label="Correo apoderado">A</td>
-                <td data-label="Correo apoderado">P</td>
-                <td data-label="Correo apoderado">J</td>
+                <td data-label="N° Sesiones">6</td>
+                <td data-label="TO">50%</td>
+                <td data-label="KINE">100%</td>
+                <td data-label="FONO">100%</td>
+                <td data-label="Total">83%</td>
+                <td data-label="Detalles"><a class="detalles" href="{{ route('detallesAsistencia') }}"><i class='bx bx-detail'></i></a></td>
             </tr>
         </tbody>
     </table>

@@ -60,6 +60,21 @@ class PostController extends Controller
         return view('views.beneficiario.histMedBeneficiario'); 
     }
 
+    public function detallesAsistencia()
+    {
+        return view('views.beneficiario.detallesAsistencia');
+    }
+
+    public function detallesAusencia()
+    {
+        return view('views.beneficiario.detallesAusencia');
+    }
+
+    public function exportarAsistenciaBen()
+    {
+        return view('views.beneficiario.exportarAsistenciaBen');
+    }
+
     // VIEWS DE ASISTENCIA
     public function asistencia()
     {

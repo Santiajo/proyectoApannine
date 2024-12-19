@@ -25,7 +25,6 @@
         <th>Fecha ingreso</th>
         <th>Rut</th>
         <th>Nombre</th>
-        <th>Fecha nacimiento</th>
         <th>Nombre cuidador</th>
         <th>Teléfono cuidador</th>
         <th>Detalles</th>
@@ -40,7 +39,6 @@
         <td data-label="Fecha ingreso">03-12-2023</td>
         <td data-label="Rut">9835803-k</td>
         <td data-label="Nombre">Juan Manzo</td>
-        <td data-label="Fecha nacimiento">16/10/1663</td>
         <td data-label="Nombre cuidador">Juan Manzo</td>
         <td data-label="Teléfono">981267512</td>
         <td data-label="Acciones"><a class="detalles" href="{{ route('verBeneficiario') }}"><i class='bx bxs-file-doc' ></i></a></td>
@@ -53,7 +51,6 @@
         <td data-label="Fecha ingreso">03-12-2023</td>
         <td data-label="Rut">9835803-k</td>
         <td data-label="Nombre">Juan Manzo</td>
-        <td data-label="Fecha nacimiento">16/10/1663</td>
         <td data-label="Nombre cuidador">Juan Manzo</td>
         <td data-label="Teléfono">981267512</td>
         <td data-label="Acciones"><a class="detalles" href="{{ route('verBeneficiario') }}"><i class='bx bxs-file-doc' ></i></a></td>
