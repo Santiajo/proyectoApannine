@@ -25,11 +25,43 @@ class PostController extends Controller
         return view('views.beneficiario.fichabeneficiario'); 
     }
 
+    // FORMULARIO PARA EL BENEFICIARIO
     public function formularioBeneficiario()
     {
-        return view('views.beneficiario.formularioBeneficiario'); 
+        return view('views.beneficiario.formulario.formularioBeneficiario'); 
     }
 
+    public function formularioBeneficiarioColegio()
+    {
+        return view('views.beneficiario.formulario.formularioBeneficiarioColegio'); 
+    }
+
+    public function formularioBeneficiarioDerivante()
+    {
+        return view('views.beneficiario.formulario.formularioBeneficiarioDerivante'); 
+    }
+
+    public function formularioBeneficiarioFamilia()
+    {
+        return view('views.beneficiario.formulario.formularioBeneficiarioFamilia'); 
+    }
+
+    public function formularioBeneficiarioAntSalud()
+    {
+        return view('views.beneficiario.formulario.formularioBeneficiarioAntSalud'); 
+    }
+
+    public function formularioBeneficiarioAntSocial()
+    {
+        return view('views.beneficiario.formulario.formularioBeneficiarioAntSocial'); 
+    }
+
+    public function formularioBeneficiarioDiagnostico()
+    {
+        return view('views.beneficiario.formulario.formularioBeneficiarioDiagnostico'); 
+    }
+
+    // RESTO DE LA VIEW DE BENEFICIARIO
     public function verBeneficiario()
     {
         return view('views.beneficiario.verBeneficiario'); 
