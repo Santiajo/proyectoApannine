@@ -87,10 +87,27 @@ class PostController extends Controller
         return view('views.beneficiario.actividadBeneficiario'); 
     }
 
+    // HISTORIAL MÉDICO DEL BENEFICIARIO
     public function histMedBeneficiario()
     {
-        return view('views.beneficiario.histMedBeneficiario'); 
+        return view('views.beneficiario.histMedico.histMedBeneficiario'); 
     }
+
+    public function antMedBeneficiario()
+    {
+        return view('views.beneficiario..histMedico.antMedBeneficiario'); 
+    }
+
+    public function diagnosticoBeneficiario()
+    {
+        return view('views.beneficiario..histMedico.diagnosticoBeneficiario'); 
+    }
+
+    public function documentosBeneficiario()
+    {
+        return view('views.beneficiario..histMedico.documentosBeneficiario'); 
+    }
+
 
     public function detallesAsistencia()
     {
@@ -105,6 +122,17 @@ class PostController extends Controller
     public function exportarAsistenciaBen()
     {
         return view('views.beneficiario.exportarAsistenciaBen');
+    }
+
+    // VIEWS PARA EL HORARIO DEL BENEFICIARIO
+    public function horarioBeneficiario()
+    {
+        return view('views.beneficiario.horario.horarioBeneficiario');
+    }
+
+    public function formularioHorario()
+    {
+        return view('views.beneficiario.horario.formularioHorario');
     }
 
     // VIEWS DE ASISTENCIA
@@ -204,5 +232,12 @@ class PostController extends Controller
         return view('views.usuarios.exportarUsuarios'); 
     }
 
-    
+    // VIEWS PARA REGISTRO DE ASISTENCIA DEL MEDICO
+    public function asistenciasEspecialistas() {
+        return view('views.beneficiarioAsistencia.asistenciasEspecialista');
+    }
+
+    public function formAsistenciaMedico() {
+        return view('views.beneficiarioAsistencia.formAsistenciaMedico');
+    }
 }

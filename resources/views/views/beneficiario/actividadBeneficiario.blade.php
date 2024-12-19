@@ -34,7 +34,7 @@
     <div class="fila1">
         <div class="cardSimple">
             <div class="separacionFormulario">
-                <h3>Período ausente N°1</h3>
+                <h3>Período inactivo N°1</h3>
                 <p><span class="letraNegrita">Desde: </span> 15-04-2024</p>
                 <p><span class="letraNegrita">Hasta: </span> 28-08-2024</p>
                 <p><span class="letraNegrita">Duración: </span> 4 meses y 14 días</p>
@@ -43,7 +43,7 @@
     </div>
     <div class="cardSimple">
         <div class="separacionFormulario">
-            <h3>Período ausente N°2</h3>
+            <h3>Período inactivo N°2</h3>
             <p><span class="letraNegrita">Desde: </span> 15-09-2024</p>
             <p><span class="letraNegrita">Hasta: </span> 28-11-2024</p>
             <p><span class="letraNegrita">Duración: </span> 2 meses y 2 días</p>

@@ -21,7 +21,7 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 
 
 // RUTAS DE BENEFICIARIO
-Route::get('/views/fichabeneficiario', [PostController::class, 'fichabeneficiario'])->name('fichabeneficiario');
+    
     // FORMULARIO DEL BENEFICIARIO
     Route::get('/views/formBeneficiario', [PostController::class, 'formularioBeneficiario'])->name('formularioBeneficiario');
     Route::get('/views/formularioBeneficiarioColegio', [PostController::class, 'formularioBeneficiarioColegio'])->name('formularioBeneficiarioColegio');
@@ -30,15 +30,26 @@ Route::get('/views/fichabeneficiario', [PostController::class, 'fichabeneficiari
     Route::get('/views/formularioBeneficiarioAntSocial', [PostController::class, 'formularioBeneficiarioAntSocial'])->name('formularioBeneficiarioAntSocial');
     Route::get('/views/formularioBeneficiarioAntSalud', [PostController::class, 'formularioBeneficiarioAntSalud'])->name('formularioBeneficiarioAntSalud');
     Route::get('/views/formularioBeneficiarioDiagnostico', [PostController::class, 'formularioBeneficiarioDiagnostico'])->name('formularioBeneficiarioDiagnostico');
+    
+    // HISTORIAL MÉDICO DEL BENEFICIARIO
+    Route::get('/views/histMedBeneficiario', [PostController::class, 'histMedBeneficiario'])->name('histMedBeneficiario');
+    Route::get('/views/antMedBeneficiario', [PostController::class, 'antMedBeneficiario'])->name('antMedBeneficiario');
+    Route::get('/views/diagnosticoBeneficiario', [PostController::class, 'diagnosticoBeneficiario'])->name('diagnosticoBeneficiario');
+    Route::get('/views/documentosBeneficiario', [PostController::class, 'documentosBeneficiario'])->name('documentosBeneficiario');
+
+    // HORARIO DEL BENEFICIARIO
+    Route::get('/views/horarioBeneficiario', [PostController::class, 'horarioBeneficiario'])->name('horarioBeneficiario');
+    Route::get('/views/formularioHorario', [PostController::class, 'formularioHorario'])->name('formularioHorario');
+
 Route::get('/views/verBeneficiario', [PostController::class, 'verBeneficiario'])->name('verBeneficiario');
 Route::get('/views/exportarBeneficiario', [PostController::class, 'exportarBeneficiario'])->name('exportarBeneficiario');
 Route::get('/views/beneficiarioAsistencia', [PostController::class, 'beneficiarioAsistencia'])->name('beneficiarioAsistencia');
 Route::get('/views/registroAsistBeneficiario', [PostController::class, 'registroAsistBeneficiario'])->name('registroAsistBeneficiario');
 Route::get('/views/actividadBeneficiario', [PostController::class, 'actividadBeneficiario'])->name('actividadBeneficiario');
-Route::get('/views/histMedBeneficiario', [PostController::class, 'histMedBeneficiario'])->name('histMedBeneficiario');
 Route::get('/views/detallesAsistencia', [PostController::class, 'detallesAsistencia'])->name('detallesAsistencia');
 Route::get('/views/detallesAusencia', [PostController::class, 'detallesAusencia'])->name('detallesAusencia');
 Route::get('/views/exportarAsistenciaBen', [PostController::class, 'exportarAsistenciaBen'])->name('exportarAsistenciaBen');
+Route::get('/views/fichabeneficiario', [PostController::class, 'fichabeneficiario'])->name('fichabeneficiario');
 
 // RUTAS DE ASISTENCIA
 Route::get('/views/asistencia', [PostController::class, 'asistencia'])->name('asistencia');
@@ -65,3 +76,7 @@ Route::get('/views/formulariousuario', [PostController::class, 'formulariousuari
 Route::get('/views/vistaUsuario', [PostController::class, 'vistaUsuario'])->name('vistaUsuario');
 Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
 Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
+
+// RUTAS PARA ASISTENCIAS DESDE POV DEL MEDICO
+Route::get('/views/asistenciasEspecialistas', [PostController::class, 'asistenciasEspecialistas'])->name('asistenciasEspecialistas');
+Route::get('/views/formAsistenciaMedico', [PostController::class, 'formAsistenciaMedico'])->name('formAsistenciaMedico');

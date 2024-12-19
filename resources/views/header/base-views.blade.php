@@ -59,13 +59,18 @@
                             </li>
                             <li class="nav-link">
                                 <a href="{{ route('asistencia') }}">
-                                    <i class='bx bx-user-check icon'></i>
+                                    <i class='bx bxs-school icon'></i>
                                     <span class="text nav-text">Talleres</span>
+                                </a>
+                            </li>
+                            <li class="nav-link">
+                                <a href="{{ route('asistenciasEspecialistas') }}">
+                                    <i class='bx bx-calendar-check icon'></i>
+                                    <span class="text nav-text">Asistencias</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <hr>
                     <div class="bottom-content">
                         <li>
                             <a href="#">
