@@ -18,7 +18,7 @@
     <div class="fila2">
         <a class="boton-primario" id="benExportar" href="{{ route('formularioHorario') }}"><i
                 class='bx bxs-calendar-edit'></i> Agregar horario</a>
-
+        <a class="boton-secundario" id="benExportar" href="{{ route('histMedicoVerHorario') }}">Historial de horarios</a>
     </div>
     <div class="cardSimple">
         <div class="separacionFormulario">

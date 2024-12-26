@@ -40,6 +40,7 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
     // HORARIO DEL BENEFICIARIO
     Route::get('/views/horarioBeneficiario', [PostController::class, 'horarioBeneficiario'])->name('horarioBeneficiario');
     Route::get('/views/formularioHorario', [PostController::class, 'formularioHorario'])->name('formularioHorario');
+    Route::get('/views/histMedicoVerHorario', [PostController::class, 'histMedicoVerHorario'])->name('histMedicoVerHorario');
 
 Route::get('/views/verBeneficiario', [PostController::class, 'verBeneficiario'])->name('verBeneficiario');
 Route::get('/views/exportarBeneficiario', [PostController::class, 'exportarBeneficiario'])->name('exportarBeneficiario');

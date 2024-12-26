@@ -15,7 +15,10 @@
         <h2>Historial medico Juan Manzo</h2>
     </div>
     <hr>
-    <br>
+    <div class="fila2">
+        <a class="boton-secundario" id="benExportar" href="{{ route('exportarAsistencia') }}"><i
+                class='bx bx-export'></i> Exportar</a>
+    </div>
     <div class="navPiola">
         <div class="navTitulo">
             <h3>Ver:</h3>
@@ -41,32 +44,35 @@
         </div>
     </div>
     <br>
+    <form method="post" class="formularioPiola" id="formTuneado">
+        <div class="separacionFormulario">
+            <label for="histMedActividad">Seleccione actividad:</label>
+            <select name="histMedActividad" id="histMedActividad">
+                <option value="Terapia Ocupacional">Terapia Ocupacional</option>
+                <option value="Kinesiología">Kinesiología</option>
+                <option value="Fonoaudilogía">Fonoaudilogía</option>
+            </select>
+        </div>
+        <a class="boton-cuartiario" href="{{ route('dia') }}">Filtrar</a>
+    </form>
     <div class="fila1">
         <h2>Terapia Ocupacional</h2>
     </div>
     <div class="cardSimple">
         <div class="separacionFormulario">
             <h3>18-12-2024</h3>
-            <p>Se trataron tales temas y se le hicieron x actividades a Juan Manzo.</p>
+            <p><span class="letraNegrita">N° de sesión: </span>1</p>
+            <p><span class="letraNegrita">Encargado: </span>Simón Hernández</p>
+            <p><span class="letraNegrita">Descripción: </span>Se trataron tales temas y se le hicieron x actividades a
+                Juan Manzo.</p>
         </div>
     </div>
-    <div class="fila1">
-        <h2>Kinesiología</h2>
-    </div>
-    <div class="cardSimple">
-        <div class="separacionFormulario">
-            <h3>19-12-2024</h3>
-            <p>Se le hicieron x actividades de movilidad en las manos a Juan Manzo.</p>
-        </div>
-    </div>
-    <div class="fila1">
-        <h2>Fonoaudilogía</h2>
-    </div>
-    <div class="cardSimple">
-        <div class="separacionFormulario">
-            <h3>18-12-2024</h3>
-            <p>Seguimiento de fonoaudilogía.</p>
-        </div>
+    <div class="fila4">
+        <a class="boton-primario" id="atras" href="{{ route('fichabeneficiario') }}">
+            << Atras</a>
+                <a class="boton-primario" id="uno" href="{{ route('fichabeneficiario') }}">1</a>
+                <a class="boton-primario" id="dos" href="{{ route('fichabeneficiario') }}">2</a>
+                <a class="boton-primario" id="adelante" href="{{ route('fichabeneficiario') }}">Adelante >></a>
     </div>
 </div>
 @endsection
