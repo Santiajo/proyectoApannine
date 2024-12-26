@@ -139,6 +139,10 @@ class PostController extends Controller
         return view('views.beneficiario.horario.verHorario');
     }
 
+    public function histMedicoVerCambios() {
+        return view('views.beneficiario.horario.verCambios');
+    }
+
     // VIEWS DE ASISTENCIA
     public function asistencia()
     {

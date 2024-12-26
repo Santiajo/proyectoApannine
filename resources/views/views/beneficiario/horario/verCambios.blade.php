@@ -44,6 +44,10 @@
         </div>
         <a class="boton-cuartiario" href="{{ route('dia') }}">Filtrar</a>
     </form>
+    <div class="fila1">
+        <h2>Antes</h2>
+    </div>
+    <hr>
     <br>
     <div class="cardSimple">
         <div class="separacionFormulario">
@@ -60,6 +64,10 @@
             <p><span class="letraNegrita">Día(s) de la semana: </span>Viernes</p>
         </div>
     </div>
+    <div class="fila1">
+        <h2>Actual</h2>
+    </div>
+    <hr>
     <br>
     <div class="cardSimple">
         <div class="separacionFormulario">
