@@ -48,6 +48,7 @@
     <div class="cardSimple">
         <div class="separacionFormulario">
             <h3>Terapia ocupacional</h3>
+            <p><span class="letraNegrita">Encargado: </span>Simón Hernández</p>
             <p><span class="letraNegrita">Fecha de inicio: </span>19-12-2024 y 07-12-2024</p>
             <p><span class="letraNegrita">Días(s) de la semana: </span>Jueves - Martes</p>
         </div>
@@ -56,6 +57,7 @@
     <div class="cardSimple">
         <div class="separacionFormulario">
             <h3>Kinesiología</h3>
+            <p><span class="letraNegrita">Encargado: </span>Simón Hernández</p>
             <p><span class="letraNegrita">Fecha de inicio: </span>20-12-2024</p>
             <p><span class="letraNegrita">Día(s) de la semana: </span>Viernes</p>
         </div>
@@ -64,6 +66,7 @@
     <div class="cardSimple">
         <div class="separacionFormulario">
             <h3>Fonoaudiología</h3>
+            <p><span class="letraNegrita">Encargado: </span>Simón Hernández</p>
             <p><span class="letraNegrita">Fecha de inicio: </span>23-12-2024</p>
             <p><span class="letraNegrita">Día(s) de la semana: </span>Lunes</p>
         </div>

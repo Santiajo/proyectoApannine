@@ -35,6 +35,18 @@
     <br>
     <form method="post" class="formularioPiola" id="formTuneado">
         <div class="separacionFormulario">
+            <label for="verHorarioAnio">Actividad:</label>
+            <select name="verHorarioAnio" id="verHorarioAnio">
+                <option value="Terapia Ocupacional">Terapia Ocupacional</option>
+                <option value="Kinesiología">Kinesiología</option>
+                <option value="Fonoaudiología">Fonoaudiología</option>
+            </select>
+        </div>
+        <a class="boton-cuartiario" href="{{ route('dia') }}">Filtrar</a>
+    </form>
+    <br>
+    <form method="post" class="formularioPiola" id="formTuneado">
+        <div class="separacionFormulario">
             <label for="verHorarioAnio">Seleccione año:</label>
             <select name="verHorarioAnio" id="verHorarioAnio">
                 <option value="2024">2024</option>
@@ -52,16 +64,9 @@
     <div class="cardSimple">
         <div class="separacionFormulario">
             <h3>Terapia ocupacional</h3>
+            <p><span class="letraNegrita">Encargado: </span>Simón Hernández</p>
             <p><span class="letraNegrita">Fecha de inicio: </span>19-12-2024 y 07-12-2024</p>
             <p><span class="letraNegrita">Días(s) de la semana: </span>Jueves - Martes</p>
-        </div>
-    </div>
-    <br>
-    <div class="cardSimple">
-        <div class="separacionFormulario">
-            <h3>Kinesiología</h3>
-            <p><span class="letraNegrita">Fecha de inicio: </span>20-12-2024</p>
-            <p><span class="letraNegrita">Día(s) de la semana: </span>Viernes</p>
         </div>
     </div>
     <div class="fila1">
@@ -71,9 +76,12 @@
     <br>
     <div class="cardSimple">
         <div class="separacionFormulario">
-            <h3>Fonoaudiología</h3>
-            <p><span class="letraNegrita">Fecha de inicio: </span>23-12-2024</p>
-            <p><span class="letraNegrita">Día(s) de la semana: </span>Lunes</p>
+            <h3>Terapia ocupacional</h3>
+            <p><span class="letraNegrita">Encargado: </span>Joaquín Muñoz</p>
+            <p><span class="letraNegrita">Fecha de inicio: </span>19-12-2024</p>
+            <p><span class="letraNegrita">Días(s) de la semana: </span>Jueves</p>
+            <p><span class="letraNegrita">Razón del cambio: </span>El beneficiario ha progresado y ya no lo necesita</p>
+            <p><span class="letraNegrita">Descripción del cambio: </span>Se le ha cambiado el especialista a cargo y también se ha eliminado un día de terapia.</p>
         </div>
     </div>
 </div>
