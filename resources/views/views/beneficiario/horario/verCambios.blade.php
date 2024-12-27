@@ -81,7 +81,7 @@
             <p><span class="letraNegrita">Fecha de inicio: </span>19-12-2024</p>
             <p><span class="letraNegrita">Días(s) de la semana: </span>Jueves</p>
             <p><span class="letraNegrita">Razón del cambio: </span>El beneficiario ha progresado y ya no lo necesita</p>
-            <p><span class="letraNegrita">Descripción del cambio: </span>Se le ha cambiado el especialista a cargo y también se ha eliminado un día de terapia.</p>
+            <p><span class="letraNegrita">Descripción del cambio: </span>Se le ha cambiado el especialista a cargo y también se ha eliminado un día de hola.</p>
         </div>
     </div>
 </div>
