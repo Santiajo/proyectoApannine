@@ -1,12 +1,5 @@
 <?php
 
-//GET peticiones visibles
-//Post peticiones de informacion no visible
-//Put actualizar algun registro
-//Patch
-//Delete eliminar registro
-
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
