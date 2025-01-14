@@ -6,8 +6,9 @@
 //Patch
 //Delete eliminar registro
 
-use App\Http\Controllers\HomeController;
+//Aqui se importan los controladores
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\especialidadController;
 use Illuminate\Support\Facades\Route;
 
 //Aqui se llama a las rutas
@@ -67,8 +68,14 @@ Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yoga
 Route::get('/views/exportarAsistencia', [PostController::class, 'exportarAsistencia'])->name('exportarAsistencia');
 
 // RUTAS ESPECIALISTAS
+    // PARA MOSTRAR LA PÁGINA DEL CRUD DE ESPECIALIDADES
+    Route::get('/views/crudEspecialidad', [especialidadController::class, 'crudEspecialidad'])->name('especialistas.crudEspecialidad');
+    // PARA GUARDAR O ACTUALIZAR UNA ESPECIALIDAD
+    Route::post('/views/guardarEspecialidad', [especialidadController::class, 'guardarEspecialidad'])->name('especialistas.guardarEspecialidad');
+    // PARA ELIMINAR UNA ESPECIALIDAD
+    Route::delete('/views/eliminarEspecialidad/{id}', [especialidadController::class, 'eliminarEspecialidad'])->name('especialistas.eliminarEspecialidad');
+
 Route::get('/views/fichaespecialista', [PostController::class, 'fichaespecialista'])->name('fichaespecialista');
-Route::get('/views/formEspecialidad', [PostController::class, 'formEspecialidad'])->name('formEspecialidad');
 Route::get('/views/formEspecialista', [PostController::class, 'formEspecialista'])->name('formEspecialista');
 Route::get('/views/exportarEspecialistas', [PostController::class, 'exportarEspecialistas'])->name('exportarEspecialistas');
 

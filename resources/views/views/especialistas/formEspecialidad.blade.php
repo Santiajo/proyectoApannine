@@ -17,18 +17,27 @@
         </a>
     </div>
     <div class="fiftyfifty">
-        <form method="POST" class="formularioPiola">
+        <form action="{{ route('especialistas.guardarEspecialidad') }}" method="POST" class="formularioPiola">
+            @csrf
             <h1>Agregar especialidad</h1>
             <div class="separacionFormulario">
+                <input type="hidden" name="especialidadId" id="especialidadId">
+
                 <label for="especialidadNombre">Nombre: </label>
                 <input type="text" name="especialidadNombre" id="especialidadNombre">
+                @error('especialidadNombre')
+                    <div class="alert alert-danger">El nombre no cumple con los requisitos!</div>
+                @enderror
 
                 <label for="especialidadAbrev">Abreviación: </label>
                 <input type="text" name="especialidadAbrev" id="especialidadAbrev">
+                @error('especialidadAbrev')
+                    <div class="alert alert-danger">La abreviación no cumple con los requisitos!</div>
+                @enderror
             </div>
             <div class="fila2" id="grupoBotones">
-                <a class="boton-primario" href="{{ route('formEspecialidad') }}">Añadir</a>
-                <a class="boton-secundario" href="{{ route('formEspecialidad') }}">Cancelar</a>
+                <button class="boton-primario" type="submit">Guardar</button>
+                <button class="boton-secundario" type="button" onclick="limpiarFormulario()">Cancelar</button>
             </div>
         </form>
         <table>
@@ -41,28 +50,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td data-label="Nombre">Terapia Ocupacional</td>
-                    <td data-label="Abreviación">TO</td>
-                    <td data-label="Modificar"><a class="boton-quintiario" id="benAgregar"
-                            href="{{ route('verBeneficiario') }}">
-                            Modificar</a></td>
-                    <td data-label="Eliminar"><a class="boton-terciario" id="benEliminar"
-                            href="{{ route('formEspecialidad') }}"><i class='bx bx-trash'></i>
-                            Eliminar</a></td>
-                </tr>
-                <tr>
-                    <td data-label="Nombre">Kinesiología</td>
-                    <td data-label="Abreviación">KINE</td>
-                    <td data-label="Modificar"><a class="boton-quintiario" id="benAgregar"
-                            href="{{ route('verBeneficiario') }}">
-                            Modificar</a></td>
-                    <td data-label="Eliminar"><a class="boton-terciario" id="benEliminar"
-                            href="{{ route('formEspecialidad') }}"><i class='bx bx-trash'></i>
-                            Eliminar</a></td>
-                </tr>
+                @foreach ($especialidades as $especialidad)
+                    <tr>
+                        <td data-label="Nombre">{{ $especialidad->especialidadNombre }}</td>
+                        <td data-label="Abreviación">{{ $especialidad->especialidadAbreviacion }}</td>
+                        <td data-label="Modificar"><button class="boton-quintiario" id="benAgregar"
+                                onclick="editarEspecialidad({{ $especialidad }})">Modificar</button>
+                        </td>
+                        <td data-label="Eliminar">
+                            <form action="{{ route('especialistas.eliminarEspecialidad', $especialidad->id) }}"
+                                method="POST" style="display: inline;" onsubmit="return confirmDelete(event)">
+                                @csrf
+                                @method('DELETE')
+                                <button class="boton-terciario" type="submit"><i class='bx bx-trash'></i> Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 </div>
+
 @endsection

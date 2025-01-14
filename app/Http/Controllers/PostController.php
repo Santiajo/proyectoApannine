@@ -204,11 +204,6 @@ class PostController extends Controller
         return view('views.especialistas.fichaespecialista'); 
     }
 
-    public function formEspecialidad()
-    {
-        return view('views.especialistas.formEspecialidad'); 
-    }
-
     public function formEspecialista()
     {
         return view('views.especialistas.formEspecialista'); 
