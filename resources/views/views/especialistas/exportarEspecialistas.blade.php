@@ -10,7 +10,7 @@
 
     <div class="fila1">
         <!-- Botón para volver a la ficha principal -->
-        <a class="boton-primario" id="volver2" href="{{ route('fichaespecialista') }}">
+        <a class="boton-primario" id="volver2" href="{{ route('especialistas.listarEspecialistas') }}">
             < Volver</a>
     </div>
 

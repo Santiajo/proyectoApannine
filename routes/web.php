@@ -1,8 +1,13 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\especialidadController;
 use Illuminate\Support\Facades\Route;
+
+// CONTROLADOR ESPECIALIDADES
+use App\Http\Controllers\especialidadController;
+
+// CONTROLADOR ESPECIALISTAS
+use App\Http\Controllers\especialistaController;
 
 //Aqui se llama a las rutas
 Route::get('/', [PostController::class, 'login']);
@@ -60,7 +65,7 @@ Route::get('/views/yogaDia', [PostController::class, 'yogaDia'])->name('yogaDia'
 Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yogaTodos');
 Route::get('/views/exportarAsistencia', [PostController::class, 'exportarAsistencia'])->name('exportarAsistencia');
 
-// RUTAS ESPECIALISTAS
+// RUTAS DEL CRUD DE ESPECIALIDADES
     // PARA MOSTRAR LA PÁGINA DEL CRUD DE ESPECIALIDADES
     Route::get('/views/crudEspecialidad', [especialidadController::class, 'crudEspecialidad'])->name('especialistas.crudEspecialidad');
     // PARA GUARDAR O ACTUALIZAR UNA ESPECIALIDAD
@@ -68,8 +73,11 @@ Route::get('/views/exportarAsistencia', [PostController::class, 'exportarAsisten
     // PARA ELIMINAR UNA ESPECIALIDAD
     Route::delete('/views/eliminarEspecialidad/{id}', [especialidadController::class, 'eliminarEspecialidad'])->name('especialistas.eliminarEspecialidad');
 
-Route::get('/views/fichaespecialista', [PostController::class, 'fichaespecialista'])->name('fichaespecialista');
-Route::get('/views/formEspecialista', [PostController::class, 'formEspecialista'])->name('formEspecialista');
+// RUTAS DEL CRUD DE ESPECIALISTAS
+    // PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
+    Route::get('/views/listarEspecialistas', [especialistaController::class, 'listarEspecialistas'])->name('especialistas.listarEspecialistas');
+    // PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA
+    Route::get('/views/formularioEspecialista', [especialistaController::class, 'formularioEspecialista'])->name('especialistas.formularioEspecialista');
 Route::get('/views/exportarEspecialistas', [PostController::class, 'exportarEspecialistas'])->name('exportarEspecialistas');
 
 // RUTAS DEL CRUD PARA EL LOGIN

@@ -8,11 +8,11 @@
 <div class="content">
     <div class="fila1">
         <!-- Botón para volver a la ficha principal -->
-        <a class="boton-primario" id="volver1" href="{{ route('fichaespecialista') }}">
+        <a class="boton-primario" id="volver1" href="{{ route('especialistas.listarEspecialistas') }}">
             < Volver</a>
     </div>
     <div class="fila2" id="fila1Perso">
-        <a class="boton-primario" href="{{ route('formEspecialista') }}">
+        <a class="boton-primario" href="{{ route('especialistas.formularioEspecialista') }}">
             <p><i class='bx bx-plus-medical'></i> Agregar especialista</p>
         </a>
     </div>

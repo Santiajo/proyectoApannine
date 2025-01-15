@@ -13,7 +13,7 @@ class Especialista extends Model
     use HasFactory;
 
     // ASIGNAMOS EL NOMBRE DE LA TABLA
-    protected $table = 'especialista';
+    protected $table = 'especialistas';
 
     // ESPECÍFICAMOS LOS CAMPOS QUE SE PUEDEN LLENAR
     protected $fillable = [

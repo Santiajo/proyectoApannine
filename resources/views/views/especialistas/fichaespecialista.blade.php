@@ -11,7 +11,7 @@
     </div>
     <hr>
     <div class="fila2">
-        <a class="boton-primario" id="benAgregar" href="{{ route('formEspecialista') }}">
+        <a class="boton-primario" id="benAgregar" href="{{ route('especialistas.formularioEspecialista') }}">
             <p><i class='bx bx-user-plus'></i> Agregar especialista</p>
         </a>
         <a class="boton-primario" id="benAgregar" href="{{ route('especialistas.crudEspecialidad') }}">

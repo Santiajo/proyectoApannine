@@ -53,7 +53,7 @@
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="{{ route('fichaespecialista') }}">
+                                <a href="{{ route('especialistas.listarEspecialistas') }}">
                                     <i class='bx bx-band-aid icon'></i>
                                     <span class="text nav-text">Especialistas</span>
                                 </a>
