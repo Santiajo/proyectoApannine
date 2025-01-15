@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('styles')
     <!-- {{-- <link rel="stylesheet" href="{{ asset('cssbootstrap/bootstrap.css') }}"> --}} -->
 </head>
@@ -131,23 +132,21 @@
             updateContentMargin();
         });
 
-        // Cambio entre modo día y modo noche
-        modeSwitch.addEventListener("click", () => {
-            body.classList.toggle("dark");
-
-            if (body.classList.contains("dark")) {
-                modeText.innerText = "Modo día";
-            } else {
-                modeText.innerText = "Modo noche";
-            }
-        });
-
         // Llamar a la función para asegurarse de que el margen esté correcto al cargar la página
         updateContentMargin();
     </script>
 
     <!-- Cargar archivos JS específicos si es necesario -->
-    <script src="{{ asset('js/sidebar.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                notificacionExito('{{ session('success') }}');
+            });
+        </script>
+    @endif
+    
 </body>
 
 </html>

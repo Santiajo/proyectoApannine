@@ -14,7 +14,7 @@
         <a class="boton-primario" id="benAgregar" href="{{ route('formEspecialista') }}">
             <p><i class='bx bx-user-plus'></i> Agregar especialista</p>
         </a>
-        <a class="boton-primario" id="benAgregar" href="{{ route('formEspecialidad') }}">
+        <a class="boton-primario" id="benAgregar" href="{{ route('especialistas.crudEspecialidad') }}">
             <p><i class='bx bx-plus-medical'></i> Agregar especialidad</p>
         </a>
         <a class="boton-secundario" id="benExportar" href="{{ route('exportarEspecialistas') }}"><i
@@ -52,7 +52,7 @@
                         href="{{ route('verBeneficiario') }}">
                         Modificar</a></td>
                 <td data-label="Eliminar"><a class="boton-terciario" id="benEliminar"
-                        href="{{ route('formEspecialidad') }}"><i class='bx bx-trash'></i></a></td>
+                        href="{{ route('especialistas.crudEspecialidad') }}"><i class='bx bx-trash'></i></a></td>
             </tr>
             <tr>
                 <td data-label="Rut">18487992-1</td>
@@ -64,7 +64,7 @@
                 <td data-label="Fecha de registro">19/11/2024</td>
                 <td data-label="Modificar"><a class="boton-quintiario" href="{{ route('verBeneficiario') }}">
                         Modificar</a></td>
-                <td data-label="Eliminar"><a class="boton-terciario" href="{{ route('formEspecialidad') }}"><i
+                <td data-label="Eliminar"><a class="boton-terciario" href="{{ route('especialistas.crudEspecialidad') }}"><i
                             class='bx bx-trash'></i></a></td>
             </tr>
         </tbody>

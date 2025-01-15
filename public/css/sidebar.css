@@ -486,16 +486,22 @@ table th {
 }
 
 /* BOTONES */
+button {
+    font-size: clamp(11px, 2vw, 15px);
+    border: none;
+}
+
 .boton-primario,
 .boton-secundario,
 .boton-terciario,
 .boton-cuartiario,
 .boton-quintiario {
     text-decoration: none;
-    font-size: (12px, 2vw, 16px);
+    font-size: (14px, 2vw, 16px);
     padding: 6px 10px;
     border-radius: 5px;
     transition: all ease .25s;
+    cursor: pointer;
 }
 
 .boton-primario i,
@@ -879,6 +885,12 @@ fieldset {
     border: 1px var(--primary-color) solid;
     padding: 6px 10px;
     border-radius: 5px;
+}
+
+/* MENSAJES DE ERROR */
+.alert, .alert-danger {
+    color: var(--danger);
+    margin-top: -5px;
 }
 
 /* TUNEO DEL FORMULARIO */
