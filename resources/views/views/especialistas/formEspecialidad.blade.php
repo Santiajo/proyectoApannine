@@ -36,8 +36,8 @@
                 @enderror
             </div>
             <div class="fila2" id="grupoBotones">
-                <button class="boton-primario" type="submit">Guardar</button>
-                <button class="boton-secundario" type="button" onclick="limpiarFormulario()">Cancelar</button>
+                <button class="boton-primario" type="submit">Añadir</button>
+                <button class="boton-secundario" type="button" onclick="limpiarInputs()">Cancelar</button>
             </div>
         </form>
         <table>

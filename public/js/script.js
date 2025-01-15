@@ -24,7 +24,10 @@ modeSwitch.addEventListener("click", () => {
 
 // FUNCIÓN PARA LIMPIAR LOS INPUTS DE LOS FORMULARIOS
 function limpiarInputs() {
-    document.getElementsByTagName('input').value = '';
+    const inputs = document.getElementsByTagName('input');
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].value = '';
+    }
 }
 
 // FUNCIÓN PARA MOSTRAR NOTIFICACIONES DE ÉXITO

@@ -43,24 +43,36 @@
             @foreach ($especialistas as $especialista)
                 <tr>
                     <td data-label="Rut">{{ $especialista->especialistaRut }}-{{ $especialista->id }}</td>
-                    <td data-label="Nombre">{{ $especialista->especialistaPNombre }} {{ $especialista->especialistaSNombre }}</td>
+                    <td data-label="Nombre">{{ $especialista->especialistaPNombre }}
+                        {{ $especialista->especialistaSNombre }}
+                    </td>
                     <td data-label="Teléfono">{{ $especialista->especialistaTelefono }}</td>
                     <td data-label="Correo electrónico">{{ $especialista->especialistaCorreo }}</td>
                     @foreach ($especialidades as $especialidad)
-                        @if ($especialista->id == $especialidad->id)
+                        @if ($especialista->especialidad_id == $especialidad->id)
                             <td data-label="Especialidad">{{ $especialidad->especialidadNombre }}</td>
                             <td data-label="Abreviación">{{ $especialidad->especialidadAbreviacion }}</td>
                         @endif
                     @endforeach
                     <td data-label="Fecha de registro">{{ $especialista->created_at }}</td>
-                    <td data-label="Modificar"><a class="boton-quintiario" id="benAgregar"
-                            href="{{ route('verBeneficiario') }}">
-                            Modificar</a></td>
-                    <td data-label="Eliminar"><a class="boton-terciario" id="benEliminar"
-                            href="{{ route('especialistas.crudEspecialidad') }}"><i class='bx bx-trash'></i></a></td>
+                    <td data-label="Modificar">
+                        <a class="boton-quintiario" id="benAgregar"
+                            href="{{ route('especialistas.formularioEspecialistaRelleno', $especialista->id) }}">
+                            Modificar</a>
+                    </td>
+                    <td data-label="Eliminar">
+                        <form action="{{ route('especialistas.eliminarEspecialista', $especialista->id) }}" method="POST"
+                            style="display: inline;" onsubmit="return confirmDelete(event)">
+                            @csrf
+                            @method('DELETE')
+                            <button class="boton-terciario" type="submit"><i class='bx bx-trash'></i></button>
+                        </form>
+                    </td>
+
                 </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+
 @endsection
