@@ -58,8 +58,9 @@
             <!-- Especialidad -->
             <label for="espEspecialidad">Especialidad:</label>
             <select name="espEspecialidad" id="espEspecialidad">
-                <option value="Terapia Ocupacional">Terapia Ocupacional</option>
-                <option value="Kinesiología">Kinesiología</option>
+                @foreach ($especialidades as $especialidad)
+                    <option value="{{ $especialidad->id }}">{{ $especialidad->especialidadNombre }} - {{ $especialidad->especialidadAbreviacion }}</option>
+                @endforeach
             </select>
         </div>
         <div class="fila2" id="grupoBotones">

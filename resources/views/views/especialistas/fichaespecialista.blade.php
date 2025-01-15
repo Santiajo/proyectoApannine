@@ -40,33 +40,26 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td data-label="Rut">20880574-6</td>
-                <td data-label="Nombre">Simón Hernández</td>
-                <td data-label="Teléfono">9 6687 6669</td>
-                <td data-label="Correo electrónico">simon.hernandez.2001@gmail.com</td>
-                <td data-label="Especialidad">Terapia Ocupacional</td>
-                <td data-label="Abreviación">TO</td>
-                <td data-label="Fecha de registro">19/11/2024</td>
-                <td data-label="Modificar"><a class="boton-quintiario" id="benAgregar"
-                        href="{{ route('verBeneficiario') }}">
-                        Modificar</a></td>
-                <td data-label="Eliminar"><a class="boton-terciario" id="benEliminar"
-                        href="{{ route('especialistas.crudEspecialidad') }}"><i class='bx bx-trash'></i></a></td>
-            </tr>
-            <tr>
-                <td data-label="Rut">18487992-1</td>
-                <td data-label="Nombre">Joaquín Muñoz</td>
-                <td data-label="Teléfono">9 9412 6722</td>
-                <td data-label="Correo electrónico">joaquin.muñoz.2001@gmail.com</td>
-                <td data-label="Especialidad">Kinesiología</td>
-                <td data-label="Abreviación">KINE</td>
-                <td data-label="Fecha de registro">19/11/2024</td>
-                <td data-label="Modificar"><a class="boton-quintiario" href="{{ route('verBeneficiario') }}">
-                        Modificar</a></td>
-                <td data-label="Eliminar"><a class="boton-terciario" href="{{ route('especialistas.crudEspecialidad') }}"><i
-                            class='bx bx-trash'></i></a></td>
-            </tr>
+            @foreach ($especialistas as $especialista)
+                <tr>
+                    <td data-label="Rut">{{ $especialista->especialistaRut }}-{{ $especialista->id }}</td>
+                    <td data-label="Nombre">{{ $especialista->especialistaPNombre }} {{ $especialista->especialistaSNombre }}</td>
+                    <td data-label="Teléfono">{{ $especialista->especialistaTelefono }}</td>
+                    <td data-label="Correo electrónico">{{ $especialista->especialistaCorreo }}</td>
+                    @foreach ($especialidades as $especialidad)
+                        @if ($especialista->id == $especialidad->id)
+                            <td data-label="Especialidad">{{ $especialidad->especialidadNombre }}</td>
+                            <td data-label="Abreviación">{{ $especialidad->especialidadAbreviacion }}</td>
+                        @endif
+                    @endforeach
+                    <td data-label="Fecha de registro">{{ $especialista->created_at }}</td>
+                    <td data-label="Modificar"><a class="boton-quintiario" id="benAgregar"
+                            href="{{ route('verBeneficiario') }}">
+                            Modificar</a></td>
+                    <td data-label="Eliminar"><a class="boton-terciario" id="benEliminar"
+                            href="{{ route('especialistas.crudEspecialidad') }}"><i class='bx bx-trash'></i></a></td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
