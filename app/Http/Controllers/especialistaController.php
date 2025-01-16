@@ -75,6 +75,36 @@ class especialistaController extends Controller
         return view('views.especialistas.formEspecialista', compact('especialista'), compact('especialidades'));
     }
 
+    // MÉTODO PARA VALIDAR RUT
+    private function validarRut($rut, $dv)
+    {
+        $suma = 0;
+        $multiplicador = 2;
+
+        for ($i = strlen($rut) - 1; $i >= 0; $i--) {
+            $suma = $suma + $rut[$i] * $multiplicador;
+            if ($multiplicador < 7) {
+                $multiplicador = $multiplicador + 1;
+            } else {
+                $multiplicador = 2;
+            }
+        }
+
+        $resto = $suma % 11;
+        $resultado = 11 - $resto;
+
+        if ($resultado == 11) {
+            $digitoVerificador = '0';
+        } elseif ($resultado == 10) {
+            $digitoVerificador = 'K';
+        } else {
+            $digitoVerificador = (string) $resultado;
+        }
+
+        return strtoupper($dv) === $digitoVerificador;
+    }
+
+
     // MÉTODO PARA GUARDAR O ACTUALIZAR UN ESPECIALISTA
     public function guardarEspecialista(Request $request)
     {
@@ -90,6 +120,14 @@ class especialistaController extends Controller
             'espEmail' => 'required|string|email|max:55',
             'espEspecialidad' => 'required|digits_between:1,20|regex:/^[^<>]*$/',
         ]);
+
+        // Convertir RUT a string para validación
+        $rut = str_pad((string) $request->espRut, 8, '0', STR_PAD_LEFT); // Asegurar longitud de 8 dígitos
+
+        // Validar el RUT usando la función personalizada
+        if (!$this->validarRut($rut, $request->espDv)) {
+            return redirect()->back()->withErrors(['espRut' => 'El RUT ingresado no es válido.'])->withInput();
+        }
 
         if ($request->especialistaId) {
             if ($request->especialistaId) {

@@ -891,6 +891,12 @@ fieldset {
 .alert, .alert-danger {
     color: var(--danger);
     margin-top: -5px;
+    text-align: justify;
+}
+
+.alert2 {
+    text-align: center;
+    margin-top: 2px;
 }
 
 /* TUNEO DEL FORMULARIO */

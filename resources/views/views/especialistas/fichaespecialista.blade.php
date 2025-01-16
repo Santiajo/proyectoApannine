@@ -54,7 +54,7 @@
         <tbody>
             @foreach ($especialistas as $especialista)
                 <tr>
-                    <td data-label="Rut">{{ $especialista->especialistaRut }}-{{ $especialista->id }}</td>
+                    <td data-label="Rut">{{ $especialista->especialistaRut }}-{{ $especialista->especialistaDv }}</td>
                     <td data-label="Nombre">{{ $especialista->especialistaPNombre }}
                         {{ $especialista->especialistaSNombre }}
                     </td>

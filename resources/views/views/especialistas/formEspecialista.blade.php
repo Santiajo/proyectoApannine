@@ -27,14 +27,17 @@
             <section class="layoutTelefono">
                 <div>
                     <label for="espRut">Rut:</label>
-                    <input type="number" name="espRut" id="espRut" value="{{ $especialista->especialistaRut ?? '' }}">
+                    <input type="number" name="espRut" id="espRut" value="{{ $especialista->especialistaRut ?? '' }}" placeholder="Solo números">
                     @error('espRut')
-                        <div class="alert alert-danger">El Rut o Dv no cumple con los requisitos!</div>
+                        <div class="alert alert-danger alert2">El Rut no cumple con los requisitos!</div>
                     @enderror
                 </div>
                 <div>
                     <label for="espDv">Dv:</label>
-                    <input type="text" name="espDv" id="espDv" value="{{ $especialista->especialistaDv ?? '' }}">
+                    <input type="text" name="espDv" id="espDv" value="{{ $especialista->especialistaDv ?? '' }}" placeholder="Solo un número o K">
+                    @error('espRut')
+                        <div class="alert alert-danger alert2">El Dv no cumple con los requisitos!</div>
+                    @enderror
                 </div>
             </section>
             <!-- Nombre especialista -->
@@ -42,38 +45,47 @@
                 <div>
                     <label for="espPNombre">Primer Nombre:</label>
                     <input type="text" name="espPNombre" id="espPNombre"
-                        value="{{ $especialista->especialistaPNombre ?? '' }}">
+                        value="{{ $especialista->especialistaPNombre ?? '' }}" placeholder="Menos de 20 caracteres">
                     @error('espPNombre')
-                        <div class="alert alert-danger">El nombre no cumple con los requisitos!</div>
+                        <div class="alert alert-danger alert2">El primer nombre no cumple con los requisitos!</div>
                     @enderror
                 </div>
                 <div>
                     <label for="espSNombre">Segundo Nombre:</label>
                     <input type="text" name="espSNombre" id="espSNombre"
-                        value="{{ $especialista->especialistaSNombre ?? '' }}">
+                        value="{{ $especialista->especialistaSNombre ?? '' }}" placeholder="(Opcional)">
+                    @error('espSNombre')
+                        <div class="alert alert-danger alert2">El segundo nombre no cumple con los requisitos!</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="espApPaterno">Apellido Paterno:</label>
                     <input type="text" name="espApPaterno" id="espApPaterno"
-                        value="{{ $especialista->especialistaApPaterno ?? '' }}">
+                        value="{{ $especialista->especialistaApPaterno ?? '' }}" placeholder="Menos de 20 caracteres">
+                    @error('espApPaterno')
+                        <div class="alert alert-danger alert2">El apellido paterno no cumple con los requisitos!</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="espApMaterno">Apellido Materno:</label>
                     <input type="text" name="espApMaterno" id="espApMaterno"
-                        value="{{ $especialista->especialistaApMaterno ?? '' }}">
+                        value="{{ $especialista->especialistaApMaterno ?? '' }}" placeholder="Menos de 20 caracteres">
+                    @error('espApMaterno')
+                        <div class="alert alert-danger alert2">El apellido materno no cumple con los requisitos!</div>
+                    @enderror
                 </div>
             </div>
 
             <!-- Teléfono especialista -->
             <label for="espTel">Teléfono:</label>
-            <input type="number" name="espTel" id="espTel" value="{{ $especialista->especialistaTelefono ?? '' }}">
+            <input type="number" name="espTel" id="espTel" value="{{ $especialista->especialistaTelefono ?? '' }}" placeholder="Solo números">
             @error('espTel')
                 <div class="alert alert-danger">El teléfono no cumple con los requisitos!</div>
             @enderror
 
             <!-- Correo especialista -->
             <label for="espEmail">Correo electrónico:</label>
-            <input type="email" name="espEmail" id="espEmail" value="{{ $especialista->especialistaCorreo ?? '' }}">
+            <input type="email" name="espEmail" id="espEmail" value="{{ $especialista->especialistaCorreo ?? '' }}" placeholder="alguien@ejemplo.com">
             @error('espEmail')
                 <div class="alert alert-danger">El correo no cumple con los requisitos!</div>
             @enderror
