@@ -24,13 +24,13 @@
                 <input type="hidden" name="especialidadId" id="especialidadId">
 
                 <label for="especialidadNombre">Nombre: </label>
-                <input type="text" name="especialidadNombre" id="especialidadNombre">
+                <input type="text" name="especialidadNombre" id="especialidadNombre" placeholder="Máximo 20 caracteres">
                 @error('especialidadNombre')
                     <div class="alert alert-danger">El nombre no cumple con los requisitos!</div>
                 @enderror
 
                 <label for="especialidadAbrev">Abreviación: </label>
-                <input type="text" name="especialidadAbrev" id="especialidadAbrev">
+                <input type="text" name="especialidadAbrev" id="especialidadAbrev" placeholder="Máximo 5 caracteres">
                 @error('especialidadAbrev')
                     <div class="alert alert-danger">La abreviación no cumple con los requisitos!</div>
                 @enderror
