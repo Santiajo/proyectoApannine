@@ -10,15 +10,55 @@ use App\Models\Especialista;
 // IMPORTAR MODELO ESPECIALIDAD
 use App\Models\Especialidad;
 
+
+use App\Exports\EspecialistasExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class especialistaController extends Controller
 {
-    // MÉTODO PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
-    public function listarEspecialistas()
+
+    // METODO PARA EXPORTAR A EXCEL
+    public function exportarEspecialistas(Request $request)
     {
-        $especialistas = Especialista::all(); // LISTAR ESPECIALISTAS
-        $especialidades = Especialidad::all(); // LISTAR ESPECIALIDADES
-        return view('views.especialistas.fichaEspecialista', compact('especialistas', 'especialidades'));
+        $request->validate([
+            'fromDate' => 'required|date',
+            'toDate' => 'required|date|after_or_equal:fromDate',
+        ]);
+    
+        $fromDate = $request->fromDate;
+        $toDate = $request->toDate;
+    
+        // Pasar las fechas al exportador
+        return Excel::download(new EspecialistasExport($fromDate, $toDate), 'especialistas.xlsx');
     }
+
+
+    // MÉTODO PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
+    public function listarEspecialistas(Request $request)
+    {
+        $search = $request->input('benBuscar'); // Captura el texto de búsqueda
+
+        $especialistas = Especialista::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('especialistaPNombre', 'LIKE', "%{$search}%")
+                      ->orWhere('especialistaSNombre', 'LIKE', "%{$search}%")
+                      ->orWhere('especialistaRut', 'LIKE', "%{$search}%")
+                      ->orWhere('especialistaCorreo', 'LIKE', "%{$search}%")
+                      // Agregar búsqueda por especialidad
+                      ->orWhereHas('especialidad', function ($q) use ($search) {
+                          $q->where('especialidadNombre', 'LIKE', "%{$search}%");
+                      });
+            })
+            ->paginate(10); // Paginar resultados
+        
+        $especialidades = Especialidad::all();
+    
+        return view('views.especialistas.fichaEspecialista', compact('especialistas', 'especialidades', 'search'));
+    }
+    
+       
+       
+
 
     // MÉTODO PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA
     public function formularioEspecialista()
@@ -93,3 +133,4 @@ class especialistaController extends Controller
     }
 }
 
+ 

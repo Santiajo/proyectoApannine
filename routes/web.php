@@ -80,11 +80,14 @@ Route::get('/views/listarEspecialistas', [especialistaController::class, 'listar
 Route::get('/views/formularioEspecialista', [especialistaController::class, 'formularioEspecialista'])->name('especialistas.formularioEspecialista');
 // PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA RELLENO
 Route::get('/views/formularioEspecialistaRelleno/{id}', [especialistaController::class, 'formularioEspecialistaRelleno'])->name('especialistas.formularioEspecialistaRelleno');
+//EXCEL
+Route::get('/views/exportarEspecialistas', [especialistaController::class, 'exportarEspecialistas'])->name('especialistas.exportarEspecialistas');
 // PARA GUARDAR O ACTUALIZAR UN ESPECIALISTA
 Route::post('/views/guardarEspecialista', [especialistaController::class, 'guardarEspecialista'])->name('especialistas.guardarEspecialista');
 // PARA ELIMINAR UN ESPECIALISTA
 Route::delete('/views/eliminarEspecialista/{id}', [especialistaController::class, 'eliminarEspecialista'])->name('especialistas.eliminarEspecialista');
-Route::get('/views/exportarEspecialistas', [PostController::class, 'exportarEspecialistas'])->name('exportarEspecialistas');
+
+
 
 // RUTAS DEL CRUD PARA EL LOGIN
 Route::get('/views/fichausuarios', [PostController::class, 'fichausuarios'])->name('fichausuarios');
@@ -96,3 +99,4 @@ Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'
 // RUTAS PARA ASISTENCIAS DESDE POV DEL MEDICO
 Route::get('/views/asistenciasEspecialistas', [PostController::class, 'asistenciasEspecialistas'])->name('asistenciasEspecialistas');
 Route::get('/views/formAsistenciaMedico', [PostController::class, 'formAsistenciaMedico'])->name('formAsistenciaMedico');
+

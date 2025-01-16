@@ -17,13 +17,25 @@
         <a class="boton-primario" id="benAgregar" href="{{ route('especialistas.crudEspecialidad') }}">
             <p><i class='bx bx-plus-medical'></i> Agregar especialidad</p>
         </a>
-        <a class="boton-secundario" id="benExportar" href="{{ route('exportarEspecialistas') }}"><i
-                class='bx bx-export'></i> Exportar</a>
+        <form method="GET" action="{{ route('especialistas.exportarEspecialistas') }}">
+            @csrf
+            <label for="fromDate">Desde:</label>
+            <input type="date" id="fromDate" name="fromDate" required>
+            
+            <label for="toDate">Hasta:</label>
+            <input type="date" id="toDate" name="toDate" required>
+
+            <button type="submit" class="btn btn-primary">
+                <i class='bx bx-export'></i> Exportar
+            </button>
+        </form>
+
         <!-- Para buscar productos por texto -->
-        <form method="POST">
-            <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar...">
+        <form method="GET" action="{{ route('especialistas.listarEspecialistas') }}">
+            <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..." value="{{ request('benBuscar') }}">
             <button type="submit"><i class='bx bx-search'></i></button>
         </form>
+
     </div>
     <table>
         <thead>
@@ -73,6 +85,9 @@
             @endforeach
         </tbody>
     </table>
+    <div class="pagination">
+    {{ $especialistas->links() }}
+    </div>
 </div>
 
 @endsection
