@@ -1,27 +1,3 @@
-// CODIGO RARO
-const container = document.getElementById('container');
-const registerBtn = document.getElementById('register');
-const loginBtn = document.getElementById('login');
-
-registerBtn.addEventListener('click', () => {
-    container.classList.add("active");
-});
-
-loginBtn.addEventListener('click', () => {
-    container.classList.remove("active");
-});
-
-// Cambio entre modo día y modo noche
-modeSwitch.addEventListener("click", () => {
-    body.classList.toggle("dark");
-
-    if (body.classList.contains("dark")) {
-        modeText.innerText = "Modo día";
-    } else {
-        modeText.innerText = "Modo noche";
-    }
-});
-
 // FUNCIÓN PARA LIMPIAR LOS INPUTS DE LOS FORMULARIOS
 function limpiarInputs() {
     const inputs = document.getElementsByTagName('input');
@@ -40,7 +16,6 @@ function notificacionExito(mensaje) {
     });
 }
 
-// FUNCIÓN PARA MOSTRAR NOTIFICACIONES DE CONFIRMACIÓN
 // CONFIRMAR ELIMINACIÓN
 function confirmDelete(event) {
     event.preventDefault();
@@ -69,3 +44,67 @@ function editarEspecialidad(especialidad) {
     document.getElementById('especialidadAbrev').value = especialidad.especialidadAbreviacion;
 }
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    // HACEMOS QUE EL ARCHIVO ESCUCHE CUANDO EL FORMULARIO ESPECIALIDADES SE VA A SUBIR
+    const formEspecialidad = document.getElementById('formEspecialidad');
+    if (formEspecialidad) {
+        formEspecialidad.addEventListener('submit', function (event) {
+            event.preventDefault();
+            console.log('Formulario enviado, ejecutando validación...');
+            validarFormEspecialidad();
+        })
+    } else {
+        console.error('No se encontró ningún formulario');
+    }
+});
+
+// FUNCIÓN PARA VALIDAR EL FORMULARIO DE ESPECIALIDADES
+function validarFormEspecialidad() {
+    let esValido = true;
+
+    // OBTENER LOS INPUTS
+    const especialidadNombre = document.getElementById('especialidadNombre');
+    const especialidadAbrev = document.getElementById('especialidadAbrev');
+
+    // OBTENER LOS DIVS DE ERROR
+    const errorNombre = document.getElementById('errorEspecialidadNombre');
+    const errorAbrev = document.getElementById('errorespecialidadAbrev');
+
+    // VALIDAR NOMBRE ESPECIALIDAD
+    const nombreValue = especialidadNombre.value.trim();
+    if (nombreValue === '') {
+        errorNombre.innerHTML = 'El nombre no puede estar vacío!';
+        errorNombre.style.display = 'block';
+        esValido = false;
+    } else if (nombreValue.length > 20) {
+        errorNombre.innerHTML = 'El nombre no puede tener más de 20 caracteres!';
+        errorNombre.style.display = 'block';
+        esValido = false;
+    } else if (/[^a-zA-Z0-9]/.test(nombreValue)) {
+        errorNombre.innerHTML = 'El nombre no puede tener caracteres especiales!';
+        errorNombre.style.display = 'block';
+        esValido = false;
+    }
+
+    // VALIDAR ABREVIACIÓN ESPECIALIDAD
+    const abrevValue = especialidadAbrev.value.trim();
+    if (abrevValue === '') {
+        errorAbrev.innerHTML = 'La abreviación no puede estar vacía!';
+        errorAbrev.style.display = 'block';
+        esValido = false;
+    } else if (abrevValue.length > 5) {
+        errorAbrev.innerHTML = 'La abreviación no puede tener más de 20 caracteres!';
+        errorAbrev.style.display = 'block';
+        esValido = false;
+    } else if (/[^a-zA-Z0-9]/.test(abrevValue)) {
+        errorAbrev.innerHTML = 'La abreviación no puede tener caracteres especiales!';
+        errorAbrev.style.display = 'block';
+        esValido = false;
+    }
+
+    // SI TODO ESTÁ CORRECTO, ENVIAR EL FORMULARIO
+    if (esValido) {
+        document.querySelector('.formularioPiola').submit();
+    }
+}

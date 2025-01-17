@@ -899,6 +899,12 @@ fieldset {
     margin-top: 2px;
 }
 
+#errorEspecialidadNombre, #errorespecialidadAbrev {
+    color: var(--danger);
+    font-size: clamp(12px, 2dvw, 16px);
+    margin-top: -5px;
+}
+
 /* TUNEO DEL FORMULARIO */
 #formTuneado {
     display: flex;

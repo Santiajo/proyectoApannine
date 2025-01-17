@@ -46,7 +46,7 @@ class especialistaController extends Controller
         return view('views.especialistas.formEspecialista', compact('especialidades'));
     }
 
-    // MÉTODO PARA ACTUALIZAR INFORMACIÓN DE UN ESPECIALISTA
+    // MÉTODO PARA MOSTRAR EL FORMULARIO DE ESPECIALISTA RELLENO CON DATOS
     public function formularioEspecialistaRelleno($id)
     {
         $especialista = Especialista::findOrFail($id); // BUSCAR ESPECIALISTA POR ID

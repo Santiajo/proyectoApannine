@@ -17,7 +17,8 @@
         </a>
     </div>
     <div class="fiftyfifty">
-        <form action="{{ route('especialistas.guardarEspecialidad') }}" method="POST" class="formularioPiola">
+        <form action="{{ route('especialistas.guardarEspecialidad') }}" method="POST" class="formularioPiola"
+            id="formEspecialidad">
             @csrf
             <h1>Agregar especialidad</h1>
             <div class="separacionFormulario">
@@ -25,12 +26,14 @@
 
                 <label for="especialidadNombre">Nombre: </label>
                 <input type="text" name="especialidadNombre" id="especialidadNombre" placeholder="Máximo 20 caracteres">
+                <div class="errores" id="errorEspecialidadNombre"></div>
                 @error('especialidadNombre')
                     <div class="alert alert-danger">El nombre no cumple con los requisitos!</div>
                 @enderror
 
                 <label for="especialidadAbrev">Abreviación: </label>
                 <input type="text" name="especialidadAbrev" id="especialidadAbrev" placeholder="Máximo 5 caracteres">
+                <div class="errores" id="errorespecialidadAbrev"></div>
                 @error('especialidadAbrev')
                     <div class="alert alert-danger">La abreviación no cumple con los requisitos!</div>
                 @enderror
