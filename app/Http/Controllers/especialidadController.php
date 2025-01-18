@@ -21,7 +21,7 @@ class especialidadController extends Controller
         // VALIDAR LA INFORMACIÓN RECIBIDA DEL FORMULARIO
         $request->validate([
             'especialidadNombre' => 'required|string|max:20|regex:/^[^<>]*$/',
-            'especialidadAbrev' => 'nullable|string|max:5|regex:/^[^<>]*$/',
+            'especialidadAbrev' => 'required|string|max:5|regex:/^[^<>]*$/',
         ]);
 
         // SI SE RECIBE UN ID YA EXISTENTE, ACTUALIZAMOS LA CATEGORÍA, SINO, LA CREAMOS
