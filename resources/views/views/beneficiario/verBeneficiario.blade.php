@@ -8,7 +8,7 @@
 <div class="content">
   <div class="fila1">
     <!-- Botón para volver a la ficha principal -->
-    <a class="boton-primario" id="volver1" href="{{ route('fichabeneficiario') }}">
+    <a class="boton-primario" id="volver1" href="{{ route('beneficiarios.listarBeneficiarios') }}">
       < Volver</a>
   </div>
   <div class="fila1">
@@ -21,7 +21,7 @@
     </a>
     <a class="boton-terciario" id="benEliminar" href="{{ route('verBeneficiario') }}"><i class='bx bx-trash'></i>
       Eliminar</a>
-    <a class="boton-secundario" id="benExportar" href="{{ route('fichabeneficiario') }}"><i class='bx bx-export'></i>
+    <a class="boton-secundario" id="benExportar" href="{{ route('beneficiarios.listarBeneficiarios') }}"><i class='bx bx-export'></i>
       Exportar</a>
   </div>
   <div class="cardSimple">

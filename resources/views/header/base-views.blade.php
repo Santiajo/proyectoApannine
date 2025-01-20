@@ -47,7 +47,7 @@
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="{{ route('fichabeneficiario') }}">
+                                <a href="{{ route('beneficiarios.listarBeneficiarios') }}">
                                     <i class='bx bx-notepad icon'></i>
                                     <span class="text nav-text">Beneficiarios</span>
                                 </a>

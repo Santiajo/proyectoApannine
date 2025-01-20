@@ -12,7 +12,9 @@
   <hr>
   <div class="fila2">
     <a class="boton-primario" id="benAgregar" href="{{ route('formularioBeneficiario') }}"><p><i class='bx bxs-user-plus'></i> Agregar beneficiario</p></a>
-    <a class="boton-secundario" id="benExportar" href="{{ route('exportarBeneficiario') }}"><i class='bx bx-export' ></i> Exportar</a>
+    <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudNacionalidad') }}"><p><i class='bx bxs-flag' ></i> Agregar nacionalidad</p></a>
+    <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudComuna') }}"><p>Agregar comuna</p></a>
+    <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudCobMedica') }}"><p><i class='bx bx-plus-medical' ></i> Agregar cobertura medica</p></a>
     <!-- Para buscar productos por texto -->
     <form method="POST">
       <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar...">
@@ -62,10 +64,10 @@
     </tbody>
   </table>
   <div class="fila4">
-  <a class="boton-primario" id="atras" href="{{ route('fichabeneficiario') }}"><< Atras</a>
-  <a class="boton-primario" id="uno" href="{{ route('fichabeneficiario') }}">1</a>
-  <a class="boton-primario" id="dos" href="{{ route('fichabeneficiario') }}">2</a>
-  <a class="boton-primario" id="adelante" href="{{ route('fichabeneficiario') }}">Adelante >></a>
+  <a class="boton-primario" id="atras" href="{{ route('beneficiarios.listarBeneficiarios') }}"><< Atras</a>
+  <a class="boton-primario" id="uno" href="{{ route('beneficiarios.listarBeneficiarios') }}">1</a>
+  <a class="boton-primario" id="dos" href="{{ route('beneficiarios.listarBeneficiarios') }}">2</a>
+  <a class="boton-primario" id="adelante" href="{{ route('beneficiarios.listarBeneficiarios') }}">Adelante >></a>
   </div>
 </div>
 @endsection

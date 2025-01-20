@@ -8,7 +8,7 @@
 <div class="content">
     <div class="fila1" id="fila1Perso3">
         <!-- Botón para volver a la ficha principal -->
-        <a class="boton-primario" id="volver2" href="{{ route('fichabeneficiario') }}">
+        <a class="boton-primario" id="volver2" href="{{ route('beneficiarios.listarBeneficiarios') }}">
             < Volver</a>
     </div>
     <div class="fila1">
@@ -50,11 +50,11 @@
         </tbody>
     </table>
     <div class="fila4">
-        <a class="boton-primario" id="atras" href="{{ route('fichabeneficiario') }}">
+        <a class="boton-primario" id="atras" href="{{ route('beneficiarios.listarBeneficiarios') }}">
             << Atras</a>
-                <a class="boton-primario" id="uno" href="{{ route('fichabeneficiario') }}">1</a>
-                <a class="boton-primario" id="dos" href="{{ route('fichabeneficiario') }}">2</a>
-                <a class="boton-primario" id="adelante" href="{{ route('fichabeneficiario') }}">Adelante >></a>
+                <a class="boton-primario" id="uno" href="{{ route('beneficiarios.listarBeneficiarios') }}">1</a>
+                <a class="boton-primario" id="dos" href="{{ route('beneficiarios.listarBeneficiarios') }}">2</a>
+                <a class="boton-primario" id="adelante" href="{{ route('beneficiarios.listarBeneficiarios') }}">Adelante >></a>
     </div>
 </div>
 @endsection
