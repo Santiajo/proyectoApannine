@@ -83,7 +83,6 @@ class especialistaController extends Controller
         return strtoupper($dv) === $digitoVerificador;
     }
 
-
     // MÉTODO PARA GUARDAR O ACTUALIZAR UN ESPECIALISTA
     public function guardarEspecialista(Request $request)
     {

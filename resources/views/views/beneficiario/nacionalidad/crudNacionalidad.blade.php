@@ -8,16 +8,22 @@
 <div class="content">
     <div class="fila1">
         <!-- Botón para volver a la ficha principal -->
-        <a class="boton-primario" id="volver1" href="{{ route('especialistas.listarEspecialistas') }}">
+        <a class="boton-primario" id="volver1" href="{{ route('beneficiarios.listarBeneficiarios') }}">
             < Volver</a>
     </div>
     <div class="fila2" id="fila1Perso">
-        <a class="boton-primario" href="{{ route('especialistas.formularioEspecialista') }}">
-            <p><i class='bx bx-plus-medical'></i> Agregar beneficiario</p>
+        <a class="boton-primario" id="benAgregar" href="{{ route('formularioBeneficiario') }}">
+            <p><i class='bx bxs-user-plus'></i> Agregar beneficiario</p>
+        </a>
+        <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudComuna') }}">
+            <p>Agregar comuna</p>
+        </a>
+        <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudCobMedica') }}">
+            <p><i class='bx bx-plus-medical'></i> Agregar cobertura medica</p>
         </a>
     </div>
     <div class="fiftyfifty">
-        <form action="#" method="POST" class="formularioPiola"
+        <form action="{{ route('beneficiarios.guardarNacionalidad') }}" method="POST" class="formularioPiola"
             id="formNacionalidad">
             @csrf
             <h1>Agregar nacionalidad</h1>
@@ -49,17 +55,17 @@
                 @foreach ($nacionalidades as $nacionalidad)
                     <tr>
                         <td data-label="Nombre">{{ $nacionalidad->nombreNacionalidad }}</td>
-                        <!-- <td data-label="Modificar"><button class="boton-quintiario" id="benAgregar"
-                                onclick="editarEspecialidad({{ $especialidad }})">Modificar</button>
+                        <td data-label="Modificar"><button class="boton-quintiario" id="benAgregar"
+                                onclick="editarNacionalidad({{ $nacionalidad }})">Modificar</button>
                         </td>
                         <td data-label="Eliminar">
-                            <form action="{{ route('especialistas.eliminarEspecialidad', $especialidad->id) }}"
+                            <form action="{{ route('beneficiarios.eliminarNacionalidad', $nacionalidad->id) }}"
                                 method="POST" style="display: inline;" onsubmit="return confirmDelete(event)">
                                 @csrf
                                 @method('DELETE')
                                 <button class="boton-terciario" type="submit"><i class='bx bx-trash'></i> Eliminar</button>
                             </form>
-                        </td> -->
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

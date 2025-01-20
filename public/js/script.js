@@ -49,11 +49,32 @@ function editarEspecialidad(especialidad) {
     document.getElementById('especialidadAbrev').value = especialidad.especialidadAbreviacion;
 }
 
+// FUNCIÓN PARA LLENAR EL FORMULARIO DE COBERTURAS MEDICAS AL DARLE CLICK EN EDITAR
+function editarCobertura(cobertura) {
+    document.getElementById('cobMedId').value = cobertura.id;
+    document.getElementById('cobMedNombre').value = cobertura.nombreCobMed;
+}
+
+// FUNCIÓN PARA LLENAR EL FORMULARIO DE COMUNAS AL DARLE CLICK EN EDITAR
+function editarComuna(comuna) {
+    document.getElementById('comunaId').value = comuna.id;
+    document.getElementById('comunaNombre').value = comuna.nombreComuna;
+}
+
+// FUNCIÓN PARA LLENAR EL FORMULARIO DE NACIONALIDADES AL DARLE CLICK EN EDITAR
+function editarNacionalidad(nacionalidad) {
+    document.getElementById('nacionalidadId').value = nacionalidad.id;
+    document.getElementById('nacionalidadNombre').value = nacionalidad.nombreNacionalidad;
+}
+
 // CARGAMOS EL CONTENIDO DOM
 document.addEventListener('DOMContentLoaded', function () {
     // HACEMOS QUE EL ARCHIVO ESCUCHE CUANDO EL FORMULARIO ESPECIALIDADES SE VA A SUBIR
     const formEspecialidad = document.getElementById('formEspecialidad');
     const formEspecialista = document.getElementById('formEspecialista');
+    const formNacionalidad = document.getElementById('formNacionalidad');
+    const formComuna = document.getElementById('formComuna');
+    const formCobMedica = document.getElementById('formCobMedica');
 
     if (formEspecialidad) {
         formEspecialidad.addEventListener('submit', function (event) {
@@ -63,8 +84,22 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (formEspecialista) {
         formEspecialista.addEventListener('submit', function (event) {
             event.preventDefault();
-            console.log('Formulario especialista enviado, ejecutando validación...');
             validarFormEspecialista();
+        })
+    } else if (formNacionalidad) {
+        formNacionalidad.addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarCampo('nacionalidadNombre', 'nacionalidad ', 'errorNacionalidadNombre');
+        })
+    } else if (formComuna) {
+        formComuna.addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarCampo('comunaNombre', 'comuna ', 'errorComunaNombre');
+        })
+    } else if (formCobMedica) {
+        formCobMedica.addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarCampo('cobMedNombre', 'cobertura médica ', 'errorCobMedNombre');
         })
     }
 });
@@ -433,6 +468,44 @@ function validarFormEspecialista() {
     const esValido = camposValidos.every(Boolean);
 
     // SI TODO ESTÁ CORRECTO, ENVIAR EL FORMULARIO
+    if (esValido) {
+        document.querySelector('.formularioPiola').submit();
+    }
+}
+
+// FUNCION PARA CAPITALIZAR PALABRAS
+function capitalizeWords(str) {
+    return str.replace(/\b\w/g, char => char.toUpperCase());
+}
+
+// FUNCIÓN PARA VALIDAR FORMULARIO CON UN SOLO CAMPO
+function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
+    errorCampo = document.getElementById(IdErrorCampo);
+
+    campo = document.getElementById(idCampo).value.trim();
+
+    if (campo === '') {
+        errorCampo.innerHTML = 'La ' + nombreCampo + 'no pueda estar vacía!';
+        errorCampo.style.display = 'block';
+        errorCampo.classList.remove('exito');
+        esValido = false;
+    } else if (campo.length > 30) {
+        errorCampo.innerHTML = 'La ' + nombreCampo + 'no pueda tener más de 30 caracteres!';
+        errorCampo.style.display = 'block';
+        errorCampo.classList.remove('exito');
+        esValido = false;
+    } else if (/[^a-zA-Z0-9\s]/.test(campo)) {
+        errorCampo.innerHTML = 'La ' + nombreCampo + 'no puede incluir caracteres especiales!';
+        errorCampo.style.display = 'block';
+        errorCampo.classList.remove('exito');
+        esValido = false;
+    } else {
+        errorCampo.classList.add('exito')
+        errorCampo.innerHTML = capitalizeWords(nombreCampo) + ' válida!';
+        errorCampo.style.display = 'block';
+        esValido = true;
+    }
+
     if (esValido) {
         document.querySelector('.formularioPiola').submit();
     }
