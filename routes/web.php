@@ -51,6 +51,15 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
     Route::get('/views/listarBeneficiarios', [beneficiarioController::class, 'listarBeneficiarios'])->name('beneficiarios.listarBeneficiarios');
     // PÁGINA DEL FORMULARIO DEL CRUD PT 1
     Route::get('/views/formularioBeneficiario', [beneficiarioController::class, 'formularioBeneficiario'])->name('beneficiarios.formularioBeneficiario');
+    // PARA GUARDAR O ACTUALIZAR BENEFICIARIOS
+    Route::post('/views/guardarBeneficiario', [beneficiarioController::class, 'guardarBeneficiario'])->name('beneficiarios.guardarBeneficiario');
+    // PARA ELIMINAR BENEFICIARIOS
+    Route::delete('/views/eliminarBeneficiario/{id}', [beneficiarioController::class,'eliminarBeneficiario'])->name('beneficiarios.eliminarBeneficiario');
+    // PARA MOSTRAR LA INFORMACIÓN DETALLADA DE UN BENEFICIARIO
+    Route::get('/views/fichaBeneficiario/{id}', [beneficiarioController::class,'fichaBeneficiario'])->name('beneficiarios.fichaBeneficiario');
+    // PÁGINA DEL FORMULARIO DEL CRUD PT 1 RELLENO
+    Route::get('/views/formBenRelleno/{id}', [beneficiarioController::class, 'formBenRelleno'])->name('beneficiarios.formBenRelleno');
+
 
 Route::get('/views/formularioBeneficiarioColegio', [PostController::class, 'formularioBeneficiarioColegio'])->name('formularioBeneficiarioColegio');
 Route::get('/views/formularioBeneficiarioDerivante', [PostController::class, 'formularioBeneficiarioDerivante'])->name('formularioBeneficiarioDerivante');

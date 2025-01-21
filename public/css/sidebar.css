@@ -939,6 +939,16 @@ fieldset {
     width: max-content;
 }
 
+#formTuneado2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    column-gap: 10px;
+    background-color: var(--body-color);
+    border: none;
+    padding: 0;
+}
+
 /* FORMULARIO2 */
 .formularioPiola2 {
     display: flex;

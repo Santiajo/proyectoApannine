@@ -37,30 +37,20 @@
       </tr>
     </thead>
     <tbody>
+      @foreach ($beneficiarios as $beneficiario)
       <tr>
-        <td data-label="Fecha ingreso">03-12-2023</td>
-        <td data-label="Rut">9835803-k</td>
-        <td data-label="Nombre">Juan Manzo</td>
+        <td data-label="Fecha ingreso">{{ $beneficiario->created_at }}</td>
+        <td data-label="Rut">{{ $beneficiario->beneficiarioRut }} - {{ $beneficiario->beneficiarioDv }}</td>
+        <td data-label="Nombre">{{ $beneficiario->beneficiarioPNombre }} {{ $beneficiario->beneficiarioApPaterno }}</td>
         <td data-label="Nombre cuidador">Juan Manzo</td>
         <td data-label="Teléfono">981267512</td>
-        <td data-label="Acciones"><a class="detalles" href="{{ route('verBeneficiario') }}"><i class='bx bxs-file-doc' ></i></a></td>
+        <td data-label="Acciones"><a class="detalles" href="{{ route('beneficiarios.fichaBeneficiario', $beneficiario->id) }}"><i class='bx bxs-file-doc' ></i></a></td>
         <td data-label="Actividad"><a class="detalles" href="actividadBeneficiario"><i class='bx bx-line-chart' ></i></a></td>
         <td data-label="Historial médico"><a class="detalles" href="histMedBeneficiario"><i class='bx bxs-capsule'></i></a></td>
         <td data-label="Horario"><a class="detalles" href="horarioBeneficiario"><i class='bx bxs-calendar'></i></a></td>
         <td data-label="Asistencia"><a class="detalles" href="{{ route('beneficiarioAsistencia') }}"><i class='bx bx-calendar-check' ></i></a></td>
       </tr>
-      <tr>
-        <td data-label="Fecha ingreso">03-12-2023</td>
-        <td data-label="Rut">9835803-k</td>
-        <td data-label="Nombre">Juan Manzo</td>
-        <td data-label="Nombre cuidador">Juan Manzo</td>
-        <td data-label="Teléfono">981267512</td>
-        <td data-label="Acciones"><a class="detalles" href="{{ route('verBeneficiario') }}"><i class='bx bxs-file-doc' ></i></a></td>
-        <td data-label="Actividad"><a class="detalles" href="actividadBeneficiario"><i class='bx bx-line-chart' ></i></a></td>
-        <td data-label="Historial médico"><a class="detalles" href="histMedBeneficiario"><i class='bx bxs-capsule'></i></a></td>
-        <td data-label="Horario"><a class="detalles" href="#"><i class='bx bxs-calendar'></i></a></td>
-        <td data-label="Asistencia"><a class="detalles" href="{{ route('beneficiarioAsistencia') }}"><i class='bx bx-calendar-check' ></i></a></td>
-      </tr>
+      @endforeach
     </tbody>
   </table>
   <div class="fila4">

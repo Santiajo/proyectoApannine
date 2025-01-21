@@ -33,18 +33,25 @@ class Beneficiario extends Model
         'comuna_id',
     ];
 
+    protected $casts = [
+        'beneficiarioFecNac' => 'date',
+    ];
+
     // CREAMOS RELACIÓN CON EL MODELO COBERTURA MEDICA
-    public function cob_medica() {
+    public function cob_medica()
+    {
         return $this->belongsTo(Cob_Medica::class);
     }
 
     // CREAMOS RELACIÓN CON EL MODELO NACIONALIDAD
-    public function nacionalidad() {
+    public function nacionalidad()
+    {
         return $this->belongsTo(Nacionalidad::class);
     }
 
     // CREAMOS RELACIÓN CON EL MODELO COMUNA
-    public function comuna() {
+    public function comuna()
+    {
         return $this->belongsTo(Comuna::class);
     }
 }
