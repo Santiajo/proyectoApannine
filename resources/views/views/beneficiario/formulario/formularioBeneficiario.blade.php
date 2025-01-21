@@ -21,8 +21,8 @@
         <hr>
         <div class="navLinks">
             <div class="navEnlace">
-                <a href="{{ route('formularioBeneficiario') }}"
-                    class="{{ request()->routeIs('formularioBeneficiario') ? 'active' : '' }}">Beneficiario</a>
+                <a href="{{ route('beneficiarios.formularioBeneficiario') }}"
+                    class="{{ request()->routeIs('beneficiarios.formularioBeneficiario') ? 'active' : '' }}">Beneficiario</a>
             </div>
             <div class="navEnlace">
                 <a href="{{ route('formularioBeneficiarioColegio') }}"
@@ -63,7 +63,7 @@
             <label for="benEstado">Estado del beneficiario:</label>
             <select name="benEstado" id="benEstado">
                 <option value="Activo">Activo</option>
-                <option value="Desertor">Inactivo</option>
+                <option value="Inactivo">Inactivo</option>
             </select>
 
             <!-- Run beneficiario -->
@@ -103,33 +103,23 @@
             <input type="date" name="benFecNac" id="benFecNac">
 
             <!-- Números de teléfono -->
-            <div class="layoutTelefono">
-                <div>
-                    <label for="benTel1">Teléfono 1:</label>
-                    <input type="number" name="benTel1" id="benTel1">
-                </div>
-                <div>
-                    <label for="benTel2">Teléfono 2:</label>
-                    <input type="number" name="benTel2" id="benTel2">
-                </div>
-            </div>
+            <label for="benTel">Teléfono:</label>
+            <input type="number" name="benTel" id="benTel">
 
             <!-- Cobertura médica -->
             <label for="benCobMed">Cobertura médica:</label>
             <select name="benCobMed" id="benCobMed">
-                <option value="Isapre">Isapre</option>
-                <option value="Fonasa Tramo A">Fonasa Tramo A</option>
-                <option value="Fonasa Tramo B">Fonasa Tramo B</option>
+                @foreach ($cobMedicas as $cobMedica)
+                    <option value="{{ $cobMedica->id }}">{{ $cobMedica->nombreCobMed }}</option>
+                @endforeach
             </select>
 
             <!-- Nacionalidad -->
             <label for="benNac">Nacionalidad:</label>
             <select name="benNac" id="benNac">
-                <option value="Chileno">Chileno</option>
-                <option value="Argentino">Argentino</option>
-                <option value="Peruano">Peruano</option>
-                <option value="Boliviano">Boliviano</option>
-                <option value="Venozolano">Venozolano</option>
+                @foreach ($nacionalidades as $nacionalidad)
+                    <option value="{{ $nacionalidad->id }}">{{ $nacionalidad->nombreNacionalidad }}</option>
+                @endforeach
             </select>
 
             <!-- Domicilio -->
@@ -142,10 +132,9 @@
                     <div>
                         <label for="benComuna">Comuna:</label>
                         <select name="benComuna" id="benComuna">
-                            <option value="Santiago">Santiago</option>
-                            <option value="Cerrillos">Cerrillos</option>
-                            <option value="Conchali">Conchalí</option>
-                            <option value="Estación Central">Estación Central</option>
+                            @foreach ($comunas as $comuna)
+                                <option value="{{ $comuna->id }}">{{ $comuna->nombreComuna }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div>

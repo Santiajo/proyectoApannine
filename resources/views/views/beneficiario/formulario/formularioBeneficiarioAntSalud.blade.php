@@ -21,8 +21,8 @@
         <hr>
         <div class="navLinks">
             <div class="navEnlace">
-                <a href="{{ route('formularioBeneficiario') }}"
-                    class="{{ request()->routeIs('formularioBeneficiario') ? 'active' : '' }}">Beneficiario</a>
+                <a href="{{ route('beneficiarios.formularioBeneficiario') }}"
+                    class="{{ request()->routeIs('beneficiarios.formularioBeneficiario') ? 'active' : '' }}">Beneficiario</a>
             </div>
             <div class="navEnlace">
                 <a href="{{ route('formularioBeneficiarioColegio') }}"

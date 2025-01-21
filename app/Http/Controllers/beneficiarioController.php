@@ -19,9 +19,15 @@ class beneficiarioController extends Controller
     public function listarBeneficiarios()
     {
         $beneficiarios = Beneficiario::all(); // LISTAR BENEFICIARIOS 
+        return view('views.beneficiario.listarBeneficiarios', compact('beneficiarios'));
+    }
+
+    // MÉTODO PARA MOSTRAR EL FORMULARIO DEL CRUD
+    public function formularioBeneficiario()
+    {
         $nacionalidades = Nacionalidad::all(); // LISTAR NACIONALIDADES
         $comunas = Comuna::all(); // LISTAR COMUNAS
         $cobMedicas = Cob_Medica::all(); // LISTAR COBERTURAS MEDICAS
-        return view('views.beneficiario.listarBeneficiarios', compact('beneficiarios', 'nacionalidades', 'comunas', 'cobMedicas'));
+        return view('views.beneficiario.formulario.formularioBeneficiario', compact('nacionalidades','comunas','cobMedicas'));
     }
 }

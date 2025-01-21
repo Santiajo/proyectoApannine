@@ -12,7 +12,7 @@
             < Volver</a>
     </div>
     <div class="fila2" id="fila1Perso">
-        <a class="boton-primario" id="benAgregar" href="{{ route('formularioBeneficiario') }}">
+        <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.formularioBeneficiario') }}">
             <p><i class='bx bxs-user-plus'></i> Agregar beneficiario</p>
         </a>
         <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudNacionalidad') }}">

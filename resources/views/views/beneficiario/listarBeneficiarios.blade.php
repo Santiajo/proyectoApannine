@@ -11,7 +11,7 @@
   </div>
   <hr>
   <div class="fila2">
-    <a class="boton-primario" id="benAgregar" href="{{ route('formularioBeneficiario') }}"><p><i class='bx bxs-user-plus'></i> Agregar beneficiario</p></a>
+    <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.formularioBeneficiario') }}"><p><i class='bx bxs-user-plus'></i> Agregar beneficiario</p></a>
     <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudNacionalidad') }}"><p><i class='bx bxs-flag' ></i> Agregar nacionalidad</p></a>
     <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudComuna') }}"><p>Agregar comuna</p></a>
     <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudCobMedica') }}"><p><i class='bx bx-plus-medical' ></i> Agregar cobertura medica</p></a>

@@ -73,8 +73,8 @@
             </fieldset>
         </div>
         <div class="fila2" id="grupoBotones">
-            <a class="boton-primario" href="{{ route('formularioBeneficiario') }}">Añadir</a>
-            <a class="boton-secundario" href="{{ route('formularioBeneficiario') }}">Cancelar</a>
+            <a class="boton-primario" href="{{ route('beneficiarios.formularioBeneficiario') }}">Añadir</a>
+            <a class="boton-secundario" href="{{ route('beneficiarios.formularioBeneficiario') }}">Cancelar</a>
         </div>
     </form>
 </div>
