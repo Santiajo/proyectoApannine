@@ -528,10 +528,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // OBTENER APARTADOS DEL FORMULARIO
         // OBTENER APARTADO DE BENEFICIARIOS
         apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
-        console.log(document.getElementById('apartadoBeneficiarios'));
         // OBTENER APARTADO DE COLEGIOS
         apartadoColegio = document.getElementById('apartadoColegio');
-        console.log(document.getElementById('apartadoColegio'));
 
     // FILTRAR APARTADOS
     mostrarBeneficiario.addEventListener('click', () => {
