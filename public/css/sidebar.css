@@ -332,81 +332,6 @@ body.dark .home .text {
     color: var(--text-color);
 }
 
-/* NAVBAR */
-.navPiola {
-    height: max-content;
-    width: 100%;
-    padding: 10px 10px 0 10px;
-    background-color: var(--sidebar-color);
-    border: 1px var(--primary-color) solid;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    row-gap: 5px;
-}
-
-h3 {
-    font-size: clamp(16px, 2dvw, 21px);
-}
-
-h4 {
-    font-size: clamp(12px, 2dvw, 16px);
-    color: var(--text-color-secondary);
-}
-
-.navLinks {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 10px;
-}
-
-.navEnlace {
-    position: relative;
-    height: max-content;
-    padding-bottom: 10px;
-}
-
-.navEnlace a {
-    text-decoration: none;
-    color: var(--text-color-secondary);
-    font-size: clamp(12px, 2dvw, 17px);
-    display: flex;
-}
-
-.navEnlace a:hover,
-.navEnlace a:focus {
-    color: var(--text-color);
-}
-
-.navEnlace a::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    visibility: hidden;
-    transition: all ease 0.25s;
-}
-
-.navLinks a:hover::before {
-    width: 100%;
-    visibility: visible;
-}
-
-.navEnlace a.active {
-    color: var(--text-color);
-}
-
-.navEnlace a.active::before {
-    width: 100%;
-    visibility: visible;
-}
-
 /* Contenido principal */
 main {
     min-height: 100dvh;
@@ -991,6 +916,93 @@ fieldset {
 /* modificamos los botones */
 #grupoBotones {
     padding: -40px -40px;
+}
+
+/* NAVBAR */
+.navPiola {
+    height: max-content;
+    width: 100%;
+    padding: 10px 10px 0 10px;
+    background-color: var(--sidebar-color);
+    border: 1px var(--primary-color) solid;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    row-gap: 5px;
+}
+
+h3 {
+    font-size: clamp(16px, 2dvw, 21px);
+}
+
+h4 {
+    font-size: clamp(12px, 2dvw, 16px);
+    color: var(--text-color-secondary);
+}
+
+.navLinks {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+}
+
+.navEnlace {
+    position: relative;
+    height: max-content;
+    padding-bottom: 10px;
+}
+
+.navEnlace a {
+    text-decoration: none;
+    color: var(--text-color-secondary);
+    font-size: clamp(12px, 2dvw, 17px);
+    display: flex;
+    cursor: pointer; /* Añadir esta línea */
+}
+
+.navEnlace a:hover,
+.navEnlace a:focus {
+    color: var(--text-color);
+}
+
+.navEnlace a::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    visibility: hidden;
+    transition: all ease 0.25s;
+    pointer-events: none; /* Añadir esta línea */
+}
+
+.navLinks a:hover::before {
+    width: 100%;
+    visibility: visible;
+}
+
+.navEnlace a.active {
+    color: var(--text-color);
+}
+
+.navEnlace a.active::before {
+    width: 100%;
+    visibility: visible;
+}
+
+.ocultar {
+    display: none;
+}
+
+.rojo {
+    display: none;
+    color: red;
+    border: 1px red solid;
 }
 
 /* Responsividad */

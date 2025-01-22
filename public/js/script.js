@@ -517,6 +517,34 @@ function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
     }
 }
 
+// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
+document.addEventListener('DOMContentLoaded', () => {
+    // OBTENER LINKS 
+        // OBTENER LINK PARA MOSTRAR BENEFICIARIO
+        mostrarBeneficiario = document.getElementById('mostrarBeneficiario');
+        // OBTENER LINK PARA MOSTRAR COLEGIO
+        mostrarColegio = document.getElementById('mostrarColegio');
+        
+    // OBTENER APARTADOS DEL FORMULARIO
+        // OBTENER APARTADO DE BENEFICIARIOS
+        apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
+        console.log(document.getElementById('apartadoBeneficiarios'));
+        // OBTENER APARTADO DE COLEGIOS
+        apartadoColegio = document.getElementById('apartadoColegio');
+        console.log(document.getElementById('apartadoColegio'));
+
+    // FILTRAR APARTADOS
+    mostrarBeneficiario.addEventListener('click', () => {
+        apartadoBeneficiarios.classList.remove('ocultar');
+        apartadoColegio.classList.add('ocultar');
+    });
+
+    mostrarColegio.addEventListener('click', () => {
+        apartadoColegio.classList.remove('ocultar');
+        apartadoBeneficiarios.classList.add('ocultar');
+    });
+});
+
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE BENEFICIARIO
 function validarFormBeneficiario() {
     let camposValidos = [];
@@ -739,34 +767,6 @@ function validarFormBeneficiario() {
     }
 
     // VALIDAMOS FECHA DE NACIMIENTO
-    fechaActual = new Date;
-    const fecNacValue = new Date(benFecNac);
-    
-    if (!benFecNac) {
-        errorBenFecNac.innerHTML = 'La fecha de nacimiento no puede estar vacía!';
-        errorBenFecNac.style.display = 'block';
-        errorBenFecNac.classList.remove('exito');
-        errorBenFecNac.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (isNaN(fecNacValue.getTime())) {
-        errorBenFecNac.innerHTML = 'La fecha de nacimiento no es válida!';
-        errorBenFecNac.style.display = 'block';
-        errorBenFecNac.classList.remove('exito');
-        errorBenFecNac.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (fecNacValue > fechaActual) {
-        errorBenFecNac.innerHTML = 'La fecha de nacimiento no puede ser futura!';
-        errorBenFecNac.style.display = 'block';
-        errorBenFecNac.classList.remove('exito');
-        errorBenFecNac.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorBenFecNac.classList.add('exito')
-        errorBenFecNac.innerHTML = 'Fecha de nacimiento válida!';
-        errorBenFecNac.style.display = 'block';
-        camposValidos.push(true);
-    }
-
 
     // VALIDAMOS DOMICILIO
     const domicilioValue = benDom.value.trim();

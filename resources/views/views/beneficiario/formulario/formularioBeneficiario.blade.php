@@ -21,12 +21,10 @@
         <hr>
         <div class="navLinks">
             <div class="navEnlace">
-                <a href="{{ route('beneficiarios.formularioBeneficiario') }}"
-                    class="{{ request()->routeIs('beneficiarios.formularioBeneficiario') ? 'active' : '' }}">Beneficiario</a>
+                <a href="#" id="mostrarBeneficiario">Beneficiario</a>
             </div>
             <div class="navEnlace">
-                <a href="{{ route('formularioBeneficiarioColegio') }}"
-                    class="{{ request()->routeIs('formularioBeneficiarioColegio') ? 'active' : '' }}">Colegio</a>
+                <a href="#" id="mostrarColegio">Colegio</a>
             </div>
             <div class="navEnlace">
                 <a href="{{ route('formularioBeneficiarioDerivante') }}"
@@ -58,7 +56,7 @@
         id="formBeneficiario">
         @csrf
         <!-- Subtítulo -->
-        <div class="separacionFormulario">
+        <div class="separacionFormulario" id="apartadoBeneficiarios">
             <h3>Datos beneficiario</h3>
 
             <!-- Id oculta del beneficiario -->
@@ -133,7 +131,8 @@
 
             <!-- Fecha de nacimiento -->
             <label for="benFecNac">Fecha de nacimiento:</label>
-            <input type="date" name="benFecNac" id="benFecNac" value="{{ isset($beneficiario) ? $beneficiario->beneficiarioFecNac->format('Y-m-d') : '' }}">
+            <input type="date" name="benFecNac" id="benFecNac"
+                value="{{ isset($beneficiario) ? $beneficiario->beneficiarioFecNac->format('Y-m-d') : '' }}">
             <div class="errores" id="errorBenFecNac"></div>
             @error('benFecNac')
                 <div class="alert alert-danger">La fecha de nacimiento no cumple con los requisitos!</div>
@@ -194,7 +193,8 @@
                         <select name="benTipViv" id="benTipViv">
                             <option value="Propia" {{isset($beneficiario) && $beneficiario->beneficiarioTipDom == 'Propia' ? 'selected' : '' }}>
                                 Propia</option>
-                            <option value="Propia con deuda" {{ isset($beneficiario) && $beneficiario->beneficiarioTipDom == 'Propia con deuda' ? 'selected' : '' }}>Propia con deuda</option>
+                            <option value="Propia con deuda" {{ isset($beneficiario) && $beneficiario->beneficiarioTipDom == 'Propia con deuda' ? 'selected' : '' }}>Propia con
+                                deuda</option>
                             <option value="Arrendada" {{ isset($beneficiario) && $beneficiario->beneficiarioTipDom == 'Arrendada' ? 'selected' : '' }}>Arrendada</option>
                             <option value="Familiares" {{ isset($beneficiario) && $beneficiario->beneficiarioTipDom == 'Familiares' ? 'selected' : '' }}>Familiares</option>
                             <option value="Allegados" {{ isset($beneficiario) && $beneficiario->beneficiarioTipDom == 'Allegados' ? 'selected' : '' }}>Allegados</option>
@@ -202,6 +202,37 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="separacionFormulario" id="apartadoColegio">
+            <!-- Colegio -->
+            <h3>Datos colegio</h3>
+            <fieldset>
+                <legend>¿Asiste al colegio?</legend>
+
+                <input type="radio" id="benAsisColSi" name="benAsisCol" value="Sí">
+                <label for="benAsisColSi">Sí</label>
+
+                <input type="radio" id="benAsisColNo" name="benAsisCol" value="No">
+                <label for="benAsisColNo">No</label>
+            </fieldset>
+            <section class="layout">
+                <div>
+                    <label for="colNom">Nombre Establecimiento:</label>
+                    <input type="text" name="colNom" id="colNom">
+                </div>
+                <div>
+                    <label for="colTel">Teléfono Establecimiento:</label>
+                    <input type="number" name="colTel" id="colTel">
+                </div>
+                <div>
+                    <label for="benCurso">Curso:</label>
+                    <input type="text" name="benCurso" id="benCurso">
+                </div>
+                <div>
+                    <label for="colProfJefe">Profesor(a) Jefe:</label>
+                    <input type="text" name="colProfJefe" id="colProfJefe">
+                </div>
+            </section>
         </div>
         <div class="fila2" id="grupoBotones">
             <button class="boton-primario" type="submit">Añadir</button>
