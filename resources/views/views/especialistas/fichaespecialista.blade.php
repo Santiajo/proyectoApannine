@@ -85,9 +85,21 @@
             @endforeach
         </tbody>
     </table>
+     <!-- Selector para cantidad de elementos por página -->
+     <form method="GET" action="{{ route('especialistas.listarEspecialistas') }}">
+        @csrf
+        <label for="items_per_page">Resultados por página:</label>
+        <select name="items_per_page" id="items_per_page" onchange="this.form.submit()">
+            <option value="10" {{ request('items_per_page') == 10 ? 'selected' : '' }}>10</option>
+            <option value="15" {{ request('items_per_page') == 15 ? 'selected' : '' }}>15</option>
+            <option value="20" {{ request('items_per_page') == 20 ? 'selected' : '' }}>20</option>
+        </select>
+        <input type="hidden" name="benBuscar" value="{{ request('benBuscar') }}">
+    </form>
     <div class="pagination">
     {{ $especialistas->links() }}
     </div>
 </div>
+
 
 @endsection
