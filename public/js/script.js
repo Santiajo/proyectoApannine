@@ -67,9 +67,8 @@ function editarNacionalidad(nacionalidad) {
     document.getElementById('nacionalidadNombre').value = nacionalidad.nombreNacionalidad;
 }
 
-// CARGAMOS EL CONTENIDO DOM
+// CARGAMOS CONTENIDO DOM
 document.addEventListener('DOMContentLoaded', function () {
-    // HACEMOS QUE EL ARCHIVO ESCUCHE CUANDO EL FORMULARIO ESPECIALIDADES SE VA A SUBIR
     const formEspecialidad = document.getElementById('formEspecialidad');
     const formEspecialista = document.getElementById('formEspecialista');
     const formNacionalidad = document.getElementById('formNacionalidad');
@@ -77,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const formCobMedica = document.getElementById('formCobMedica');
     const formBeneficiario = document.getElementById('formBeneficiario');
 
+    // HACEMOS QUE EL ARCHIVO ESCUCHE CUANDO EL FORMULARIO ESPECIALIDADES SE VA A SUBIR
     if (formEspecialidad) {
         formEspecialidad.addEventListener('submit', function (event) {
             event.preventDefault();
