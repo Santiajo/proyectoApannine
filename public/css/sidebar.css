@@ -1060,6 +1060,75 @@ h4 {
     }
 }
 
+/* PAGINADOR   */
+/* Estilo general del contenedor del paginador */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    font-size: 16px;
+    flex-direction: row;
+}
+
+/* Estilo de los botones de página */
+.pagination a {
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #555;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover sobre los botones */
+.pagination a:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Página activa */
+.pagination .active span {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+/* Deshabilitar flechas */
+.pagination .disabled span {
+    color: #aaa;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    cursor: not-allowed;
+}
+/* Deshabilitar texto */
+.pagination p {
+    color: transparent;
+}
+
+
+    /* Corregir el tamaño de las flechas */
+    .pagination svg {
+        width: 16px; /* Ajusta el tamaño según tus preferencias */
+        height: 16px;
+    }
+
+    /* Elimina bordes si están afectando el diseño */
+    .pagination {
+        display: flex;
+        gap: 5px;
+    }
+
+    /* Ajustar el espaciado para mantenerlo limpio */
+    .pagination a, .pagination span {
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+
 /* Responsividad */
 @media screen and (max-width: 1200px) {
     table {

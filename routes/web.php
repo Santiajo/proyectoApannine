@@ -15,6 +15,14 @@ use App\Http\Controllers\nacionalidadController;
 use App\Http\Controllers\cobMedController;
 // CONTROLADOR DE COMUNAS
 use App\Http\Controllers\comunaController;
+// CONTROLADOR DE BENEFICIARIOS
+use App\Http\Controllers\beneficiarioController;
+// CONTROLADOR DE NACIONALIDADES
+use App\Http\Controllers\nacionalidadController;
+// CONTROLADOR DE COBERTURAS MEDICAS
+use App\Http\Controllers\cobMedController;
+// CONTROLADOR DE COMUNAS
+use App\Http\Controllers\comunaController;
 
 //Aqui se llama a las rutas
 Route::get('/', [PostController::class, 'login']);
@@ -61,12 +69,12 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
     Route::get('/views/formBenRelleno/{id}', [beneficiarioController::class, 'formBenRelleno'])->name('beneficiarios.formBenRelleno');
 
 
-Route::get('/views/formularioBeneficiarioColegio', [PostController::class, 'formularioBeneficiarioColegio'])->name('formularioBeneficiarioColegio');
-Route::get('/views/formularioBeneficiarioDerivante', [PostController::class, 'formularioBeneficiarioDerivante'])->name('formularioBeneficiarioDerivante');
-Route::get('/views/formularioBeneficiarioFamilia', [PostController::class, 'formularioBeneficiarioFamilia'])->name('formularioBeneficiarioFamilia');
-Route::get('/views/formularioBeneficiarioAntSocial', [PostController::class, 'formularioBeneficiarioAntSocial'])->name('formularioBeneficiarioAntSocial');
-Route::get('/views/formularioBeneficiarioAntSalud', [PostController::class, 'formularioBeneficiarioAntSalud'])->name('formularioBeneficiarioAntSalud');
-Route::get('/views/formularioBeneficiarioDiagnostico', [PostController::class, 'formularioBeneficiarioDiagnostico'])->name('formularioBeneficiarioDiagnostico');
+
+// Route::get('/views/formularioBeneficiarioDerivante', [PostController::class, 'formularioBeneficiarioDerivante'])->name('formularioBeneficiarioDerivante');
+// Route::get('/views/formularioBeneficiarioFamilia', [PostController::class, 'formularioBeneficiarioFamilia'])->name('formularioBeneficiarioFamilia');
+// Route::get('/views/formularioBeneficiarioAntSocial', [PostController::class, 'formularioBeneficiarioAntSocial'])->name('formularioBeneficiarioAntSocial');
+// Route::get('/views/formularioBeneficiarioAntSalud', [PostController::class, 'formularioBeneficiarioAntSalud'])->name('formularioBeneficiarioAntSalud');
+// Route::get('/views/formularioBeneficiarioDiagnostico', [PostController::class, 'formularioBeneficiarioDiagnostico'])->name('formularioBeneficiarioDiagnostico');
 
 // HISTORIAL MÉDICO DEL BENEFICIARIO
 Route::get('/views/histMedBeneficiario', [PostController::class, 'histMedBeneficiario'])->name('histMedBeneficiario');

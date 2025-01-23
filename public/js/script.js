@@ -517,31 +517,82 @@ function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
     }
 }
 
-// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
+// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO
 document.addEventListener('DOMContentLoaded', () => {
-    // OBTENER LINKS 
-        // OBTENER LINK PARA MOSTRAR BENEFICIARIO
-        mostrarBeneficiario = document.getElementById('mostrarBeneficiario');
-        // OBTENER LINK PARA MOSTRAR COLEGIO
-        mostrarColegio = document.getElementById('mostrarColegio');
-        
+    // OBTENER LINKS
+    const mostrarBeneficiario = document.getElementById('mostrarBeneficiario');
+    const mostrarColegio = document.getElementById('mostrarColegio');
+    const mostrarDerivante = document.getElementById('mostrarDerivante');
+    const mostrarFamilia = document.getElementById('mostrarFamilia');
+    const mostrarAntSalud = document.getElementById('mostrarAntSalud');
+    const mostrarAntSocial = document.getElementById('mostrarAntSocial');
+    const mostrarDiagnostico = document.getElementById('mostrarDiagnostico');
+    
     // OBTENER APARTADOS DEL FORMULARIO
-        // OBTENER APARTADO DE BENEFICIARIOS
-        apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
-        // OBTENER APARTADO DE COLEGIOS
-        apartadoColegio = document.getElementById('apartadoColegio');
+    const apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
+    const apartadoColegio = document.getElementById('apartadoColegio');
+    const apartadoDerivante = document.getElementById('apartadoDerivante');
+    const apartadoFamilia = document.getElementById('apartadoFamilia');
+    const apartadoAntSalud = document.getElementById('apartadoAntSalud');
+    const apartadoAntSocial = document.getElementById('apartadoAntSocial');
+    const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
 
-    // FILTRAR APARTADOS
+    // FUNCION PARA OCULTAR TODOS LOS APARTADOS
+    function ocultarTodosLosApartados() {
+        const apartados = [
+            apartadoBeneficiarios,
+            apartadoColegio,
+            apartadoDerivante,
+            apartadoFamilia,
+            apartadoAntSalud,
+            apartadoAntSocial,
+            apartadoDiagnostico
+        ];
+        apartados.forEach(apartado => apartado.classList.add('ocultar'));
+    }
+
+    // MOSTRAR SOLO EL FORMULARIO DE BENEFICIARIO AL CARGAR
+    ocultarTodosLosApartados();
+    apartadoBeneficiarios.classList.remove('ocultar');
+
+    // CONFIGURAR EVENTOS PARA MOSTRAR LOS FORMULARIOS
     mostrarBeneficiario.addEventListener('click', () => {
+        ocultarTodosLosApartados();
         apartadoBeneficiarios.classList.remove('ocultar');
-        apartadoColegio.classList.add('ocultar');
     });
 
     mostrarColegio.addEventListener('click', () => {
+        ocultarTodosLosApartados();
         apartadoColegio.classList.remove('ocultar');
-        apartadoBeneficiarios.classList.add('ocultar');
+    });
+
+    mostrarDerivante.addEventListener('click', () => {
+        ocultarTodosLosApartados();
+        apartadoDerivante.classList.remove('ocultar');
+    });
+
+    mostrarFamilia.addEventListener('click', () => {
+        ocultarTodosLosApartados();
+        apartadoFamilia.classList.remove('ocultar');
+    });
+
+    mostrarAntSalud.addEventListener('click', () => {
+        ocultarTodosLosApartados();
+        apartadoAntSalud.classList.remove('ocultar');
+    });
+
+    mostrarAntSocial.addEventListener('click', () => {
+        ocultarTodosLosApartados();
+        apartadoAntSocial.classList.remove('ocultar');
+    });
+
+    mostrarDiagnostico.addEventListener('click', () => {
+        ocultarTodosLosApartados();
+        apartadoDiagnostico.classList.remove('ocultar');
     });
 });
+
+
 
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE BENEFICIARIO
 function validarFormBeneficiario() {
