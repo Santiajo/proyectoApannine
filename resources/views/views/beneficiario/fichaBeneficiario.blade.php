@@ -8,7 +8,7 @@
 <div class="content">
   <div class="fila1">
     <!-- Botón para volver a la ficha principal -->
-    <a class="boton-primario" id="volver1" href="{{ route('fichabeneficiario') }}">
+    <a class="boton-primario" id="volver1" href="{{ route('beneficiarios.listarBeneficiarios') }}">
       < Volver</a>
   </div>
   <div class="fila1">
@@ -16,27 +16,53 @@
   </div>
   <hr>
   <div class="fila2">
-    <a class="boton-quintiario" id="benAgregar" href="{{ route('verBeneficiario') }}">
-      <p>Modificar</p>
-    </a>
-    <a class="boton-terciario" id="benEliminar" href="{{ route('verBeneficiario') }}"><i class='bx bx-trash'></i>
-      Eliminar</a>
-    <a class="boton-secundario" id="benExportar" href="{{ route('fichabeneficiario') }}"><i class='bx bx-export'></i>
-      Exportar</a>
+
   </div>
+  <form class="formularioPiola" id="formTuneado2"
+    action="{{ route('beneficiarios.eliminarBeneficiario', $beneficiario->id) }}" method="POST"
+    onsubmit="return confirmDelete(event)">
+    @csrf
+    @method('DELETE')
+      <a class="boton-quintiario" id="benAgregar" href="{{ route('beneficiarios.formBenRelleno', $beneficiario->id) }}">
+        <p>Modificar</p>
+      </a>
+      <button type="submit" class="boton-terciario"><i class='bx bx-trash'></i> Eliminar</button>
+      <a class="boton-secundario" id="benExportar" href="{{ route('beneficiarios.listarBeneficiarios') }}"><i
+          class='bx bx-export'></i>
+        Exportar</a>
+  </form>
+  <br>
   <div class="cardSimple">
     <div class="separacionFormulario">
-      <h3>Juan Enrique Manzo Gárate</h3>
-      <p><span class="letraNegrita">Estado: </span> ACTIVO</p>
-      <p><span class="letraNegrita">Rut: </span> 9835803-k</p>
-      <p><span class="letraNegrita">Fecha de nacimiento: </span> 16/10/1663</p>
-      <p><span class="letraNegrita">Teléfono 1: </span> 9 8126 7512</p>
-      <p><span class="letraNegrita">Teléfono 2: </span> N/A</p>
-      <p><span class="letraNegrita">Nacionalidad: </span> Chileno</p>
-      <p><span class="letraNegrita">Previsión: </span> Fonasa tramo b</p>
-      <p><span class="letraNegrita">Comuna: </span> Melipilla</p>
-      <p><span class="letraNegrita">Domicilio: </span> Los prados 117</p>
-      <p><span class="letraNegrita">Vive en casa: </span> Propia</p>
+      <h3>{{ $beneficiario->beneficiarioPNombre }} {{ $beneficiario->beneficiarioSNombre }}
+        {{ $beneficiario->beneficiarioApPaterno }} {{ $beneficiario->beneficiarioApMaterno }}
+      </h3>
+      <p><span class="letraNegrita">Estado: </span> {{ $beneficiario->beneficiarioEstado }}</p>
+      <p><span class="letraNegrita">Rut: </span> {{ $beneficiario->beneficiarioRut }} -
+        {{ $beneficiario->beneficiarioDv }}
+      </p>
+      <p><span class="letraNegrita">Fecha de nacimiento: </span> {{ $beneficiario->beneficiarioFecNac }}</p>
+      <p><span class="letraNegrita">Teléfono 1: </span> {{ $beneficiario->beneficiarioTelefono }}</p>
+      <!-- Mostrar nacionalidad del beneficiario -->
+      @foreach ($nacionalidades as $nacionalidad)
+      @if ($beneficiario->nacionalidad_id == $nacionalidad->id)
+      <p><span class="letraNegrita">Nacionalidad: </span> {{ $nacionalidad->nombreNacionalidad }}</p>
+    @endif
+    @endforeach
+      <!-- Mostrar cobertura medica del beneficiario -->
+      @foreach ($cobMedicas as $cobMedica)
+      @if ($beneficiario->cob_med_id == $cobMedica->id)
+      <p><span class="letraNegrita">Previsión médica: </span> {{ $cobMedica->nombreCobMed }}</p>
+    @endif
+    @endforeach
+      <!-- Mostrar comuna del beneficiario -->
+      @foreach ($comunas as $comuna)
+      @if ($beneficiario->comuna_id == $comuna->id)
+      <p><span class="letraNegrita">Comuna: </span> {{ $comuna->nombreComuna }}</p>
+    @endif
+    @endforeach
+      <p><span class="letraNegrita">Domicilio: </span> {{ $beneficiario->beneficiarioDomicilio }}</p>
+      <p><span class="letraNegrita">Vive en casa: </span> {{ $beneficiario->beneficiarioTipDom }}</p>
     </div>
   </div>
   <br>

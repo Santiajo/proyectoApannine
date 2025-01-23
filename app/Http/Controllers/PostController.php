@@ -18,12 +18,6 @@ class PostController extends Controller
     {
         return view('posts.show', compact('post'));
     }
-    
-    // VIEWS DEL BENEFICIARIO
-    public function fichabeneficiario()
-    {
-        return view('views.beneficiario.fichabeneficiario'); 
-    }
 
     // FORMULARIO PARA EL BENEFICIARIO
     public function formularioBeneficiario()

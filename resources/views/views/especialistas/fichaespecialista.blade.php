@@ -17,25 +17,28 @@
         <a class="boton-primario" id="benAgregar" href="{{ route('especialistas.crudEspecialidad') }}">
             <p><i class='bx bx-plus-medical'></i> Agregar especialidad</p>
         </a>
-        <form method="GET" action="{{ route('especialistas.exportarEspecialistas') }}">
+        <!-- Para buscar productos por texto -->
+        <form method="GET" action="{{ route('especialistas.listarEspecialistas') }}">
+            <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..."
+                value="{{ request('benBuscar') }}">
+            <button type="submit"><i class='bx bx-search'></i></button>
+        </form>
+    </div>
+    <div class="fila4" id="fila1Perso">
+        <form class="formularioPiola" id="formTuneado" method="GET"
+            action="{{ route('especialistas.exportarEspecialistas') }}">
             @csrf
-            <label for="fromDate">Desde:</label>
-            <input type="date" id="fromDate" name="fromDate" required>
-            
-            <label for="toDate">Hasta:</label>
-            <input type="date" id="toDate" name="toDate" required>
+            <div class="separacionFormulario">
+                <label for="fromDate">Desde:</label>
+                <input type="date" id="fromDate" name="fromDate" required>
 
-            <button type="submit" class="btn btn-primary">
+                <label for="toDate">Hasta:</label>
+                <input type="date" id="toDate" name="toDate" required>
+            </div>
+            <button type="submit" class="boton-secundario">
                 <i class='bx bx-export'></i> Exportar
             </button>
         </form>
-
-        <!-- Para buscar productos por texto -->
-        <form method="GET" action="{{ route('especialistas.listarEspecialistas') }}">
-            <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..." value="{{ request('benBuscar') }}">
-            <button type="submit"><i class='bx bx-search'></i></button>
-        </form>
-
     </div>
     <table>
         <thead>
@@ -97,7 +100,7 @@
         <input type="hidden" name="benBuscar" value="{{ request('benBuscar') }}">
     </form>
     <div class="pagination">
-    {{ $especialistas->links() }}
+        {{ $especialistas->links() }}
     </div>
 </div>
 

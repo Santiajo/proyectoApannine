@@ -16,6 +16,7 @@
     --text-color-secondary: #434343;
     --danger: #E1454C;
     --caution: #DB7038;
+    --success: #0EB65F;
 
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
@@ -331,81 +332,6 @@ body.dark .home .text {
     color: var(--text-color);
 }
 
-/* NAVBAR */
-.navPiola {
-    height: max-content;
-    width: 100%;
-    padding: 10px 10px 0 10px;
-    background-color: var(--sidebar-color);
-    border: 1px var(--primary-color) solid;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    row-gap: 5px;
-}
-
-h3 {
-    font-size: clamp(16px, 2dvw, 21px);
-}
-
-h4 {
-    font-size: clamp(12px, 2dvw, 16px);
-    color: var(--text-color-secondary);
-}
-
-.navLinks {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 10px;
-}
-
-.navEnlace {
-    position: relative;
-    height: max-content;
-    padding-bottom: 10px;
-}
-
-.navEnlace a {
-    text-decoration: none;
-    color: var(--text-color-secondary);
-    font-size: clamp(12px, 2dvw, 17px);
-    display: flex;
-}
-
-.navEnlace a:hover,
-.navEnlace a:focus {
-    color: var(--text-color);
-}
-
-.navEnlace a::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    visibility: hidden;
-    transition: all ease 0.25s;
-}
-
-.navLinks a:hover::before {
-    width: 100%;
-    visibility: visible;
-}
-
-.navEnlace a.active {
-    color: var(--text-color);
-}
-
-.navEnlace a.active::before {
-    width: 100%;
-    visibility: visible;
-}
-
 /* Contenido principal */
 main {
     min-height: 100dvh;
@@ -628,7 +554,7 @@ button {
 
 hr {
     width: 100%;
-    background-color:var(--text-color);
+    background-color: var(--text-color);
     height: 0.5px;
     border: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -697,12 +623,12 @@ hr {
     row-gap: 20px;
 }
 
-.fiftyfifty form{
+.fiftyfifty form {
     min-height: 100%;
     width: 43%;
 }
 
-.fiftyfifty table{
+.fiftyfifty table {
     width: 55%;
 }
 
@@ -888,7 +814,8 @@ fieldset {
 }
 
 /* MENSAJES DE ERROR */
-.alert, .alert-danger {
+.alert,
+.alert-danger {
     color: var(--danger);
     margin-top: -5px;
     text-align: justify;
@@ -899,11 +826,30 @@ fieldset {
     margin-top: 2px;
 }
 
+.errores {
+    color: var(--danger);
+    font-size: clamp(12px, 2dvw, 16px);
+    margin-top: -5px;
+}
+
+.errores2 {
+    margin-top: 2px;
+    text-align: center;
+}
+
+.exito {
+    color: var(--success);
+}
+
+.exito2 {
+    margin-top: 2px;
+}
+
 /* TUNEO DEL FORMULARIO */
 #formTuneado {
     display: flex;
     flex-direction: row;
-    column-gap: 5px;
+    column-gap: 10px;
 }
 
 #formTuneado .separacionFormulario {
@@ -916,6 +862,16 @@ fieldset {
 
 #formTuneado select {
     width: max-content;
+}
+
+#formTuneado2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    column-gap: 10px;
+    background-color: var(--body-color);
+    border: none;
+    padding: 0;
 }
 
 /* FORMULARIO2 */
@@ -960,6 +916,93 @@ fieldset {
 /* modificamos los botones */
 #grupoBotones {
     padding: -40px -40px;
+}
+
+/* NAVBAR */
+.navPiola {
+    height: max-content;
+    width: 100%;
+    padding: 10px 10px 0 10px;
+    background-color: var(--sidebar-color);
+    border: 1px var(--primary-color) solid;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    row-gap: 5px;
+}
+
+h3 {
+    font-size: clamp(16px, 2dvw, 21px);
+}
+
+h4 {
+    font-size: clamp(12px, 2dvw, 16px);
+    color: var(--text-color-secondary);
+}
+
+.navLinks {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+}
+
+.navEnlace {
+    position: relative;
+    height: max-content;
+    padding-bottom: 10px;
+}
+
+.navEnlace a {
+    text-decoration: none;
+    color: var(--text-color-secondary);
+    font-size: clamp(12px, 2dvw, 17px);
+    display: flex;
+    cursor: pointer; /* Añadir esta línea */
+}
+
+.navEnlace a:hover,
+.navEnlace a:focus {
+    color: var(--text-color);
+}
+
+.navEnlace a::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    visibility: hidden;
+    transition: all ease 0.25s;
+    pointer-events: none; /* Añadir esta línea */
+}
+
+.navLinks a:hover::before {
+    width: 100%;
+    visibility: visible;
+}
+
+.navEnlace a.active {
+    color: var(--text-color);
+}
+
+.navEnlace a.active::before {
+    width: 100%;
+    visibility: visible;
+}
+
+.ocultar {
+    display: none;
+}
+
+.rojo {
+    display: none;
+    color: red;
+    border: 1px red solid;
 }
 
 /* Responsividad */
@@ -1135,7 +1178,7 @@ fieldset {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .fiftyfifty form{
+    .fiftyfifty form {
         width: 100%;
     }
 

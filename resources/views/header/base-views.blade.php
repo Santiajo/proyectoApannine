@@ -47,7 +47,7 @@
                                 </a>
                             </li>
                             <li class="nav-link">
-                                <a href="{{ route('fichabeneficiario') }}">
+                                <a href="{{ route('beneficiarios.listarBeneficiarios') }}">
                                     <i class='bx bx-notepad icon'></i>
                                     <span class="text nav-text">Beneficiarios</span>
                                 </a>
@@ -102,6 +102,18 @@
             @yield('content') <!-- Contenido dinámico de cada vista -->
         </main>
     </div>
+
+    <!-- Cargar archivos JS específicos si es necesario -->
+    <script src="{{ asset('js/script.js') }}"></script>
+
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                notificacionExito('{{ session('success') }}');
+            });
+        </script>
+    @endif
+
     {{-- script --}}
     <script>
         const body = document.querySelector('body'),
@@ -134,19 +146,18 @@
 
         // Llamar a la función para asegurarse de que el margen esté correcto al cargar la página
         updateContentMargin();
+
+        // Cambio entre modo día y modo noche
+        modeSwitch.addEventListener("click", () => {
+            body.classList.toggle("dark");
+
+            if (body.classList.contains("dark")) {
+                modeText.innerText = "Modo día";
+            } else {
+                modeText.innerText = "Modo noche";
+            }
+        });
     </script>
-
-    <!-- Cargar archivos JS específicos si es necesario -->
-    <script src="{{ asset('js/script.js') }}"></script>
-
-    @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                notificacionExito('{{ session('success') }}');
-            });
-        </script>
-    @endif
-    
 </body>
 
 </html>

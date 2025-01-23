@@ -8,35 +8,35 @@
 <div class="content">
     <div class="fila1">
         <!-- Botón para volver a la ficha principal -->
-        <a class="boton-primario" id="volver1" href="{{ route('especialistas.listarEspecialistas') }}">
+        <a class="boton-primario" id="volver1" href="{{ route('beneficiarios.listarBeneficiarios') }}">
             < Volver</a>
     </div>
     <div class="fila2" id="fila1Perso">
-        <a class="boton-primario" href="{{ route('especialistas.formularioEspecialista') }}">
-            <p><i class='bx bx-plus-medical'></i> Agregar especialista</p>
+        <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.formularioBeneficiario') }}">
+            <p><i class='bx bxs-user-plus'></i> Agregar beneficiario</p>
+        </a>
+        <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudComuna') }}">
+            <p>Agregar comuna</p>
+        </a>
+        <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudCobMedica') }}">
+            <p><i class='bx bx-plus-medical'></i> Agregar cobertura medica</p>
         </a>
     </div>
     <div class="fiftyfifty">
-        <form action="{{ route('especialistas.guardarEspecialidad') }}" method="POST" class="formularioPiola"
-            id="formEspecialidad">
+        <form action="{{ route('beneficiarios.guardarNacionalidad') }}" method="POST" class="formularioPiola"
+            id="formNacionalidad">
             @csrf
-            <h1>Agregar especialidad</h1>
+            <h1>Agregar nacionalidad</h1>
             <div class="separacionFormulario">
-                <input type="hidden" name="especialidadId" id="especialidadId">
+                <input type="hidden" name="nacionalidadId" id="nacionalidadId">
 
-                <label for="especialidadNombre">Nombre: </label>
-                <input type="text" name="especialidadNombre" id="especialidadNombre" placeholder="Máximo 20 caracteres">
-                <div class="errores" id="errorEspecialidadNombre"></div>
-                @error('especialidadNombre')
+                <label for="nacionalidadNombre">Nombre: </label>
+                <input type="text" name="nacionalidadNombre" id="nacionalidadNombre" placeholder="Máximo 30 caracteres">
+                <div class="errores" id="errorNacionalidadNombre"></div>
+                @error('nacionalidadNombre')
                     <div class="alert alert-danger">El nombre no cumple con los requisitos!</div>
                 @enderror
 
-                <label for="especialidadAbrev">Abreviación: </label>
-                <input type="text" name="especialidadAbrev" id="especialidadAbrev" placeholder="Máximo 5 caracteres">
-                <div class="errores" id="errorespecialidadAbrev"></div>
-                @error('especialidadAbrev')
-                    <div class="alert alert-danger">La abreviación no cumple con los requisitos!</div>
-                @enderror
             </div>
             <div class="fila2" id="grupoBotones">
                 <button class="boton-primario" type="submit">Añadir</button>
@@ -47,21 +47,19 @@
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Abreviación</th>
                     <th>Modificar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($especialidades as $especialidad)
+                @foreach ($nacionalidades as $nacionalidad)
                     <tr>
-                        <td data-label="Nombre">{{ $especialidad->especialidadNombre }}</td>
-                        <td data-label="Abreviación">{{ $especialidad->especialidadAbreviacion }}</td>
+                        <td data-label="Nombre">{{ $nacionalidad->nombreNacionalidad }}</td>
                         <td data-label="Modificar"><button class="boton-quintiario" id="benAgregar"
-                                onclick="editarEspecialidad({{ $especialidad }})">Modificar</button>
+                                onclick="editarNacionalidad({{ $nacionalidad }})">Modificar</button>
                         </td>
                         <td data-label="Eliminar">
-                            <form action="{{ route('especialistas.eliminarEspecialidad', $especialidad->id) }}"
+                            <form action="{{ route('beneficiarios.eliminarNacionalidad', $nacionalidad->id) }}"
                                 method="POST" style="display: inline;" onsubmit="return confirmDelete(event)">
                                 @csrf
                                 @method('DELETE')

@@ -10,29 +10,12 @@ use App\Models\Especialista;
 // IMPORTAR MODELO ESPECIALIDAD
 use App\Models\Especialidad;
 
-
+// IMPORTACIONES PARA EXPORTAR ESPECIALISTAS A EXCEL
 use App\Exports\EspecialistasExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class especialistaController extends Controller
 {
-
-    // METODO PARA EXPORTAR A EXCEL
-    public function exportarEspecialistas(Request $request)
-    {
-        $request->validate([
-            'fromDate' => 'required|date',
-            'toDate' => 'required|date|after_or_equal:fromDate',
-        ]);
-    
-        $fromDate = $request->fromDate;
-        $toDate = $request->toDate;
-    
-        // Pasar las fechas al exportador
-        return Excel::download(new EspecialistasExport($fromDate, $toDate), 'especialistas.xlsx');
-    }
-
-
     // MÉTODO PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
     public function listarEspecialistas(Request $request)
 {
@@ -60,10 +43,6 @@ class especialistaController extends Controller
 }
 
     
-       
-       
-
-
     // MÉTODO PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA
     public function formularioEspecialista()
     {
@@ -71,7 +50,7 @@ class especialistaController extends Controller
         return view('views.especialistas.formEspecialista', compact('especialidades'));
     }
 
-    // MÉTODO PARA ACTUALIZAR INFORMACIÓN DE UN ESPECIALISTA
+    // MÉTODO PARA MOSTRAR EL FORMULARIO DE ESPECIALISTA RELLENO CON DATOS
     public function formularioEspecialistaRelleno($id)
     {
         $especialista = Especialista::findOrFail($id); // BUSCAR ESPECIALISTA POR ID
@@ -108,13 +87,12 @@ class especialistaController extends Controller
         return strtoupper($dv) === $digitoVerificador;
     }
 
-
     // MÉTODO PARA GUARDAR O ACTUALIZAR UN ESPECIALISTA
     public function guardarEspecialista(Request $request)
     {
         // VALIDAR LA INFORMACIÓN RECIBIDA DEL FORMULARIO
         $request->validate([
-            'espRut' => 'required|digits:8|regex:/^[0-9]+$/',
+            'espRut' => 'required|digits:8|regex:/^[0-9]+$/|unique:especialistas,especialistaRut,' . $request->especialistaId,
             'espDv' => 'required|string|max:1|regex:/^[0-9Kk]$/',
             'espPNombre' => 'required|string|max:20|regex:/^[^<>]*$/',
             'espSNombre' => 'nullable|string|max:20|regex:/^[^<>]*$/',
@@ -172,6 +150,21 @@ class especialistaController extends Controller
     {
         Especialista::find($id)->delete();
         return redirect()->route('especialistas.listarEspecialistas')->with('success', 'Especialista eliminado/a correctamente.');
+    }
+
+    // METODO PARA EXPORTAR ESPECIALISTAS A EXCEL
+    public function exportarEspecialistas(Request $request)
+    {
+        $request->validate([
+            'fromDate' => 'required|date',
+            'toDate' => 'required|date|after_or_equal:fromDate',
+        ]);
+    
+        $fromDate = $request->fromDate;
+        $toDate = $request->toDate;
+    
+        // Pasar las fechas al exportador
+        return Excel::download(new EspecialistasExport($fromDate, $toDate), 'especialistas.xlsx');
     }
 }
 
