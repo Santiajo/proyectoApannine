@@ -12,6 +12,10 @@ use App\Models\Nacionalidad;
 use App\Models\Comuna;
 // IMPORTAR MODELO COBERTURA MEDICA
 use App\Models\Cob_Medica;
+// IMPORTAR MODELO COLEGIO
+use App\Models\Colegio;
+// IMPORTAR MODELO DERIVANTE
+use App\Models\Derivante;
 
 class beneficiarioController extends Controller
 {
@@ -50,12 +54,16 @@ class beneficiarioController extends Controller
             'benDom' => 'required|string|max:100|regex:/^[^<>]*$/',
             'benComuna' => 'required|digits_between:1,20|regex:/^[^<>]*$/',
             'benTipViv' => 'required|string|max:20|regex:/^[^<>]*$/',
+            'benAsisCol' => 'required|digits:1|regex:/^[^<>]*$/',
+            'colNom' => 'nullable|string|max:30|regex:/^[^<>]*$/',
+            'colTel' => 'nullable|string|min:7|max:15|regex:/^[0-9]+$/',
+            'benCurso' => 'nullable|string|max:25|regex:/^[^<>]*$/',
+            'colProfJefe' => 'nullable|string|max:60|regex:/^[^<>]*$/',
         ]);
 
         // SI SE RECIBE UN ID YA EXISTENTE, ACTUALIZAMOS LA NACIONALIDAD, SINO, LA CREAMOS
         if ($request->benId) {
             $beneficiario = Beneficiario::findOrFail($request->benId);
-            // ACTUALIZAR COMUNA EXISTENTE
             $beneficiario->update([
                 'beneficiarioEstado' => $request->benEstado,
                 'beneficiarioRut' => $request->benRut,
@@ -72,9 +80,27 @@ class beneficiarioController extends Controller
                 'nacionalidad_id' => $request->benNac,
                 'comuna_id' => $request->benComuna,
             ]);
+            // OBTENER COLEGIO ASOCIADO AL BENEFICARIO 
+            $colegio = Colegio::findOrFail($beneficiario->colegio_id);
+            // ACTUALIZAR EL COLEGIO ASOCIADO
+            $colegio->update([
+                'colegioAsiste' => $request->benAsisCol,
+                'colegioNombre' => $request->colNom,
+                'colegioTelefono' => $request->colTel,
+                'colegioCurso' => $request->benCurso,
+                'colegioProfJefe' => $request->colProfJefe,
+            ]);
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario actualizado correctamente.');
         } else {
-            // CREAR NUEVA NACIONALIDAD
+            // CREAR COLEGIO
+            $colegio = Colegio::create([
+                'colegioAsiste' => $request->benAsisCol,
+                'colegioNombre' => $request->colNom,
+                'colegioTelefono' => $request->colTel,
+                'colegioCurso' => $request->benCurso,
+                'colegioProfJefe' => $request->colProfJefe,
+            ]);
+            // CREAR BENEFICIARIO
             Beneficiario::create([
                 'beneficiarioEstado' => $request->benEstado,
                 'beneficiarioRut' => $request->benRut,
@@ -90,6 +116,7 @@ class beneficiarioController extends Controller
                 'cob_med_id' => $request->benCobMed,
                 'nacionalidad_id' => $request->benNac,
                 'comuna_id' => $request->benComuna,
+                'colegio_id' => $colegio->id,
             ]);
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario creado correctamente.');
         }
@@ -106,19 +133,21 @@ class beneficiarioController extends Controller
     public function fichaBeneficiario($id)
     {
         $beneficiario = Beneficiario::findOrFail($id);
-        $nacionalidades = Nacionalidad::all();
-        $comunas = Comuna::all(); 
-        $cobMedicas = Cob_Medica::all();
-        return view('views.beneficiario.fichaBeneficiario', compact('beneficiario', 'nacionalidades', 'comunas', 'cobMedicas'));
+        $nacionalidad = Nacionalidad::findOrFail($beneficiario->nacionalidad_id);
+        $comuna = Comuna::findOrFail($beneficiario->comuna_id);
+        $cobMedica = Cob_Medica::findOrFail($beneficiario->cob_med_id);
+        $colegio = Colegio::findOrFail($beneficiario->colegio_id);
+        return view('views.beneficiario.fichaBeneficiario', compact('beneficiario', 'nacionalidad', 'comuna', 'cobMedica', 'colegio'));
     }
 
     // MÉTODO PARA MOSTRAR FORMULARIO BENEFICIARIO RELLENO
-    public function formBenRelleno($id) 
+    public function formBenRelleno($id)
     {
         $beneficiario = Beneficiario::findOrFail($id);
         $nacionalidades = Nacionalidad::all();
-        $comunas = Comuna::all(); 
+        $comunas = Comuna::all();
         $cobMedicas = Cob_Medica::all();
-        return view('views.beneficiario.formulario.formularioBeneficiario', compact('beneficiario','nacionalidades', 'comunas', 'cobMedicas'));
+        $colegio = Colegio::findOrFail($beneficiario->colegio_id);
+        return view('views.beneficiario.formulario.formularioBeneficiario', compact('beneficiario', 'nacionalidades', 'comunas', 'cobMedicas', 'colegio'));
     }
 }

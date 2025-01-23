@@ -527,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mostrarAntSalud = document.getElementById('mostrarAntSalud');
     const mostrarAntSocial = document.getElementById('mostrarAntSocial');
     const mostrarDiagnostico = document.getElementById('mostrarDiagnostico');
-    
+
     // OBTENER APARTADOS DEL FORMULARIO
     const apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
     const apartadoColegio = document.getElementById('apartadoColegio');
@@ -592,7 +592,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// FUNCIÓN PARA DESHABILITAR CAMPOS SI ES NECESARIO
+document.addEventListener('DOMContentLoaded', () => {
+    // OBTENEMOS LOS RADIO BUTTONS
+    const benAsisColSi = document.getElementById('benAsisColSi');
+    const benAsisColNo = document.getElementById('benAsisColNo');
 
+    // INPUTS ASOCIADOS
+    const colNom = document.getElementById('colNom');
+    const colTel = document.getElementById('colTel');
+    const benCurso = document.getElementById('benCurso');
+    const colProfJefe = document.getElementById('colProfJefe');
+
+    // FUNCIÓN PARA DESHABILITAR O HABILITAR CAMPOS
+    const toggleFields = () => {
+        const isDisabled = benAsisColNo.checked; // Si está marcado "No"
+        colNom.disabled = isDisabled;
+        colTel.disabled = isDisabled;
+        benCurso.disabled = isDisabled;
+        colProfJefe.disabled = isDisabled;
+
+        if (isDisabled) {
+            colNom.value = '';
+            colTel.value = '';
+            benCurso.value = '';
+            colProfJefe.value = '';
+        }
+    };
+
+    // ASOCIAMOS EL EVENTO change A LOS RADIO BUTTONS
+    benAsisColSi.addEventListener('change', toggleFields);
+    benAsisColNo.addEventListener('change', toggleFields);
+
+    // LLAMAMOS LA FUNCIÓN AL CARGAR LA PÁGINA PARA AJUSTAR EL ESTADO INICIAL
+    toggleFields();
+});
 
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE BENEFICIARIO
 function validarFormBeneficiario() {
@@ -831,7 +865,7 @@ function validarFormBeneficiario() {
         errorBenDom.classList.remove('exito');
         errorBenDom.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (/[^a-zA-Z0-9]/.test(domicilioValue)) {
+    } else if (/[^[a-zA-Z0-9 ]*$]/.test(domicilioValue)) {
         errorBenDom.innerHTML = 'El domicilio no puede incluir caracteres especiales!';
         errorBenDom.style.display = 'block';
         errorBenDom.classList.remove('exito');
@@ -842,6 +876,97 @@ function validarFormBeneficiario() {
         errorBenDom.classList.add('exito2')
         errorBenDom.innerHTML = 'Domicilio válido!';
         errorBenDom.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // INPUTS DEL COLEGIO
+    const colNom = document.getElementById('colNom');
+    const colTel = document.getElementById('colTel');
+    const benCurso = document.getElementById('benCurso');
+    const colProfJefe = document.getElementById('colProfJefe');
+
+    // VALIDAR NOMBRE DEL COLEGIO
+    const colNomValue = colNom.value.trim();
+    const errorColNombre = document.getElementById('errorColNom');
+    if (colNomValue.length > 30) {
+        errorColNombre.innerHTML = 'El nombre del colegio no puede tener más de 30 caracteres!';
+        errorColNombre.style.display = 'block';
+        errorColNombre.classList.remove('exito');
+        errorColNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^[a-zA-Z0-9 ]*$]/.test(colNomValue)) {
+        errorColNombre.innerHTML = 'El nombre del colegio no puede incluir caracteres especiales!';
+        errorColNombre.style.display = 'block';
+        errorColNombre.classList.remove('exito');
+        errorColNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorColNombre.classList.add('exito')
+        errorColNombre.classList.add('exito2')
+        errorColNombre.innerHTML = 'Nombre válido!';
+        errorColNombre.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR PRIMER NOMBRE
+    const colTelValue = colTel.value.trim();
+    const errorColTel = document.getElementById('errorColTel');
+    if (colTelValue.length > 15) {
+        errorColTel.innerHTML = 'El telefono del colegio no puede tener más de 15 caracteres!';
+        errorColTel.style.display = 'block';
+        errorColTel.classList.remove('exito');
+        errorColTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorColTel.classList.add('exito')
+        errorColTel.innerHTML = 'Telefono válido!';
+        errorColTel.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR PRIMER NOMBRE
+    const benCursoValue = benCurso.value.trim();
+    const errorBenCurso = document.getElementById('errorBenCurso');
+    if (benCursoValue.length > 8) {
+        errorBenCurso.innerHTML = 'El curso no puede tener más de 20 caracteres!';
+        errorBenCurso.style.display = 'block';
+        errorBenCurso.classList.remove('exito');
+        errorBenCurso.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^[a-zA-Z0-9 ]*$]/.test(benCursoValue)) {
+        errorBenCurso.innerHTML = 'El curso no puede incluir caracteres especiales!';
+        errorBenCurso.style.display = 'block';
+        errorBenCurso.classList.remove('exito');
+        errorBenCurso.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorBenCurso.classList.add('exito')
+        errorBenCurso.classList.add('exito2')
+        errorBenCurso.innerHTML = 'Curso válido!';
+        errorBenCurso.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR PRIMER NOMBRE
+    const colProfJefeValue = colProfJefe.value.trim();
+    const errorColProfJefe = document.getElementById('errorColProfJefe');
+    if (colProfJefeValue.length > 8) {
+        errorColProfJefe.innerHTML = 'El nombre del profesor no puede tener más de 20 caracteres!';
+        errorColProfJefe.style.display = 'block';
+        errorColProfJefe.classList.remove('exito');
+        errorColProfJefe.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^[a-zA-Z0-9 ]*$]/.test(colProfJefeValue)) {
+        errorColProfJefe.innerHTML = 'El nombre del profesor no puede incluir caracteres especiales!';
+        errorColProfJefe.style.display = 'block';
+        errorColProfJefe.classList.remove('exito');
+        errorColProfJefe.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorColProfJefe.classList.add('exito')
+        errorColProfJefe.classList.add('exito2')
+        errorColProfJefe.innerHTML = 'Nombre del profesor válido!';
+        errorColProfJefe.style.display = 'block';
         camposValidos.push(true);
     }
 

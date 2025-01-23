@@ -31,6 +31,8 @@ class Beneficiario extends Model
         'cob_med_id',
         'nacionalidad_id',
         'comuna_id',
+        'comuna_id',
+        'colegio_id',
     ];
 
     protected $casts = [
@@ -53,5 +55,17 @@ class Beneficiario extends Model
     public function comuna()
     {
         return $this->belongsTo(Comuna::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO COLEGIO
+    public function colegio()
+    {
+        return $this->belongsTo(Colegio::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO DERIVANTE
+    public function derivante()
+    {
+        return $this->belongsTo(Derivante::class);
     }
 }

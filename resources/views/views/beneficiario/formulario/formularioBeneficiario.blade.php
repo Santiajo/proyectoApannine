@@ -202,28 +202,50 @@
             <fieldset>
                 <legend>¿Asiste al colegio?</legend>
 
-                <input type="radio" id="benAsisColSi" name="benAsisCol" value="Sí">
+                <input type="radio" id="benAsisColSi" name="benAsisCol" value="1" {{ (isset($colegio) && $colegio->colegioAsiste == 1) ? 'checked' : '' }}>
                 <label for="benAsisColSi">Sí</label>
 
-                <input type="radio" id="benAsisColNo" name="benAsisCol" value="No">
+                <input type="radio" id="benAsisColNo" name="benAsisCol" value="0" {{ (isset($colegio) && $colegio->colegioAsiste == 0) ? 'checked' : '' }}>
                 <label for="benAsisColNo">No</label>
             </fieldset>
             <section class="layout">
                 <div>
                     <label for="colNom">Nombre Establecimiento:</label>
-                    <input type="text" name="colNom" id="colNom">
+                    <input type="text" name="colNom" id="colNom"
+                        value="{{ $colegio->colegioNombre ?? '' }}">
+                    <div class="errores errores2" id="errorColNom"></div>
+                    @error('colNom')
+                        <div class="alert alert-danger">El nombre de colegio no cumple con los requisitos!</div>
+                    @enderror
+
                 </div>
                 <div>
                     <label for="colTel">Teléfono Establecimiento:</label>
-                    <input type="number" name="colTel" id="colTel">
+                    <input type="number" name="colTel" id="colTel"
+                        value="{{ $colegio->colegioTelefono ?? '' }}">
+                    <div class="errores errores2" id="errorColTel"></div>
+                    @error('colTel')
+                        <div class="alert alert-danger">El telefono del colegio no cumple con los requisitos!</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="benCurso">Curso:</label>
-                    <input type="text" name="benCurso" id="benCurso">
+                    <input type="text" name="benCurso" id="benCurso"
+                        value="{{ $colegio->colegioCurso ?? '' }}">
+                    <div class="errores errores2" id="errorBenCurso"></div>
+                    @error('benCurso')
+                        <div class="alert alert-danger">El curso del colegio no cumple con los requisitos!</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="colProfJefe">Profesor(a) Jefe:</label>
-                    <input type="text" name="colProfJefe" id="colProfJefe">
+                    <input type="text" name="colProfJefe" id="colProfJefe"
+                        value="{{ $colegio->colegioProfJefe ?? '' }}">
+                    <div class="errores errores2" id="errorColProfJefe"></div>
+                    @error('colProfJefe')
+                        <div class="alert alert-danger">El nombre del profesor jefe del colegio no cumple con los
+                            requisitos!</div>
+                    @enderror
                 </div>
             </section>
         </div>
@@ -348,7 +370,7 @@
             <input type="file" name="benEvidMed" id="benEvidMed">
         </div>
 
-         <!-- form Antecedentes social -->
+        <!-- form Antecedentes social -->
         <div class="separacionFormulario" id="apartadoAntSocial">
             <h3>Antecedentes sociales</h3>
 
@@ -402,16 +424,16 @@
             </fieldset>
         </div>
 
-          <!-- form Diagnostico -->
+        <!-- form Diagnostico -->
         <div class="separacionFormulario" id="apartadoDiagnostico">
             <h3>Datos diagnóstico</h3>
             <textarea name="benDiag" id="benDiag" rows="4" cols="50"></textarea>
         </div>
 
-    <!-- Botones -->
+        <!-- Botones -->
         <div class="fila2" id="grupoBotones">
             <button class="boton-primario" type="submit">Añadir</button>
-            <a class="boton-secundario" href="#" id="mostrarColegio" >Siguiente</a>
+            <a class="boton-secundario" href="#" id="mostrarColegio">Siguiente</a>
         </div>
     </form>
 </div>

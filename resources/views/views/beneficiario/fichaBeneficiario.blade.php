@@ -23,13 +23,13 @@
     onsubmit="return confirmDelete(event)">
     @csrf
     @method('DELETE')
-      <a class="boton-quintiario" id="benAgregar" href="{{ route('beneficiarios.formBenRelleno', $beneficiario->id) }}">
-        <p>Modificar</p>
-      </a>
-      <button type="submit" class="boton-terciario"><i class='bx bx-trash'></i> Eliminar</button>
-      <a class="boton-secundario" id="benExportar" href="{{ route('beneficiarios.listarBeneficiarios') }}"><i
-          class='bx bx-export'></i>
-        Exportar</a>
+    <a class="boton-quintiario" id="benAgregar" href="{{ route('beneficiarios.formBenRelleno', $beneficiario->id) }}">
+      <p>Modificar</p>
+    </a>
+    <button type="submit" class="boton-terciario"><i class='bx bx-trash'></i> Eliminar</button>
+    <a class="boton-secundario" id="benExportar" href="{{ route('beneficiarios.listarBeneficiarios') }}"><i
+        class='bx bx-export'></i>
+      Exportar</a>
   </form>
   <br>
   <div class="cardSimple">
@@ -43,24 +43,9 @@
       </p>
       <p><span class="letraNegrita">Fecha de nacimiento: </span> {{ $beneficiario->beneficiarioFecNac }}</p>
       <p><span class="letraNegrita">Teléfono 1: </span> {{ $beneficiario->beneficiarioTelefono }}</p>
-      <!-- Mostrar nacionalidad del beneficiario -->
-      @foreach ($nacionalidades as $nacionalidad)
-      @if ($beneficiario->nacionalidad_id == $nacionalidad->id)
       <p><span class="letraNegrita">Nacionalidad: </span> {{ $nacionalidad->nombreNacionalidad }}</p>
-    @endif
-    @endforeach
-      <!-- Mostrar cobertura medica del beneficiario -->
-      @foreach ($cobMedicas as $cobMedica)
-      @if ($beneficiario->cob_med_id == $cobMedica->id)
       <p><span class="letraNegrita">Previsión médica: </span> {{ $cobMedica->nombreCobMed }}</p>
-    @endif
-    @endforeach
-      <!-- Mostrar comuna del beneficiario -->
-      @foreach ($comunas as $comuna)
-      @if ($beneficiario->comuna_id == $comuna->id)
       <p><span class="letraNegrita">Comuna: </span> {{ $comuna->nombreComuna }}</p>
-    @endif
-    @endforeach
       <p><span class="letraNegrita">Domicilio: </span> {{ $beneficiario->beneficiarioDomicilio }}</p>
       <p><span class="letraNegrita">Vive en casa: </span> {{ $beneficiario->beneficiarioTipDom }}</p>
     </div>
@@ -69,11 +54,11 @@
   <div class="cardSimple">
     <div class="separacionFormulario">
       <h3>Datos del colegio</h3>
-      <p><span class="letraNegrita">¿Asiste al colegio? </span> Sí</p>
-      <p><span class="letraNegrita">Nombre: </span>Colegio Particular melipilla</p>
-      <p><span class="letraNegrita">Teléfono: </span>9 7490 4931</p>
-      <p><span class="letraNegrita">Curso: </span> 8° básico "C"</p>
-      <p><span class="letraNegrita">Profesor(a) jefe: </span> Fabiola Jiménez</p>
+      <p><span class="letraNegrita">¿Asiste al colegio? </span> {{ $colegio->colegioAsiste == 1 ? 'Sí' : 'No' }}</p>
+      <p><span class="letraNegrita">Nombre: </span> {{ $colegio->colegioNombre == null ? 'N/A' : $colegio->colegioNombre }}</p>
+      <p><span class="letraNegrita">Teléfono: </span> {{ $colegio->colegioTelefono == null ? 'N/A' : $colegio->colegioTelefono }}</p>
+      <p><span class="letraNegrita">Curso: </span> {{ $colegio->colegioCurso == null ? 'N/A' : $colegio->colegioCurso }}</p>
+      <p><span class="letraNegrita">Profesor(a) jefe: </span> {{ $colegio->colegioProfJefe == null ? 'N/A' : $colegio->colegioProfJefe }}</p>
     </div>
   </div>
   <br>
