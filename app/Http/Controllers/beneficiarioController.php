@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 // IMPORTAR MODELO BENEFICIARIO
@@ -16,6 +15,10 @@ use App\Models\Cob_Medica;
 use App\Models\Colegio;
 // IMPORTAR MODELO DERIVANTE
 use App\Models\Derivante;
+// IMPORTAR MODELO ANTECEDENTES DE SALUD
+use App\Models\antecedenteSalud;
+// IMPORTAR MODELO ANTECEDENTES SOCIAL
+use App\Models\antecedenteSocial;
 
 class beneficiarioController extends Controller
 {
@@ -41,7 +44,7 @@ class beneficiarioController extends Controller
         // VALIDAR LA INFORMACIÓN RECIBIDA DEL FORMULARIO
         $request->validate([
             'benEstado' => 'required|digits:1|regex:/^[^<>]*$/',
-            'benRut' => 'required|digits:8|regex:/^[0-9]+$/|unique:beneficiario,beneficiarioRut,' . $request->benId,
+            'benRut' => 'required|digits_between:7,8|regex:/^[0-9]+$/|unique:beneficiario,beneficiarioRut,' . $request->benId,
             'benDv' => 'required|string|max:1|regex:/^[0-9Kk]$/',
             'benPNombre' => 'required|string|max:20|regex:/^[^<>]*$/',
             'benSNombre' => 'nullable|string|max:20|regex:/^[^<>]*$/',
@@ -59,7 +62,32 @@ class beneficiarioController extends Controller
             'colTel' => 'nullable|string|min:7|max:15|regex:/^[0-9]+$/',
             'benCurso' => 'nullable|string|max:25|regex:/^[^<>]*$/',
             'colProfJefe' => 'nullable|string|max:60|regex:/^[^<>]*$/',
+            'devNombre' => 'nullable|string|max:60|regex:/^[^<>]*$/',
+            'devObservaciones' => 'nullable|string|regex:/^[^<>]*$/',
+            'benNee' => 'nullable|string|regex:/^[^<>]*$/',
+            'benEnfCro' => 'nullable|string|regex:/^[^<>]*$/',
+            'benTratamientos' => 'nullable|string|regex:/^[^<>]*$/',
+            'benCirugia' => 'required|digits:1|regex:/^[^<>]*$/',
+            'benCirugiaNom' => 'nullable|string|regex:/^[^<>]*$/',
+            'benEvidMed' => 'nullable|string|regex:/^[^<>]*$/',
+            'benFicFam' => 'required|digits:1|regex:/^[^<>]*$/',
+            'benFicFamPtje' => 'nullable|string|max:40|regex:/^[^<>]*$/',
+            'benBenSoc' => 'nullable|array',
+            'benBenSocOtro' => 'nullable|string',
+            'benCredDisc' => 'required|digits:1|regex:/^[^<>]*$/',
         ]);
+        // OBTENER LOS BENEFICIOS SOCIALES
+        $beneficios = $request->input('benBenSoc', []); 
+        $beneficioExtra = $request->input('benBenSocOtro', null); 
+        dd($beneficios, $beneficioExtra);
+        // SI HAY BENEFICIOS EXTRA, SE AÑADE A LA LISTA
+        if ($beneficioExtra) {
+            // Agregar el beneficio extra al array si existe
+            $beneficios[] = $beneficioExtra;
+        }
+        // UNIFICAR BENEFICIOS
+        $beneficiosGuardados = implode(', ', $beneficios);
+        dd($beneficiosGuardados);
 
         // SI SE RECIBE UN ID YA EXISTENTE, ACTUALIZAMOS LA NACIONALIDAD, SINO, LA CREAMOS
         if ($request->benId) {
@@ -90,6 +118,24 @@ class beneficiarioController extends Controller
                 'colegioCurso' => $request->benCurso,
                 'colegioProfJefe' => $request->colProfJefe,
             ]);
+            // OBTENER DERIVANTE ASOCIADO AL BENEFICIARIO
+            $derivante = Derivante::findOrFail($beneficiario->derivante_id);
+            // ACTUALIZAR DERIVANTE
+            $derivante->update([
+                'derivanteNombre' => $request->devNombre,
+                'derivanteObservaciones' => $request->devObservaciones,
+            ]);
+            // OBTENER ANTECEDENTES DE SALUD PERTINENTES
+            $antSalud = antecedenteSalud::findOrFail($beneficiario->antSal_id);
+            // ACTUALIZAR ANTECEDENTES MEDICOS
+            $antSalud->update([
+                'antSalNEE' => $request->benNee,
+                'antSalEnfCronica' => $request->benEnfCro,
+                'antSalTratamiento' => $request->benTratamientos,
+                'antSalCirugia' => $request->benCirugia,
+                'antSalDescCirugia' => $request->benCirugiaNom,
+                'antSalFilePath' => $request->benEvidMed,
+            ]);
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario actualizado correctamente.');
         } else {
             // CREAR COLEGIO
@@ -99,6 +145,27 @@ class beneficiarioController extends Controller
                 'colegioTelefono' => $request->colTel,
                 'colegioCurso' => $request->benCurso,
                 'colegioProfJefe' => $request->colProfJefe,
+            ]);
+            // CREAR DERIVANTE
+            $derivante = Derivante::create([
+                'derivanteNombre' => $request->devNombre,
+                'derivanteObservaciones' => $request->devObservaciones,
+            ]);
+            // CREAR ANTECEDENTES DE SALUD
+            $antSalud = antecedenteSalud::create([
+                'antSalNEE' => $request->benNee,
+                'antSalEnfCronica' => $request->benEnfCro,
+                'antSalTratamiento' => $request->benTratamientos,
+                'antSalCirugia' => $request->benCirugia,
+                'antSalDescCirugia' => $request->benCirugiaNom,
+                'antSalFilePath' => $request->benEvidMed,
+            ]);
+            // CREAR ANTECEDENTES SOCIALES
+            $antSocial = antecedenteSocial::create([
+                'antSocFichaFamiliar' => $request->benFicFam,
+                'antSocPtj' => $request->benFicFamPtje,
+                'antSocBeneficio' => $beneficiosGuardados,
+                'antSocCredDiscapacidad' => $request->benCredDisc,
             ]);
             // CREAR BENEFICIARIO
             Beneficiario::create([
@@ -117,6 +184,8 @@ class beneficiarioController extends Controller
                 'nacionalidad_id' => $request->benNac,
                 'comuna_id' => $request->benComuna,
                 'colegio_id' => $colegio->id,
+                'derivante_id' => $derivante->id,
+                'antSoc_id' => $antSocial->id,
             ]);
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario creado correctamente.');
         }

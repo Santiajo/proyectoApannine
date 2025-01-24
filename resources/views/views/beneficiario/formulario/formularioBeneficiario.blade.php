@@ -208,11 +208,11 @@
                 <input type="radio" id="benAsisColNo" name="benAsisCol" value="0" {{ (isset($colegio) && $colegio->colegioAsiste == 0) ? 'checked' : '' }}>
                 <label for="benAsisColNo">No</label>
             </fieldset>
+            <div class="errores" id="errorAsistirCol"></div>
             <section class="layout">
                 <div>
                     <label for="colNom">Nombre Establecimiento:</label>
-                    <input type="text" name="colNom" id="colNom"
-                        value="{{ $colegio->colegioNombre ?? '' }}">
+                    <input type="text" name="colNom" id="colNom" value="{{ $colegio->colegioNombre ?? '' }}">
                     <div class="errores errores2" id="errorColNom"></div>
                     @error('colNom')
                         <div class="alert alert-danger">El nombre de colegio no cumple con los requisitos!</div>
@@ -221,8 +221,7 @@
                 </div>
                 <div>
                     <label for="colTel">Teléfono Establecimiento:</label>
-                    <input type="number" name="colTel" id="colTel"
-                        value="{{ $colegio->colegioTelefono ?? '' }}">
+                    <input type="number" name="colTel" id="colTel" value="{{ $colegio->colegioTelefono ?? '' }}">
                     <div class="errores errores2" id="errorColTel"></div>
                     @error('colTel')
                         <div class="alert alert-danger">El telefono del colegio no cumple con los requisitos!</div>
@@ -230,8 +229,7 @@
                 </div>
                 <div>
                     <label for="benCurso">Curso:</label>
-                    <input type="text" name="benCurso" id="benCurso"
-                        value="{{ $colegio->colegioCurso ?? '' }}">
+                    <input type="text" name="benCurso" id="benCurso" value="{{ $colegio->colegioCurso ?? '' }}">
                     <div class="errores errores2" id="errorBenCurso"></div>
                     @error('benCurso')
                         <div class="alert alert-danger">El curso del colegio no cumple con los requisitos!</div>
@@ -256,9 +254,19 @@
 
             <label for="devNombre">Quien deriva:</label>
             <input type="text" name="devNombre" id="devNombre">
+            <div class="errores" id="errorDevNombre"></div>
+            @error('devNombre')
+                <div class="alert alert-danger">El nombre del derivante no cumple con los
+                    requisitos!</div>
+            @enderror
 
             <label for="devObservaciones">Observaciones derivación:</label>
             <textarea name="devObservaciones" id="devObservaciones"></textarea>
+            <div class="errores" id="errorDevObservaciones"></div>
+            @error('devObservaciones')
+                <div class="alert alert-danger">Las observaciones del derivante no cumplen los
+                    requisitos!</div>
+            @enderror
         </div>
 
         <!-- form Familia -->
@@ -340,34 +348,58 @@
             <!-- Necesidades educativas especiales -->
             <label for="benNee">NEE:</label>
             <textarea name="benNee" id="benNee" rows="4" cols="50"></textarea>
+            <div class="errores" id="erroBenNee"></div>
+            @error('benNee')
+                <div class="alert alert-danger">Las NEE no cumplen los
+                    requisitos!</div>
+            @enderror
 
             <!-- Enfermadades crónicas -->
             <label for="benEnfCro">Enfermedades crónicas:</label>
             <textarea name="benEnfCro" id="benEnfCro" rows="4" cols="50"></textarea>
+            <div class="errores" id="erroBenEnfCro"></div>
+            @error('benEnfCro')
+                <div class="alert alert-danger">Las enfermadades crónicas no cumplen los
+                    requisitos!</div>
+            @enderror
 
             <!-- Tratamientos -->
             <label for="benTratamientos">Tratamientos actuales:</label>
             <textarea name="benTratamientos" id="benTratamientos" rows="4" cols="50"></textarea>
+            <div class="errores" id="erroBenTratamientos"></div>
+            @error('benTratamientos')
+                <div class="alert alert-danger">Las tratamientos no cumplen los
+                    requisitos!</div>
+            @enderror
 
             <!-- ¿Tuvo cirugías? -->
             <fieldset>
                 <legend>¿Cirugías?</legend>
 
-                <input type="radio" id="benCirugiaSi" name="benCirugia" value="Sí">
+                <input type="radio" id="benCirugiaSi" name="benCirugia" value="1">
                 <label for="benCirugiaSi">Sí</label>
 
-                <input type="radio" id="benCirugiaNo" name="benCirugia" value="No">
+                <input type="radio" id="benCirugiaNo" name="benCirugia" value="0">
                 <label for="benCirugiaNo">No</label>
-
             </fieldset>
+            <div class="errores" id="errorTuvoCir"></div>
 
             <!-- Descripción cirugías -->
             <label for="benCirugiaNom">¿Cuales?</label>
             <textarea name="benCirugiaNom" id="benCirugiaNom" rows="4" cols="50"></textarea>
+            @error('benCirugiaNom')
+                <div class="alert alert-danger">Las cirúgías descritas no cumplen los
+                    requisitos!</div>
+            @enderror
 
             <!-- Documentos médicos -->
             <label for="benEvidMed">Documentos:</label>
             <input type="file" name="benEvidMed" id="benEvidMed">
+            <div class="errores" id="erroBenEvidMed"></div>
+            @error('benEvidMed')
+                <div class="alert alert-danger">La evidencia médica subidas no cumplen los
+                    requisitos!</div>
+            @enderror
         </div>
 
         <!-- form Antecedentes social -->
@@ -378,50 +410,65 @@
             <fieldset>
                 <legend>¿Cuenta con ficha familiar?</legend>
 
-                <input type="radio" id="benFicFamSi" name="benFicFam" value="Sí">
+                <input type="radio" id="benFicFamSi" name="benFicFam" value="1">
                 <label for="benFicFamSi">Sí</label>
 
-                <input type="radio" id="benFicFamNo" name="benFicFam" value="No">
+                <input type="radio" id="benFicFamNo" name="benFicFam" value="0">
                 <label for="benFicFamNo">No</label>
 
             </fieldset>
+            <div class="errores" id="tieneFicFam"></div>
+            @error('benFicFam')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
 
             <!-- Puntaje ficha familiar -->
             <label for="benFicFamPtje">Puntaje:</label>
             <input type="number" name="benFicFamPtje" id="benFicFamPtje">
+            @error('benFicFamPtje')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
 
-            <!-- Beneficios sociales -->
+
             <fieldset>
                 <legend>Beneficios sociales:</legend>
-
-                <input type="checkbox" id="benBenSoc1" name="benBenSoc1" value="Subsidio familiar">
-                <label for="vehicle1"> Subsidio familiar</label><br>
-                <input type="checkbox" id="benBenSoc2" name="benBenSoc2" value="Pensiones">
-                <label for="vehicle2"> Pensiones</label><br>
-                <input type="checkbox" id="benBenSoc3" name="benBenSoc3" value="Becas">
-                <label for="vehicle3"> Becas</label><br>
-                <input type="checkbox" id="benBenSoc4" name="benBenSoc4" value="Chile solidario">
-                <label for="vehicle3"> Chile solidario</label><br>
-                <input type="checkbox" id="benBenSoc5" name="benBenSoc5" value="Programa puente">
-                <label for="vehicle3"> Programa puente</label><br>
-                <input type="checkbox" id="benBenSoc6" name="benBenSoc6" value="Subsidio ético familiar">
-                <label for="vehicle3"> Subsidio ético familiar</label><br>
+                <input type="checkbox" id="benBenSoc1" name="benBenSoc[]" value="Subsidio familiar">
+                <label for="benBenSoc1"> Subsidio familiar</label><br>
+                <input type="checkbox" id="benBenSoc2" name="benBenSoc[]" value="Pensiones">
+                <label for="benBenSoc2"> Pensiones</label><br>
+                <input type="checkbox" id="benBenSoc3" name="benBenSoc[]" value="Becas">
+                <label for="benBenSoc3"> Becas</label><br>
+                <input type="checkbox" id="benBenSoc4" name="benBenSoc[]" value="Chile solidario">
+                <label for="benBenSoc4"> Chile solidario</label><br>
+                <input type="checkbox" id="benBenSoc5" name="benBenSoc[]" value="Programa puente">
+                <label for="benBenSoc5"> Programa puente</label><br>
+                <input type="checkbox" id="benBenSoc6" name="benBenSoc[]" value="Subsidio ético familiar">
+                <label for="benBenSoc6"> Subsidio ético familiar</label><br>
             </fieldset>
+            @error('benBenSoc')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
 
-            <!-- Anotar beneficio social extra -->
+            <!-- Input para beneficio social extra -->
             <label for="benBenSocOtro">Otro:</label>
             <input type="text" name="benBenSocOtro" id="benBenSocOtro">
+            @error('benBenSocOtro[]')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
 
             <!-- ¿Cuenta con credencial de discapacidad? -->
             <fieldset>
                 <legend>¿Cuenta con credencial de discapacidad?</legend>
 
-                <input type="radio" id="benCredDiscSi" name="benCredDisc" value="Sí">
+                <input type="radio" id="benCredDiscSi" name="benCredDisc" value="1">
                 <label for="benCredDiscSi">Sí</label>
 
-                <input type="radio" id="benCredDiscNo" name="benCredDisc" value="No">
+                <input type="radio" id="benCredDiscNo" name="benCredDisc" value="0">
                 <label for="benCredDiscNo">No</label>
             </fieldset>
+            @error('benCredDisc')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- form Diagnostico -->

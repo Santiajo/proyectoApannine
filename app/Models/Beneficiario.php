@@ -31,8 +31,10 @@ class Beneficiario extends Model
         'cob_med_id',
         'nacionalidad_id',
         'comuna_id',
-        'comuna_id',
         'colegio_id',
+        'derivante_id',
+        'antSal_id',
+        'antSoc_id',
     ];
 
     protected $casts = [
@@ -67,5 +69,17 @@ class Beneficiario extends Model
     public function derivante()
     {
         return $this->belongsTo(Derivante::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO ANTECEDENTES SALUD
+    public function antSalud()
+    {
+        return $this->belongsTo(antecedenteSalud::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO ANTECEDENTES SOCIALES
+    public function antSocial()
+    {
+        return $this->belongsTo(antecedenteSocial::class);
     }
 }

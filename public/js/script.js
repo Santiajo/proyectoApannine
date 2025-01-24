@@ -592,32 +592,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// FUNCIÓN PARA DESHABILITAR CAMPOS SI ES NECESARIO
-document.addEventListener('DOMContentLoaded', () => {
+// FUNCIÓN REUTILIZABLE PARA DESHABILITAR CAMPOS ASOCIADOS A RADIO BUTTONS
+function setupToggleFields(radioYesId, radioNoId, fieldIds) {
     // OBTENEMOS LOS RADIO BUTTONS
-    const benAsisColSi = document.getElementById('benAsisColSi');
-    const benAsisColNo = document.getElementById('benAsisColNo');
+    const benAsisColSi = document.getElementById(radioYesId);
+    const benAsisColNo = document.getElementById(radioNoId);
 
-    // INPUTS ASOCIADOS
-    const colNom = document.getElementById('colNom');
-    const colTel = document.getElementById('colTel');
-    const benCurso = document.getElementById('benCurso');
-    const colProfJefe = document.getElementById('colProfJefe');
+    // MAPEAMOS LOS INPUTS ASOCIADOS
+    const fields = fieldIds.map(id => document.getElementById(id));
 
     // FUNCIÓN PARA DESHABILITAR O HABILITAR CAMPOS
     const toggleFields = () => {
         const isDisabled = benAsisColNo.checked; // Si está marcado "No"
-        colNom.disabled = isDisabled;
-        colTel.disabled = isDisabled;
-        benCurso.disabled = isDisabled;
-        colProfJefe.disabled = isDisabled;
-
-        if (isDisabled) {
-            colNom.value = '';
-            colTel.value = '';
-            benCurso.value = '';
-            colProfJefe.value = '';
-        }
+        fields.forEach(field => {
+            field.disabled = isDisabled;
+            if (isDisabled) {
+                field.value = '';
+            }
+        });
     };
 
     // ASOCIAMOS EL EVENTO change A LOS RADIO BUTTONS
@@ -626,6 +618,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // LLAMAMOS LA FUNCIÓN AL CARGAR LA PÁGINA PARA AJUSTAR EL ESTADO INICIAL
     toggleFields();
+}
+
+// FUNCIÓN REUTILIZABLE PARA COMPROBAR QUE LOS RADIO BUTTONS ESTEN MARCADOS
+function isAnyRadioChecked(radioIds) {
+    return radioIds.some(id => {
+        const radio = document.getElementById(id);
+        return radio && radio.checked;
+    });
+}
+
+// FUNCIÓN REUTILIZABLE PARA DESACTIVAR INPUTS DE TEXTO EN CASO DE SER NECESARIO
+function desactivarInputTexto(inputId, inputId2) {
+    const input = document.getElementById(inputId);
+    const input2 = document.getElementById(inputId2);
+
+    // Verifica si los elementos existen
+    if (input && input2) {
+        input2.disabled = true;
+        input.addEventListener('input', () => {
+            console.log(`Valor del input (${inputId}):`, input.value);
+            if (input.value.trim() === '') {
+                input2.value = '';
+                input2.disabled = true;
+            } else {
+                input2.disabled = false;
+            }
+        });
+    } else {
+        console.error(`Elementos con IDs "${inputId}" o "${inputId2}" no encontrados.`);
+    }
+}
+
+// FUNCION PARA VALIDAR LA EXTENSION DEL ARCHIVO
+function validarArchivo(nombreArchivo) {
+    // EXTENSIONES PERMITIDAS
+    const extensionesValidas = ['.pdf', '.docx'];
+
+    // VALIDAR QUE EL NOMBRE DEL INPUT COINCIDA CON LAS COLOCACADAS EN LA LISTA
+    return extensionesValidas.some((extension) => nombreArchivo.toLowerCase().endsWith(extension));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // VALIDAMOS LOS INPUTS QUE DEBEN DE SER DESHABILITADOS
+    desactivarInputTexto('devNombre', 'devObservaciones');
+    // AJUSTAMOS CAMPOS A DESAHIBILITAR DEPENDIENDO DEl VALOR ASISTIR A COLEGIO
+    setupToggleFields(
+        'benAsisColSi', // ID del radio "Sí"
+        'benAsisColNo', // ID del radio "No"
+        ['colNom', 'colTel', 'benCurso', 'colProfJefe'] // IDs de los campos asociados
+    );
+    // AJUSTAMOS CAMPOS A DESAHIBILITAR DEPENDIENDO DEl VALOR SI TUVO CIRUGIAS
+    setupToggleFields(
+        'benCirugiaSi',
+        'benCirugiaNo',
+        ['benCirugiaNom']
+    );
 });
 
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE BENEFICIARIO
@@ -908,10 +956,16 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     }
 
-    // VALIDAR PRIMER NOMBRE
+    // VALIDAR TELEFONO DEL COLEGIO
     const colTelValue = colTel.value.trim();
     const errorColTel = document.getElementById('errorColTel');
-    if (colTelValue.length > 15) {
+    if (colTelValue != '' && colTelValue.length < 7) {
+        errorColTel.innerHTML = 'El telefono del colegio no puede tener menos de 7 caracteres!';
+        errorColTel.style.display = 'block';
+        errorColTel.classList.remove('exito');
+        errorColTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (colTelValue.length > 15) {
         errorColTel.innerHTML = 'El telefono del colegio no puede tener más de 15 caracteres!';
         errorColTel.style.display = 'block';
         errorColTel.classList.remove('exito');
@@ -970,6 +1024,91 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     }
 
+    // VALIDAR NOMBRE DE DERIVANTE
+    const devNombre = document.getElementById('devNombre');
+    const devNombreValue = devNombre.value.trim();
+    const errorDevNombre = document.getElementById('errorDevNombre');
+    if (devNombreValue.length > 60) {
+        errorDevNombre.innerHTML = 'El nombre del derivante no puede tener más de 60 caracteres!';
+        errorDevNombre.style.display = 'block';
+        errorDevNombre.classList.remove('exito');
+        camposValidos.push(false);
+    } else if (/[^[a-zA-Z0-9 ]*$]/.test(devNombreValue)) {
+        errorDevNombre.innerHTML = 'El nombre del derivante no puede incluir caracteres especiales!';
+        errorDevNombre.style.display = 'block';
+        errorDevNombre.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        errorDevNombre.classList.add('exito')
+        errorDevNombre.innerHTML = 'Nombre del derivante válido!';
+        errorDevNombre.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR OBSERVACIONES DE DERIVANTE
+    const devObservaciones = document.getElementById('devObservaciones');
+    const devObservacionesValue = devObservaciones.value.trim();
+    const errorDevObservaciones = document.getElementById('errorDevObservaciones');
+    if (/[^[a-zA-Z0-9 ]*$]/.test(devObservacionesValue)) {
+        errorDevObservaciones.innerHTML = 'Las observaciones del derivante no pueden incluir caracteres especiales!';
+        errorDevObservaciones.style.display = 'block';
+        errorDevObservaciones.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        errorDevObservaciones.classList.add('exito')
+        errorDevObservaciones.innerHTML = 'Observaciones del derivante válido!';
+        errorDevObservaciones.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR NEE DEL BENEFICIARIO
+    const benNee = document.getElementById('benNee');
+    const benNeeValue = benNee.value.trim();
+    const erroBenNee = document.getElementById('erroBenNee');
+    if (/[^[a-zA-Z0-9 ]*$]/.test(benNeeValue)) {
+        erroBenNee.innerHTML = 'Las NEE no pueden incluir caracteres especiales!';
+        erroBenNee.style.display = 'block';
+        erroBenNee.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        erroBenNee.classList.add('exito')
+        erroBenNee.innerHTML = 'NEE válidas!';
+        erroBenNee.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR ENFERMEDADES CRONICAS DEL BENEFICIARIO
+    const benEnfCro = document.getElementById('benEnfCro');
+    const benEnfCroValue = benEnfCro.value.trim();
+    const erroBenEnfCro = document.getElementById('erroBenEnfCro');
+    if (/[^[a-zA-Z0-9 ]*$]/.test(benEnfCroValue)) {
+        erroBenEnfCro.innerHTML = 'Las enfermedades crónicas no pueden incluir caracteres especiales!';
+        erroBenEnfCro.style.display = 'block';
+        erroBenEnfCro.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        erroBenEnfCro.classList.add('exito')
+        erroBenEnfCro.innerHTML = 'Enfermedades crónicas válidas!';
+        erroBenEnfCro.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR TRATAMIENTOS DEL BENEFICIARIO
+    const benTratamientos = document.getElementById('benTratamientos');
+    const benTratamientosValue = benTratamientos.value.trim();
+    const erroBenTratamientos = document.getElementById('erroBenTratamientos');
+    if (/[^[a-zA-Z0-9 ]*$]/.test(benTratamientosValue)) {
+        erroBenTratamientos.innerHTML = 'Los tratamientos no pueden incluir caracteres especiales!';
+        erroBenTratamientos.style.display = 'block';
+        erroBenTratamientos.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        erroBenTratamientos.classList.add('exito')
+        erroBenTratamientos.innerHTML = 'Tratamientos válidos!';
+        erroBenTratamientos.style.display = 'block';
+        camposValidos.push(true);
+    }
+
     // COMPROBAR SI TODOS LOS CAMPOS SON VÁLIDOS
     const esValido = camposValidos.every(Boolean);
 
@@ -978,3 +1117,66 @@ function validarFormBeneficiario() {
         document.querySelector('.formularioPiola').submit();
     }
 }
+
+// VALIDAR EL FORMULARIO
+document.addEventListener('DOMContentLoaded', () => {
+    const formBeneficiario = document.getElementById('formBeneficiario');
+
+    formBeneficiario.addEventListener('submit', (event) => {
+        const asisteAColegio = ['benAsisColSi', 'benAsisColNo'];
+        const errorAsistirCol = document.getElementById('errorAsistirCol');
+        const tuvoCirugias = ['benCirugiaSi', 'benCirugiaNo']; // IDs correctos
+        const errorTuvoCir = document.getElementById('errorTuvoCir');
+
+        let formValid = true;
+
+        // VALIDAR SI ASISTE A COLEGIO
+        if (!isAnyRadioChecked(asisteAColegio)) {
+            errorAsistirCol.innerHTML = 'Por favor, seleccione al menos una opción!';
+            errorAsistirCol.classList.remove('exito');
+            errorAsistirCol.style.display = 'block';
+            formValid = false;
+        } else {
+            errorAsistirCol.innerHTML = 'Opción válida!';
+            errorAsistirCol.classList.add('exito');
+            errorAsistirCol.style.display = 'block';
+        }
+
+        // VALIDAR SI TUVO CIRUGÍAS
+        if (!isAnyRadioChecked(tuvoCirugias)) {
+            errorTuvoCir.innerHTML = 'Por favor, seleccione al menos una opción!';
+            errorTuvoCir.classList.remove('exito');
+            errorTuvoCir.style.display = 'block';
+            formValid = false;
+        } else {
+            errorTuvoCir.innerHTML = 'Opción válida!';
+            errorTuvoCir.classList.add('exito');
+            errorTuvoCir.style.display = 'block';
+        }
+
+        // IMPEDIR EL ENVÍO DEL FORMULARIO SI ALGUNA VALIDACIÓN FALLA
+        if (!formValid) {
+            event.preventDefault();
+        }
+    });
+});
+
+// VALIDAMOS LAS EXTENSIONES DE LOS ARCHIVOS
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('benEvidMed').addEventListener('change', (event) => {
+        const archivo = event.target.files[0]; // Obtiene el archivo seleccionado
+        const nombreArchivo = archivo ? archivo.name : ''; // Obtiene el nombre del archivo
+        const erroBenEvidMed = document.getElementById('erroBenEvidMed');
+
+        if (!validarArchivo(nombreArchivo)) {
+            erroBenEvidMed.innerHTML = 'Los documentos solo pueden ser docx o pdf!';
+            erroBenEvidMed.classList.remove('exito');
+            erroBenEvidMed.style.display = 'block';
+            event.target.value = '';
+        } else {
+            erroBenEvidMed.innerHTML = 'Los documentos son válidos!';
+            erroBenEvidMed.classList.add('exito');
+            erroBenEvidMed.style.display = 'block';
+        }
+    });
+});
