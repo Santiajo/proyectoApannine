@@ -31,12 +31,12 @@ class Beneficiario extends Model
         'cob_med_id',
         'nacionalidad_id',
         'comuna_id',
-        'colegio_id',
         'derivante_id',
+        'colegio_id',
+        'diagnostico_id',
         'antSal_id',
         'antSoc_id',
     ];
-
     protected $casts = [
         'beneficiarioFecNac' => 'date',
     ];
@@ -60,6 +60,7 @@ class Beneficiario extends Model
     }
 
     // CREAMOS RELACIÓN CON EL MODELO COLEGIO
+    // Relationship with Colegio
     public function colegio()
     {
         return $this->belongsTo(Colegio::class);
@@ -81,5 +82,11 @@ class Beneficiario extends Model
     public function antSocial()
     {
         return $this->belongsTo(antecedenteSocial::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO ANTECEDENTES DIAGNÓSTICO
+    public function diagnostico()
+    {
+        return $this->belongsTo(Diagnostico::class);
     }
 }

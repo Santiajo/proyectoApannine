@@ -19,6 +19,8 @@ use App\Models\Derivante;
 use App\Models\antecedenteSalud;
 // IMPORTAR MODELO ANTECEDENTES SOCIAL
 use App\Models\antecedenteSocial;
+// IMPORTAR MODELO ANTECEDENTES SOCIAL
+use App\Models\Diagnostico;
 
 class beneficiarioController extends Controller
 {
@@ -69,17 +71,14 @@ class beneficiarioController extends Controller
             'benTratamientos' => 'nullable|string|regex:/^[^<>]*$/',
             'benCirugia' => 'required|digits:1|regex:/^[^<>]*$/',
             'benCirugiaNom' => 'nullable|string|regex:/^[^<>]*$/',
-            'benEvidMed' => 'nullable|string|regex:/^[^<>]*$/',
             'benFicFam' => 'required|digits:1|regex:/^[^<>]*$/',
             'benFicFamPtje' => 'nullable|string|max:40|regex:/^[^<>]*$/',
-            'benBenSoc' => 'nullable|array',
-            'benBenSocOtro' => 'nullable|string',
             'benCredDisc' => 'required|digits:1|regex:/^[^<>]*$/',
+            'benDiag' => 'required|string|regex:/^[^<>]*$/',
         ]);
         // OBTENER LOS BENEFICIOS SOCIALES
-        $beneficios = $request->input('benBenSoc', []); 
-        $beneficioExtra = $request->input('benBenSocOtro', null); 
-        dd($beneficios, $beneficioExtra);
+        $beneficios = $request->input('benBenSoc', []);
+        $beneficioExtra = $request->input('benBenSocOtro', null);
         // SI HAY BENEFICIOS EXTRA, SE AÑADE A LA LISTA
         if ($beneficioExtra) {
             // Agregar el beneficio extra al array si existe
@@ -87,7 +86,15 @@ class beneficiarioController extends Controller
         }
         // UNIFICAR BENEFICIOS
         $beneficiosGuardados = implode(', ', $beneficios);
-        dd($beneficiosGuardados);
+
+        // MANEJO DE SUBIDA DE ARCHIVOS
+        if ($request->hasFile('benEvidMed')) {
+            $filePath = $request->file('benEvidMed')->storeAs(
+                'public/beneficiarios',
+                $request->file('benEvidMed')->getClientOriginalName(),
+                'public'
+            );
+        }
 
         // SI SE RECIBE UN ID YA EXISTENTE, ACTUALIZAMOS LA NACIONALIDAD, SINO, LA CREAMOS
         if ($request->benId) {
@@ -136,6 +143,21 @@ class beneficiarioController extends Controller
                 'antSalDescCirugia' => $request->benCirugiaNom,
                 'antSalFilePath' => $request->benEvidMed,
             ]);
+            // OBTENER ANTECEDENTES DE SALUD PERTINENTES
+            $antSocial = antecedenteSocial::findOrFail($beneficiario->antSoc_id);
+            // ACTUALIZAR ANTECEDENTES MEDICOS
+            $antSocial->update([
+                'antSocFichaFamiliar' => $request->benFicFam,
+                'antSocPtj' => $request->benFicFamPtje,
+                'antSocBeneficio' => $beneficiosGuardados,
+                'antSocCredDiscapacidad' => $request->benCredDisc,
+            ]);
+            // OBTENER ANTECEDENTES DE SALUD PERTINENTES
+            $diagnostico = Diagnostico::findOrFail($beneficiario->diagnostico_id);
+            // ACTUALIZAR ANTECEDENTES MEDICOS
+            $diagnostico->update([
+                'diagnosticoDesc' => $request->benDiag,
+            ]);
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario actualizado correctamente.');
         } else {
             // CREAR COLEGIO
@@ -158,7 +180,7 @@ class beneficiarioController extends Controller
                 'antSalTratamiento' => $request->benTratamientos,
                 'antSalCirugia' => $request->benCirugia,
                 'antSalDescCirugia' => $request->benCirugiaNom,
-                'antSalFilePath' => $request->benEvidMed,
+                'antSalFilePath' => $filePath,
             ]);
             // CREAR ANTECEDENTES SOCIALES
             $antSocial = antecedenteSocial::create([
@@ -166,6 +188,10 @@ class beneficiarioController extends Controller
                 'antSocPtj' => $request->benFicFamPtje,
                 'antSocBeneficio' => $beneficiosGuardados,
                 'antSocCredDiscapacidad' => $request->benCredDisc,
+            ]);
+            // CREAR DIAGNOSTICO
+            $diagnostico = Diagnostico::create([
+                'diagnosticoDesc' => $request->benDiag,
             ]);
             // CREAR BENEFICIARIO
             Beneficiario::create([
@@ -185,7 +211,9 @@ class beneficiarioController extends Controller
                 'comuna_id' => $request->benComuna,
                 'colegio_id' => $colegio->id,
                 'derivante_id' => $derivante->id,
+                'antSal_id' => $antSalud->id,
                 'antSoc_id' => $antSocial->id,
+                'diagnostico_id' => $diagnostico->id,
             ]);
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario creado correctamente.');
         }

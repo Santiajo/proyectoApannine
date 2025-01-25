@@ -978,11 +978,11 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     }
 
-    // VALIDAR PRIMER NOMBRE
+    // VALIDAR CURSO
     const benCursoValue = benCurso.value.trim();
     const errorBenCurso = document.getElementById('errorBenCurso');
-    if (benCursoValue.length > 8) {
-        errorBenCurso.innerHTML = 'El curso no puede tener más de 20 caracteres!';
+    if (benCursoValue.length > 25) {
+        errorBenCurso.innerHTML = 'El curso no puede tener más de 25 caracteres!';
         errorBenCurso.style.display = 'block';
         errorBenCurso.classList.remove('exito');
         errorBenCurso.classList.remove('exito2');
@@ -1001,11 +1001,11 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     }
 
-    // VALIDAR PRIMER NOMBRE
+    // VALIDAR PRIMER PROFESOR JEFE
     const colProfJefeValue = colProfJefe.value.trim();
     const errorColProfJefe = document.getElementById('errorColProfJefe');
-    if (colProfJefeValue.length > 8) {
-        errorColProfJefe.innerHTML = 'El nombre del profesor no puede tener más de 20 caracteres!';
+    if (colProfJefeValue.length > 60) {
+        errorColProfJefe.innerHTML = 'El nombre del profesor no puede tener más de 60 caracteres!';
         errorColProfJefe.style.display = 'block';
         errorColProfJefe.classList.remove('exito');
         errorColProfJefe.classList.remove('exito2');

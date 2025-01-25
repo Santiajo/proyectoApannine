@@ -45,7 +45,7 @@
     </div>
     <br>
     <!-- Etiqueta formulario -->
-    <form class="formularioPiola" method="POST" action="{{ route('beneficiarios.guardarBeneficiario') }}"
+    <form class="formularioPiola" method="POST" action="{{ route('beneficiarios.guardarBeneficiario') }}" enctype="multipart/form-data"
         id="formBeneficiario">
         @csrf
         <!-- Subtítulo -->
@@ -445,15 +445,13 @@
                 <input type="checkbox" id="benBenSoc6" name="benBenSoc[]" value="Subsidio ético familiar">
                 <label for="benBenSoc6"> Subsidio ético familiar</label><br>
             </fieldset>
-            @error('benBenSoc')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+
 
             <!-- Input para beneficio social extra -->
             <label for="benBenSocOtro">Otro:</label>
             <input type="text" name="benBenSocOtro" id="benBenSocOtro">
             @error('benBenSocOtro[]')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="alert alert-danger">Los beneficios sociales extra no cumplen los requisitos!</div>
             @enderror
 
             <!-- ¿Cuenta con credencial de discapacidad? -->
