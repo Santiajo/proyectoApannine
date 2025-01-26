@@ -676,6 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 });
 
+
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE BENEFICIARIO
 function validarFormBeneficiario() {
     let camposValidos = [];
@@ -701,6 +702,38 @@ function validarFormBeneficiario() {
     errorBenFecNac = document.getElementById('errorBenFecNac');
     errorBenTel = document.getElementById('errorBenTel');
     errorBenDom = document.getElementById('errorBenDom');
+
+    // RADIO INPUTS
+    const asisteAColegio = ['benAsisColSi', 'benAsisColNo'];
+    const errorAsistirCol = document.getElementById('errorAsistirCol');
+    const tuvoCirugias = ['benCirugiaSi', 'benCirugiaNo'];
+    const errorTuvoCir = document.getElementById('errorTuvoCir');
+
+    // VALIDAR RADIO BUTTON SI ASISTE AL COLEGIO
+    if (!isAnyRadioChecked(asisteAColegio)) {
+        errorAsistirCol.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorAsistirCol.classList.remove('exito');
+        errorAsistirCol.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorAsistirCol.innerHTML = 'Opción válida!';
+        errorAsistirCol.classList.add('exito');
+        errorAsistirCol.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SI TUVO CIRUGÍAS
+    if (!isAnyRadioChecked(tuvoCirugias)) {
+        errorTuvoCir.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorTuvoCir.classList.remove('exito');
+        errorTuvoCir.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorTuvoCir.innerHTML = 'Opción válida!';
+        errorTuvoCir.classList.add('exito');
+        errorTuvoCir.style.display = 'block';
+        camposValidos.push(true);
+    }
 
     /// VALIDAR RUT
     const rutValue = benRut.value.trim();
@@ -1117,49 +1150,6 @@ function validarFormBeneficiario() {
         document.querySelector('.formularioPiola').submit();
     }
 }
-
-// VALIDAR EL FORMULARIO
-document.addEventListener('DOMContentLoaded', () => {
-    const formBeneficiario = document.getElementById('formBeneficiario');
-
-    formBeneficiario.addEventListener('submit', (event) => {
-        const asisteAColegio = ['benAsisColSi', 'benAsisColNo'];
-        const errorAsistirCol = document.getElementById('errorAsistirCol');
-        const tuvoCirugias = ['benCirugiaSi', 'benCirugiaNo']; // IDs correctos
-        const errorTuvoCir = document.getElementById('errorTuvoCir');
-
-        let formValid = true;
-
-        // VALIDAR SI ASISTE A COLEGIO
-        if (!isAnyRadioChecked(asisteAColegio)) {
-            errorAsistirCol.innerHTML = 'Por favor, seleccione al menos una opción!';
-            errorAsistirCol.classList.remove('exito');
-            errorAsistirCol.style.display = 'block';
-            formValid = false;
-        } else {
-            errorAsistirCol.innerHTML = 'Opción válida!';
-            errorAsistirCol.classList.add('exito');
-            errorAsistirCol.style.display = 'block';
-        }
-
-        // VALIDAR SI TUVO CIRUGÍAS
-        if (!isAnyRadioChecked(tuvoCirugias)) {
-            errorTuvoCir.innerHTML = 'Por favor, seleccione al menos una opción!';
-            errorTuvoCir.classList.remove('exito');
-            errorTuvoCir.style.display = 'block';
-            formValid = false;
-        } else {
-            errorTuvoCir.innerHTML = 'Opción válida!';
-            errorTuvoCir.classList.add('exito');
-            errorTuvoCir.style.display = 'block';
-        }
-
-        // IMPEDIR EL ENVÍO DEL FORMULARIO SI ALGUNA VALIDACIÓN FALLA
-        if (!formValid) {
-            event.preventDefault();
-        }
-    });
-});
 
 // VALIDAMOS LAS EXTENSIONES DE LOS ARCHIVOS
 document.addEventListener('DOMContentLoaded', () => {

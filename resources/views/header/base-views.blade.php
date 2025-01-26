@@ -103,7 +103,7 @@
         </main>
     </div>
 
-    <!-- Cargar archivos JS específicos si es necesario -->
+    <!-- Cargar archivos JS -->
     <script src="{{ asset('js/script.js') }}"></script>
 
     @if (session('success'))

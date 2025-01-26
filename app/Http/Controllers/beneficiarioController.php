@@ -40,43 +40,117 @@ class beneficiarioController extends Controller
         return view('views.beneficiario.formulario.formularioBeneficiario', compact('nacionalidades', 'comunas', 'cobMedicas'));
     }
 
+    // MÉTODO PARA VALIDAR BOOLEANOS
+    public function validarBoolean(Request $request, $nombreBoolean)
+    {
+        $request->validate([
+            $nombreBoolean => 'required|boolean',
+        ]);
+    }
+
+    // MÉTODO PARA VALIDAR STRINGS
+    public function validarString(Request $request, $nombreString, $necesariedad, int $largoString)
+    {
+        $request->validate([
+            $nombreString => $necesariedad . '|string|max:' . $largoString . '|regex:/^[^<>]*$/',
+        ]);
+    }
+
+    // MÉTODO PARA VALIDAR INTEGERS
+    public function validarInteger(Request $request, $nombreInteger)
+    {
+        $request->validate([
+            $nombreInteger => 'required|digits_between:1,20|regex:/^[^<>]*$/',
+        ]);
+    }
+
+    // REGLAS PARA NÚMEROS DE TELEFONO
+    public function reglaTelefonos($nullable = true)
+    {
+        return ($nullable ? 'nullable' : 'required') . '|string|min:7|max:15|regex:/^[0-9]+$/';
+    }
+
+    // MÉTODO PARA VALIDAR DATOS DEL FORMULARIO
+    public function validarFormulario(Request $request)
+    {
+        // VALIDAR TODOS LOS BOOLEANOS DEL FORMULARIO
+        $booleanos = ['benEstado', 'benAsisCol', 'benCirugia', 'benFicFam', 'benCredDisc'];
+        foreach ($booleanos as $boolean) {
+            $this->validarBoolean($request, $boolean);
+        }
+
+        // VALIDAR STRINGS PEQUEÑOS
+        $stringPequenios = ['benPNombre', 'benApPaterno', 'benApMaterno', 'benTipViv'];
+        foreach ($stringPequenios as $stringPequenio) {
+            $this->validarString($request, $stringPequenio, 'required', 20);
+        }
+        $this->validarString($request, 'benSNombre', 'nullable', 20);
+        $this->validarString($request, 'benCurso', 'nullable', 25);
+        $this->validarString($request, 'colNom', 'nullable', 30);
+        $this->validarString($request, 'benFicFamPtje', 'nullable', 40);
+        // VALIDAR STRINGS MEDIANOS
+        $this->validarString($request, 'colProfJefe', 'nullable', 60);
+        $this->validarString($request, 'devNombre', 'nullable', 60);  
+        $this->validarString($request, 'benDom', 'required', 100);  
+        // VALIDAR STRINGS GRANDES
+        $stringGrandes = ['devObservaciones', 'benNee', 'benEnfCro', 'benTratamientos', 'benCirugiaNom'];
+        foreach ($stringGrandes as $stringGrande) {
+            $this->validarString($request, $stringGrande, 'nullable', 255);
+        }
+        $this->validarString($request, 'benDiag', 'required', 255);
+
+        // VALIDAR INTEGERS
+        $integers = ['benCobMed', 'benNac', 'benComuna'];
+        foreach ($integers as $integer) {
+            $this->validarInteger($request, $integer);
+        }
+        
+        // VALIDAR CAMPOS ESPECIALES
+        $request->validate([
+            'benRut' => 'required|digits_between:7,8|regex:/^[0-9]+$/|unique:beneficiario,beneficiarioRut,' . $request->benId,
+            'benDv' => 'required|string|max:1|regex:/^[0-9Kk]$/',
+            'benTel' => $this->reglaTelefonos(),
+            'colTel' => $this->reglaTelefonos(),
+            'benFecNac' => 'required|date|before:today',
+        ]);
+    }
+
+    // MÉTODO PARA CREAR REGISTROS
+    public function crearRegistro(Request $request, $nombreModelo, $listaColumnas, $listaCampos)
+    {
+        $datos = [];
+        for ($i = 0; $i < count($listaColumnas); $i++) {
+            if (isset($listaCampos[$i])) {
+                $datos[$listaColumnas[$i]] = is_string($listaCampos[$i]) 
+                    ? $request->input($listaCampos[$i]) 
+                    : $listaCampos[$i];
+            }
+        }
+        return $nombreModelo::create($datos);
+    }
+
+    // MÉTODO PARA ACTUALIZAR REGISTROS
+    public function actualizarRegistro(Request $request, $nombreModelo, $id, $listaColumnas, $listaCampos)
+    {
+        $registro = $nombreModelo::findOrFail($id);
+        $datos = [];
+        for ($i = 0; $i < count($listaColumnas); $i++) {
+            if (isset($listaCampos[$i])) {
+                $datos[$listaColumnas[$i]] = is_string($listaCampos[$i]) 
+                    ? $request->input($listaCampos[$i]) 
+                    : $listaCampos[$i];
+            }
+        }
+        $registro->update($datos);
+    }
+
     // MÉTODO PARA GUARDAR O ACTUALIZAR UN BENEFICIARIO
     public function guardarBeneficiario(Request $request)
     {
-        // VALIDAR LA INFORMACIÓN RECIBIDA DEL FORMULARIO
-        $request->validate([
-            'benEstado' => 'required|digits:1|regex:/^[^<>]*$/',
-            'benRut' => 'required|digits_between:7,8|regex:/^[0-9]+$/|unique:beneficiario,beneficiarioRut,' . $request->benId,
-            'benDv' => 'required|string|max:1|regex:/^[0-9Kk]$/',
-            'benPNombre' => 'required|string|max:20|regex:/^[^<>]*$/',
-            'benSNombre' => 'nullable|string|max:20|regex:/^[^<>]*$/',
-            'benApPaterno' => 'required|string|max:20|regex:/^[^<>]*$/',
-            'benApMaterno' => 'required|string|max:20|regex:/^[^<>]*$/',
-            'benFecNac' => 'required|date|before:today',
-            'benTel' => 'required|string|min:7|max:15|regex:/^[0-9]+$/',
-            'benCobMed' => 'required|digits_between:1,20|regex:/^[^<>]*$/',
-            'benNac' => 'required|digits_between:1,20|regex:/^[^<>]*$/',
-            'benDom' => 'required|string|max:100|regex:/^[^<>]*$/',
-            'benComuna' => 'required|digits_between:1,20|regex:/^[^<>]*$/',
-            'benTipViv' => 'required|string|max:20|regex:/^[^<>]*$/',
-            'benAsisCol' => 'required|digits:1|regex:/^[^<>]*$/',
-            'colNom' => 'nullable|string|max:30|regex:/^[^<>]*$/',
-            'colTel' => 'nullable|string|min:7|max:15|regex:/^[0-9]+$/',
-            'benCurso' => 'nullable|string|max:25|regex:/^[^<>]*$/',
-            'colProfJefe' => 'nullable|string|max:60|regex:/^[^<>]*$/',
-            'devNombre' => 'nullable|string|max:60|regex:/^[^<>]*$/',
-            'devObservaciones' => 'nullable|string|regex:/^[^<>]*$/',
-            'benNee' => 'nullable|string|regex:/^[^<>]*$/',
-            'benEnfCro' => 'nullable|string|regex:/^[^<>]*$/',
-            'benTratamientos' => 'nullable|string|regex:/^[^<>]*$/',
-            'benCirugia' => 'required|digits:1|regex:/^[^<>]*$/',
-            'benCirugiaNom' => 'nullable|string|regex:/^[^<>]*$/',
-            'benFicFam' => 'required|digits:1|regex:/^[^<>]*$/',
-            'benFicFamPtje' => 'nullable|string|max:40|regex:/^[^<>]*$/',
-            'benCredDisc' => 'required|digits:1|regex:/^[^<>]*$/',
-            'benDiag' => 'required|string|regex:/^[^<>]*$/',
-        ]);
-        // OBTENER LOS BENEFICIOS SOCIALES
+        // VALIDAR INFORMACIÓN DEL FORMULARIO
+        $this->validarFormulario($request);
+
+        // MANEJO DE MÚLTIPLES BENEFICIOS TOTALES
         $beneficios = $request->input('benBenSoc', []);
         $beneficioExtra = $request->input('benBenSocOtro', null);
         // SI HAY BENEFICIOS EXTRA, SE AÑADE A LA LISTA
@@ -90,10 +164,12 @@ class beneficiarioController extends Controller
         // MANEJO DE SUBIDA DE ARCHIVOS
         if ($request->hasFile('benEvidMed')) {
             $filePath = $request->file('benEvidMed')->storeAs(
-                'public/beneficiarios',
+                'beneficiarios',
                 $request->file('benEvidMed')->getClientOriginalName(),
                 'public'
             );
+        } else {
+            $filePath = null;
         }
 
         // SI SE RECIBE UN ID YA EXISTENTE, ACTUALIZAMOS LA NACIONALIDAD, SINO, LA CREAMOS
@@ -161,18 +237,13 @@ class beneficiarioController extends Controller
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario actualizado correctamente.');
         } else {
             // CREAR COLEGIO
-            $colegio = Colegio::create([
-                'colegioAsiste' => $request->benAsisCol,
-                'colegioNombre' => $request->colNom,
-                'colegioTelefono' => $request->colTel,
-                'colegioCurso' => $request->benCurso,
-                'colegioProfJefe' => $request->colProfJefe,
-            ]);
+            $colegioColumnas = ['colegioAsiste', 'colegioNombre', 'colegioTelefono', 'colegioCurso', 'colegioProfJefe'];
+            $colegioCampos = ['benAsisCol', 'colNom', 'colTel', 'benCurso', 'colProfJefe'];
+            $colegio = $this->crearRegistro($request, Colegio::class, $colegioColumnas, $colegioCampos);
             // CREAR DERIVANTE
-            $derivante = Derivante::create([
-                'derivanteNombre' => $request->devNombre,
-                'derivanteObservaciones' => $request->devObservaciones,
-            ]);
+            $derivanteColumnas = ['derivanteNombre', 'derivanteObservaciones'];
+            $derivanteCampos = ['devNombre', 'devObservaciones'];
+            $derivante = $this->crearRegistro($request, Derivante::class, $derivanteColumnas, $derivanteCampos);
             // CREAR ANTECEDENTES DE SALUD
             $antSalud = antecedenteSalud::create([
                 'antSalNEE' => $request->benNee,
@@ -183,38 +254,21 @@ class beneficiarioController extends Controller
                 'antSalFilePath' => $filePath,
             ]);
             // CREAR ANTECEDENTES SOCIALES
-            $antSocial = antecedenteSocial::create([
-                'antSocFichaFamiliar' => $request->benFicFam,
-                'antSocPtj' => $request->benFicFamPtje,
-                'antSocBeneficio' => $beneficiosGuardados,
-                'antSocCredDiscapacidad' => $request->benCredDisc,
-            ]);
+            $antSocialColumnas = ['antSocFichaFamiliar', 'antSocPtj', 'antSocBeneficio', 'antSocCredDiscapacidad'];
+            $antSocialCampos = ['benFicFam', 'benFicFamPtje', $beneficiosGuardados, 'benCredDisc'];
+            $antSocial = $this->crearRegistro($request, antecedenteSocial::class, $antSocialColumnas, $antSocialCampos);
             // CREAR DIAGNOSTICO
-            $diagnostico = Diagnostico::create([
-                'diagnosticoDesc' => $request->benDiag,
-            ]);
+            $diagnosticoColumnas = ['diagnosticoDesc'];
+            $diagnosticoCampos = ['benDiag'];
+            $diagnostico = $this->crearRegistro($request, Diagnostico::class, $diagnosticoColumnas, $diagnosticoCampos);
             // CREAR BENEFICIARIO
-            Beneficiario::create([
-                'beneficiarioEstado' => $request->benEstado,
-                'beneficiarioRut' => $request->benRut,
-                'beneficiarioDv' => $request->benDv,
-                'beneficiarioPNombre' => $request->benPNombre,
-                'beneficiarioSNombre' => $request->benSNombre,
-                'beneficiarioApPaterno' => $request->benApPaterno,
-                'beneficiarioApMaterno' => $request->benApMaterno,
-                'beneficiarioFecNac' => $request->benFecNac,
-                'beneficiarioTelefono' => $request->benTel,
-                'beneficiarioDomicilio' => $request->benDom,
-                'beneficiarioTipDom' => $request->benTipViv,
-                'cob_med_id' => $request->benCobMed,
-                'nacionalidad_id' => $request->benNac,
-                'comuna_id' => $request->benComuna,
-                'colegio_id' => $colegio->id,
-                'derivante_id' => $derivante->id,
-                'antSal_id' => $antSalud->id,
-                'antSoc_id' => $antSocial->id,
-                'diagnostico_id' => $diagnostico->id,
-            ]);
+            $beneficiarioColumnas = ['beneficiarioEstado', 'beneficiarioRut', 'beneficiarioDv', 'beneficiarioPNombre', 'beneficiarioSNombre', 'beneficiarioApPaterno', 
+            'beneficiarioApMaterno', 'beneficiarioFecNac', 'beneficiarioTelefono', 'beneficiarioDomicilio', 'beneficiarioTipDom', 'cob_med_id', 'nacionalidad_id',
+            'comuna_id', 'colegio_id', 'derivante_id', 'antSal_id', 'antSoc_id', 'diagnostico_id'];
+            $beneficiarioCampos = ['benEstado', 'benRut', 'benDv', 'benPNombre', 'benSNombre', 'benApPaterno', 'benApMaterno', 'benFecNac', 'benTel', 'benDom', 
+            'benTipViv', 'benCobMed', 'benNac','benComuna', $colegio->id, $derivante->id, $antSalud->id, $antSocial->id,  $diagnostico->id];
+            $this->crearRegistro($request, Beneficiario::class, $beneficiarioColumnas, $beneficiarioCampos);
+            
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario creado correctamente.');
         }
     }
@@ -222,7 +276,13 @@ class beneficiarioController extends Controller
     // MÉTODO PARA ELIMINAR UN BENEFICIARIO
     public function eliminarBeneficiario($id)
     {
-        Beneficiario::findOrFail($id)->delete();
+        $beneficiario = Beneficiario::findOrFail($id);
+        Colegio::findOrFail($beneficiario->colegio_id)->delete();
+        Derivante::findOrFail($beneficiario->derivante_id)->delete();
+        antecedenteSalud::findOrFail($beneficiario->antSal_id)->delete();
+        antecedenteSocial::findOrFail($beneficiario->antSoc_id)->delete();
+        Diagnostico::findOrFail($beneficiario->diagnostico_id)->delete();
+        $beneficiario->delete();
         return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario eliminado correctamente.');
     }
 
