@@ -36,6 +36,7 @@ class Beneficiario extends Model
         'diagnostico_id',
         'antSal_id',
         'antSoc_id',
+        'familiar_beneficiario_id',
     ];
     protected $casts = [
         'beneficiarioFecNac' => 'date',
@@ -88,5 +89,12 @@ class Beneficiario extends Model
     public function diagnostico()
     {
         return $this->belongsTo(Diagnostico::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO FAMILIAR BENEFICIARIO
+    public function familiares()
+    {
+        return $this->belongsToMany(Familiar::class, 'familiarBeneficiario', 'beneficiario_id', 'familiar_id')
+            ->withTimestamps();
     }
 }

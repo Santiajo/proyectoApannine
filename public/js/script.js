@@ -1232,18 +1232,6 @@ function validarFormBeneficiario() {
     // COMPROBAR SI TODOS LOS CAMPOS SON VÁLIDOS
     const esValido = camposValidos.every(Boolean);
 
-    const benBenSocFields = document.querySelectorAll('input[name="benBenSoc[]"]');
-    const benEvidMedField = document.getElementById('benEvidMed');
-
-    const isBenEvidMedEmpty = benEvidMedField.value.trim() === '';
-
-    let isBenBenSocEmpty = true;
-    benBenSocFields.forEach(function (field) {
-        if (field.value.trim() !== '') {
-            isBenBenSocEmpty = false;
-        }
-    });
-
     // SI TODO ESTÁ CORRECTO, ENVIAR EL FORMULARIO
     if (esValido) {
         document.querySelector('.formularioPiola').submit();
