@@ -527,15 +527,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const mostrarAntSalud = document.getElementById('mostrarAntSalud');
     const mostrarAntSocial = document.getElementById('mostrarAntSocial');
     const mostrarDiagnostico = document.getElementById('mostrarDiagnostico');
+    const agregarFamiliar = document.getElementById('agregarFamiliar');
+    const eliminarFamiliar = document.getElementById('eliminarFamiliar');
 
     // OBTENER APARTADOS DEL FORMULARIO
     const apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
     const apartadoColegio = document.getElementById('apartadoColegio');
     const apartadoDerivante = document.getElementById('apartadoDerivante');
     const apartadoFamilia = document.getElementById('apartadoFamilia');
+    const apartadoFamilia2 = document.getElementById('apartadoFamilia2');
     const apartadoAntSalud = document.getElementById('apartadoAntSalud');
     const apartadoAntSocial = document.getElementById('apartadoAntSocial');
     const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
+
+    let contadorFamiliares = 0;
 
     // FUNCION PARA OCULTAR TODOS LOS APARTADOS
     function ocultarTodosLosApartados() {
@@ -544,9 +549,11 @@ document.addEventListener('DOMContentLoaded', () => {
             apartadoColegio,
             apartadoDerivante,
             apartadoFamilia,
+            apartadoFamilia2,
             apartadoAntSalud,
             apartadoAntSocial,
-            apartadoDiagnostico
+            apartadoDiagnostico,
+            grupoBotones
         ];
         apartados.forEach(apartado => apartado.classList.add('ocultar'));
     }
@@ -589,7 +596,37 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarDiagnostico.addEventListener('click', () => {
         ocultarTodosLosApartados();
         apartadoDiagnostico.classList.remove('ocultar');
+        grupoBotones.classList.remove('ocultar');
     });
+
+    agregarFamiliar.addEventListener('click', () => {
+        ocultarTodosLosApartados();
+        contadorFamiliares++;
+        console.log('Contador: ', contadorFamiliares);
+        apartadoFamilia.classList.remove('ocultar');
+        apartadoFamilia2.classList.remove('ocultar');
+
+        if (contadorFamiliares == 0) {
+            eliminarFamiliar.disabled = true;
+        } else {
+            eliminarFamiliar.disabled = false;
+        }
+    });
+
+    eliminarFamiliar.addEventListener('click', () => {
+        contadorFamiliares--;
+        if (contadorFamiliares == 0) {
+            contadorFamiliares = 0;
+            eliminarFamiliar.disabled = true;
+        } else {
+            eliminarFamiliar.disabled = true;
+        }
+        console.log('Contador: ', contadorFamiliares);
+        ocultarTodosLosApartados();
+        apartadoFamilia.classList.remove('ocultar');
+        console.log('Se hizo clic en eliminar');
+    });
+
 });
 
 // FUNCIÓN REUTILIZABLE PARA DESHABILITAR CAMPOS ASOCIADOS A RADIO BUTTONS

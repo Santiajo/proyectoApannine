@@ -272,7 +272,7 @@
         <!-- form Familia -->
         <div class="separacionFormulario" id="apartadoFamilia">
             <!-- Subtítulo -->
-            <h3>Datos Familia</h3>
+            <h3>Datos Familiar 1</h3>
 
             <!-- Tipo Familiar -->
             <label for="famTipo">Familiaridad:</label>
@@ -343,6 +343,89 @@
             <!-- Situación Laboral -->
             <label for="famSitLab">Situación laboral:</label>
             <select name="famSitLab" id="famSitLab">
+                <option value="Trabajo Estable">Trabajo Estable</option>
+                <option value="Trabajo Ocasional">Trabajo Ocasional</option>
+                <option value="Sin trabajo">Sin trabajo</option>
+                <option value="Pensionado">Pensionado</option>
+            </select>
+            <!-- Botón para añadir familiar -->
+            <div class="fila4">
+                <button class="boton-primario" type="button" id="agregarFamiliar"><i class='bx bx-user-plus'></i> Añadir Familiar</button>
+                <button class="boton-secundario" type="button" id="eliminarFamiliar"><i class='bx bx-user-minus' ></i> Eliminar Familiar</button>
+            </div>
+        </div>
+
+        <div class="separacionFormulario" id="apartadoFamilia2">
+            <h3>Datos Familiar 2</h3>
+            <!-- Tipo Familiar -->
+            <label for="famTipo2">Familiaridad:</label>
+            <select name="famTipo2" id="famTipo2">
+                <option value="Padre">Padre</option>
+                <option value="Madre">Madre</option>
+                <option value="Hermano(a)">Hermano(a)</option>
+            </select>
+
+            <!-- Rut familiar -->
+            <section class="layoutTelefono">
+                <div>
+                    <label for="famRut2">Rut:</label>
+                    <input type="number" name="famRut2" id="famRut2">
+                    <div class="errores errores2" id="errorFamRut2"></div>
+                </div>
+                <div>
+                    <label for="famDv2">Dv:</label>
+                    <input type="text" name="famDv2" id="famDv2">
+                    <div class="errores errores2" id="errorFamDv2"></div>
+                </div>
+            </section>
+
+            <!-- Nombre familiar -->
+            <div class="layoutNombre">
+                <div>
+                    <label for="famPNombre2">Primer Nombre:</label>
+                    <input type="text" name="famPNombre2" id="famPNombre2">
+                    <div class="errores errores2" id="errorFamPNombre2"></div>
+                </div>
+                <div>
+                    <label for="famSNombre2">Segundo Nombre:</label>
+                    <input type="text" name="famSNombre2" id="famSNombre2">
+                    <div class="errores errores2" id="errorFamSNombre2"></div>
+                </div>
+                <div>
+                    <label for="famApPaterno2">Apellido Paterno:</label>
+                    <input type="text" name="famApPaterno2" id="famApPaterno2">
+                    <div class="errores errores2" id="errorfamApPaterno2"></div>
+                </div>
+                <div>
+                    <label for="famApMaterno2">Apellido Materno:</label>
+                    <input type="text" name="famApMaterno2" id="famApMaterno2">
+                    <div class="errores errores2" id="errorfamApMaterno2"></div>
+                </div>
+            </div>
+
+            <label for="famTel2">Teléfono:</label>
+            <input type="number" name="famTel2" id="famTel2">
+            <div class="errores" id="errorfamTel2"></div>
+
+            <label for="famEmail2">Correo electrónico:</label>
+            <input type="email" name="famEmail2" id="famEmail2">
+            <div class="errores" id="errorfamEmail2"></div>
+
+            <!-- Cuidador o no -->
+            <fieldset>
+                <legend>¿Es cuidador(a)?</legend>
+
+                <input type="radio" id="famCuidadorSi2" name="famCuidador2" value="Sí">
+                <label for="famCuidadorSi">Sí</label>
+
+                <input type="radio" id="famCuidadorNo2" name="famCuidador2" value="No">
+                <label for="famCuidadorNo">No</label>
+            </fieldset>
+            <div class="errores" id="errorEsCuidador2"></div>
+
+            <!-- Situación Laboral -->
+            <label for="famSitLab2">Situación laboral:</label>
+            <select name="famSitLab2" id="famSitLab2">
                 <option value="Trabajo Estable">Trabajo Estable</option>
                 <option value="Trabajo Ocasional">Trabajo Ocasional</option>
                 <option value="Sin trabajo">Sin trabajo</option>
