@@ -65,8 +65,8 @@
   <div class="cardSimple">
     <div class="separacionFormulario">
       <h3>Datos del derivante</h3>
-      <p><span class="letraNegrita">Nombre: </span>Simon Hernández - TO</p>
-      <p><span class="letraNegrita">Observaciones: </span>No sé</p>
+      <p><span class="letraNegrita">Nombre: </span>{{ $derivante->derivanteNombre == null ? 'N/A' : $derivante->derivanteNombre }}</p>
+      <p><span class="letraNegrita">Observaciones: </span>{{ $derivante->derivanteObservaciones == null ? 'N/A' : $derivante->derivanteObservaciones }}</p>
     </div>
   </div>
   <br>
@@ -107,25 +107,21 @@
   <div class="cardSimple">
     <div class="separacionFormulario">
       <h3>Antecedentes de salud</h3>
-      <p><span class="letraNegrita">NEE: </span> Cáracter transitorio</p>
-      <p><span class="letraNegrita">Enfermedades crónicas: </span> Diábetes tipo 2</p>
-      <p><span class="letraNegrita">Tratamientos actuales: </span><br>Consumo de insulina para regular la glicemia.</p>
-      <p><span class="letraNegrita">¿Ha tenido cirugías?: </span> No</p>
+      <p><span class="letraNegrita">NEE: </span>{{ $antSal->antSalNEE == null ? 'N/A' : $antSal->antSalNEE }}</p>
+      <p><span class="letraNegrita">Enfermedades crónicas: </span>{{ $antSal->antSalEnfCronica == null ? 'N/A' : $antSal->antSalEnfCronica }}</p>
+      <p><span class="letraNegrita">Tratamientos actuales: </span>{{ $antSal->antSalTratamiento == null ? 'N/A' : $antSal->antSalTratamiento }}</p>
+      <p><span class="letraNegrita">¿Ha tenido cirugías?: </span>{{ $antSal->antSalCirugia == 1 ? 'Sí' : 'No' }}</p>
+      <p><span class="letraNegrita">¿Cuales?: </span>{{ $antSal->antSalDescCirugia == null ? 'N/A' : $antSal->antSalDescCirugia }}</p>
     </div>
   </div>
   <br>
   <div class="cardSimple">
     <div class="separacionFormulario">
       <h3>Antecedentes sociales</h3>
-      <p><span class="letraNegrita">¿Cuenta con ficha familiar?: </span> Sí</p>
-      <p><span class="letraNegrita">Puntaje: </span> 5to quintil</p>
-      <p><span class="letraNegrita">Beneficios: </span><br>
-      <ul>
-        <li class="listaElemento">Subsidio familiar</li>
-        <li class="listaElemento">Becas</li>
-      </ul>
-      </p>
-      <p><span class="letraNegrita">¿Cuenta con credencial de discapacidad?: </span> No</p>
+      <p><span class="letraNegrita">¿Cuenta con ficha familiar?: </span>{{ $antSoc->antSocFichaFamiliar == 1 ? 'Sí' : 'No' }}</p>
+      <p><span class="letraNegrita">Puntaje: </span>{{ $antSoc->antSocPtj == null ? 'N/A' : $antSoc->antSocPtj }}</p>
+      <p><span class="letraNegrita">Beneficios: </span>{{ $antSoc->antSocBeneficio == null ? 'N/A' : $antSoc->antSocBeneficio }}</p>
+      <p><span class="letraNegrita">¿Cuenta con credencial de discapacidad?: </span>{{ $antSoc->antSocCredDiscapacidad == 1 ? 'Sí' : 'No' }}</p>
     </div>
   </div>
 </div>

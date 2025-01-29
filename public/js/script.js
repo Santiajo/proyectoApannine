@@ -1253,8 +1253,8 @@ function validarFormBeneficiario() {
 // VALIDAMOS LAS EXTENSIONES DE LOS ARCHIVOS
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('benEvidMed').addEventListener('change', (event) => {
-        const archivo = event.target.files[0]; // Obtiene el archivo seleccionado
-        const nombreArchivo = archivo ? archivo.name : ''; // Obtiene el nombre del archivo
+        const archivo = event.target.files[0];
+        const nombreArchivo = archivo ? archivo.name : ''; 
         const erroBenEvidMed = document.getElementById('erroBenEvidMed');
 
         if (!validarArchivo(nombreArchivo)) {

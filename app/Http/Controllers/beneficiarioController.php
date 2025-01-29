@@ -297,7 +297,19 @@ class beneficiarioController extends Controller
         $comuna = Comuna::findOrFail($beneficiario->comuna_id);
         $cobMedica = Cob_Medica::findOrFail($beneficiario->cob_med_id);
         $colegio = Colegio::findOrFail($beneficiario->colegio_id);
-        return view('views.beneficiario.fichaBeneficiario', compact('beneficiario', 'nacionalidad', 'comuna', 'cobMedica', 'colegio'));
+        $derivante = Derivante::findOrFail($beneficiario->derivante_id);
+        $antSal = antecedenteSalud::findOrFail($beneficiario->antSal_id);
+        $antSoc = antecedenteSocial::findOrFail($beneficiario->antSoc_id);
+        return view('views.beneficiario.fichaBeneficiario', 
+        compact(
+            'beneficiario', 
+            'nacionalidad', 
+            'comuna', 
+            'cobMedica', 
+            'colegio',
+            'derivante',
+            'antSal',
+            'antSoc'));
     }
 
     // MÉTODO PARA MOSTRAR FORMULARIO BENEFICIARIO RELLENO
@@ -308,6 +320,14 @@ class beneficiarioController extends Controller
         $comunas = Comuna::all();
         $cobMedicas = Cob_Medica::all();
         $colegio = Colegio::findOrFail($beneficiario->colegio_id);
-        return view('views.beneficiario.formulario.formularioBeneficiario', compact('beneficiario', 'nacionalidades', 'comunas', 'cobMedicas', 'colegio'));
+        $derivante = Colegio::findOrFail($beneficiario->derivante_id);
+        return view('views.beneficiario.formulario.formularioBeneficiario', 
+        compact(
+            'beneficiario', 
+            'nacionalidades', 
+            'comunas', 
+            'cobMedicas', 
+            'colegio',
+            'derivante'));
     }
 }
