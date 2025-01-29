@@ -387,6 +387,7 @@
             <!-- Descripción cirugías -->
             <label for="benCirugiaNom">¿Cuales?</label>
             <textarea name="benCirugiaNom" id="benCirugiaNom" rows="4" cols="50"></textarea>
+            <div class="errores" id="errorBenCirugiaNom"></div>
             @error('benCirugiaNom')
                 <div class="alert alert-danger">Las cirúgías descritas no cumplen los
                     requisitos!</div>
@@ -415,7 +416,6 @@
 
                 <input type="radio" id="benFicFamNo" name="benFicFam" value="0">
                 <label for="benFicFamNo">No</label>
-
             </fieldset>
             <div class="errores" id="tieneFicFam"></div>
             @error('benFicFam')
@@ -424,7 +424,15 @@
 
             <!-- Puntaje ficha familiar -->
             <label for="benFicFamPtje">Puntaje:</label>
-            <input type="number" name="benFicFamPtje" id="benFicFamPtje">
+            <select name="benFicFamPtje" id="benFicFamPtje">
+                <option value="Tramo 1">Tramo 1</option>
+                <option value="Tramo 2">Tramo 2</option>
+                <option value="Tramo 3">Tramo 3</option>
+                <option value="Tramo 4">Tramo 4</option>
+                <option value="Tramo 5">Tramo 5</option>
+                <option value="Tramo 6">Tramo 6</option>
+                <option value="Tramo 7">Tramo 7</option>
+            </select>
             @error('benFicFamPtje')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -450,6 +458,7 @@
             <!-- Input para beneficio social extra -->
             <label for="benBenSocOtro">Otro:</label>
             <input type="text" name="benBenSocOtro" id="benBenSocOtro">
+            <div class="errores" id="errorBenBenSocOtro"></div>
             @error('benBenSocOtro[]')
                 <div class="alert alert-danger">Los beneficios sociales extra no cumplen los requisitos!</div>
             @enderror
@@ -464,6 +473,7 @@
                 <input type="radio" id="benCredDiscNo" name="benCredDisc" value="0">
                 <label for="benCredDiscNo">No</label>
             </fieldset>
+            <div class="errores" id="errorCredDiscapacidad"></div>
             @error('benCredDisc')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -473,7 +483,9 @@
         <div class="separacionFormulario" id="apartadoDiagnostico">
             <h3>Datos diagnóstico</h3>
             <textarea name="benDiag" id="benDiag" rows="4" cols="50"></textarea>
+            <div class="errores" id="errorBenDiag"></div>
         </div>
+        
 
         <!-- Botones -->
         <div class="fila2" id="grupoBotones">

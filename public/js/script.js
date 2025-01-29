@@ -674,6 +674,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'benCirugiaNo',
         ['benCirugiaNom']
     );
+    // AJUSTAMOS CAMPOS A DESAHIBILITAR DEPENDIENDO DEl VALOR SI TUVO CIRUGIAS
+    setupToggleFields(
+        'benFicFamSi',
+        'benFicFamNo',
+        ['benFicFamPtje']
+    );
 });
 
 
@@ -708,6 +714,10 @@ function validarFormBeneficiario() {
     const errorAsistirCol = document.getElementById('errorAsistirCol');
     const tuvoCirugias = ['benCirugiaSi', 'benCirugiaNo'];
     const errorTuvoCir = document.getElementById('errorTuvoCir');
+    const fichaFamiliar = ['benFicFamSi', 'benFicFamNo'];
+    const errorFichaFam = document.getElementById('tieneFicFam');
+    const credDiscapacidad = ['benCredDiscSi', 'benCredDiscNo'];
+    const errorCredDiscapacidad = document.getElementById('errorCredDiscapacidad');
 
     // VALIDAR RADIO BUTTON SI ASISTE AL COLEGIO
     if (!isAnyRadioChecked(asisteAColegio)) {
@@ -732,6 +742,32 @@ function validarFormBeneficiario() {
         errorTuvoCir.innerHTML = 'Opción válida!';
         errorTuvoCir.classList.add('exito');
         errorTuvoCir.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SI TIENE FICHA FAMILIAR 
+    if (!isAnyRadioChecked(fichaFamiliar)) {
+        errorFichaFam.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorFichaFam.classList.remove('exito');
+        errorFichaFam.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorFichaFam.innerHTML = 'Opción válida!';
+        errorFichaFam.classList.add('exito');
+        errorFichaFam.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SI TIENE CREDENCIAL DE DISCAPACIDAD 
+    if (!isAnyRadioChecked(credDiscapacidad)) {
+        errorCredDiscapacidad.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorCredDiscapacidad.classList.remove('exito');
+        errorCredDiscapacidad.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorCredDiscapacidad.innerHTML = 'Opción válida!';
+        errorCredDiscapacidad.classList.add('exito');
+        errorCredDiscapacidad.style.display = 'block';
         camposValidos.push(true);
     }
 
@@ -930,8 +966,6 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     }
 
-    // VALIDAMOS FECHA DE NACIMIENTO
-
     // VALIDAMOS DOMICILIO
     const domicilioValue = benDom.value.trim();
     if (domicilioValue === '') {
@@ -946,7 +980,7 @@ function validarFormBeneficiario() {
         errorBenDom.classList.remove('exito');
         errorBenDom.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (/[^[a-zA-Z0-9 ]*$]/.test(domicilioValue)) {
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(domicilioValue)) {
         errorBenDom.innerHTML = 'El domicilio no puede incluir caracteres especiales!';
         errorBenDom.style.display = 'block';
         errorBenDom.classList.remove('exito');
@@ -975,7 +1009,7 @@ function validarFormBeneficiario() {
         errorColNombre.classList.remove('exito');
         errorColNombre.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (/[^[a-zA-Z0-9 ]*$]/.test(colNomValue)) {
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(colNomValue)) {
         errorColNombre.innerHTML = 'El nombre del colegio no puede incluir caracteres especiales!';
         errorColNombre.style.display = 'block';
         errorColNombre.classList.remove('exito');
@@ -1020,7 +1054,7 @@ function validarFormBeneficiario() {
         errorBenCurso.classList.remove('exito');
         errorBenCurso.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (/[^[a-zA-Z0-9 ]*$]/.test(benCursoValue)) {
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(benCursoValue)) {
         errorBenCurso.innerHTML = 'El curso no puede incluir caracteres especiales!';
         errorBenCurso.style.display = 'block';
         errorBenCurso.classList.remove('exito');
@@ -1043,7 +1077,7 @@ function validarFormBeneficiario() {
         errorColProfJefe.classList.remove('exito');
         errorColProfJefe.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (/[^[a-zA-Z0-9 ]*$]/.test(colProfJefeValue)) {
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(colProfJefeValue)) {
         errorColProfJefe.innerHTML = 'El nombre del profesor no puede incluir caracteres especiales!';
         errorColProfJefe.style.display = 'block';
         errorColProfJefe.classList.remove('exito');
@@ -1066,7 +1100,7 @@ function validarFormBeneficiario() {
         errorDevNombre.style.display = 'block';
         errorDevNombre.classList.remove('exito');
         camposValidos.push(false);
-    } else if (/[^[a-zA-Z0-9 ]*$]/.test(devNombreValue)) {
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(devNombreValue)) {
         errorDevNombre.innerHTML = 'El nombre del derivante no puede incluir caracteres especiales!';
         errorDevNombre.style.display = 'block';
         errorDevNombre.classList.remove('exito');
@@ -1082,7 +1116,7 @@ function validarFormBeneficiario() {
     const devObservaciones = document.getElementById('devObservaciones');
     const devObservacionesValue = devObservaciones.value.trim();
     const errorDevObservaciones = document.getElementById('errorDevObservaciones');
-    if (/[^[a-zA-Z0-9 ]*$]/.test(devObservacionesValue)) {
+    if (!/^[a-zA-Z0-9 ]*$/.test(devObservacionesValue)) {
         errorDevObservaciones.innerHTML = 'Las observaciones del derivante no pueden incluir caracteres especiales!';
         errorDevObservaciones.style.display = 'block';
         errorDevObservaciones.classList.remove('exito');
@@ -1098,7 +1132,7 @@ function validarFormBeneficiario() {
     const benNee = document.getElementById('benNee');
     const benNeeValue = benNee.value.trim();
     const erroBenNee = document.getElementById('erroBenNee');
-    if (/[^[a-zA-Z0-9 ]*$]/.test(benNeeValue)) {
+    if (!/^[a-zA-Z0-9 ]*$/.test(benNeeValue)) {
         erroBenNee.innerHTML = 'Las NEE no pueden incluir caracteres especiales!';
         erroBenNee.style.display = 'block';
         erroBenNee.classList.remove('exito');
@@ -1114,7 +1148,7 @@ function validarFormBeneficiario() {
     const benEnfCro = document.getElementById('benEnfCro');
     const benEnfCroValue = benEnfCro.value.trim();
     const erroBenEnfCro = document.getElementById('erroBenEnfCro');
-    if (/[^[a-zA-Z0-9 ]*$]/.test(benEnfCroValue)) {
+    if (!/^[a-zA-Z0-9 ]*$/.test(benEnfCroValue)) {
         erroBenEnfCro.innerHTML = 'Las enfermedades crónicas no pueden incluir caracteres especiales!';
         erroBenEnfCro.style.display = 'block';
         erroBenEnfCro.classList.remove('exito');
@@ -1130,10 +1164,10 @@ function validarFormBeneficiario() {
     const benTratamientos = document.getElementById('benTratamientos');
     const benTratamientosValue = benTratamientos.value.trim();
     const erroBenTratamientos = document.getElementById('erroBenTratamientos');
-    if (/[^[a-zA-Z0-9 ]*$]/.test(benTratamientosValue)) {
+    if (!/^[a-zA-Z0-9 ]*$/.test(benTratamientosValue)) {
         erroBenTratamientos.innerHTML = 'Los tratamientos no pueden incluir caracteres especiales!';
-        erroBenTratamientos.style.display = 'block';
         erroBenTratamientos.classList.remove('exito');
+        erroBenTratamientos.style.display = 'block';
         camposValidos.push(false);
     } else {
         erroBenTratamientos.classList.add('exito')
@@ -1142,8 +1176,73 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     }
 
+    // VALIDAR DESCRIPCIONES DE LAS OPERACIONES DEL BENEFICIARIO
+    benCirugiaNom = document.getElementById('benCirugiaNom');
+    errorBenCirugiaNom = document.getElementById('errorBenCirugiaNom');
+    benCirugiaNomValue = benCirugiaNom.value.trim();
+    if (!/^[a-zA-Z0-9 ]*$/.test(benCirugiaNomValue)) {
+        errorBenCirugiaNom.innerHTML = 'Los tratamientos no pueden incluir caracteres especiales!';
+        errorBenCirugiaNom.classList.remove('exito');
+        errorBenCirugiaNom.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorBenCirugiaNom.innerHTML = 'Operaciones válidas!';
+        errorBenCirugiaNom.classList.add('exito');
+        errorBenCirugiaNom.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR BENEFICIOS SOCIALES EXTRAS
+    benBenSocOtro = document.getElementById('benBenSocOtro');
+    errorBenBenSocOtro = document.getElementById('errorBenBenSocOtro');
+    benBenSocValue = benBenSocOtro.value.trim();
+    if (!/^[a-zA-Z0-9 ]*$/.test(benBenSocValue)) {
+        errorBenBenSocOtro.innerHTML = 'Los beneficios sociales extra no pueden incluir caracteres especiales!';
+        errorBenBenSocOtro.classList.remove('exito');
+        errorBenBenSocOtro.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorBenBenSocOtro.innerHTML = 'Beneficios sociales extra válidos!';
+        errorBenBenSocOtro.classList.add('exito');
+        errorBenBenSocOtro.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR DIAGNOSTICO
+    benDiag = document.getElementById('benDiag');
+    errorBenDiag = document.getElementById('errorBenDiag');
+    benDiagValue = benDiag.value.trim();
+    if (benDiagValue === '') {
+        errorBenDiag.innerHTML = 'La evaluación diagnóstica no puede estar vacía!';
+        errorBenDiag.classList.remove('exito');
+        errorBenDiag.style.display = 'block';
+        camposValidos.push(false);
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(benDiagValue)) {
+        errorBenDiag.innerHTML = 'La evaluación diagnóstica no puede incluir caracteres especiales!';
+        errorBenDiag.classList.remove('exito');
+        errorBenDiag.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorBenDiag.innerHTML = 'Evaluación diagnóstica válida!';
+        errorBenDiag.classList.add('exito');
+        errorBenDiag.style.display = 'block';
+        camposValidos.push(true);
+    }
+
     // COMPROBAR SI TODOS LOS CAMPOS SON VÁLIDOS
     const esValido = camposValidos.every(Boolean);
+
+    const benBenSocFields = document.querySelectorAll('input[name="benBenSoc[]"]');
+    const benEvidMedField = document.getElementById('benEvidMed');
+
+    const isBenEvidMedEmpty = benEvidMedField.value.trim() === '';
+
+    let isBenBenSocEmpty = true;
+    benBenSocFields.forEach(function (field) {
+        if (field.value.trim() !== '') {
+            isBenBenSocEmpty = false;
+        }
+    });
 
     // SI TODO ESTÁ CORRECTO, ENVIAR EL FORMULARIO
     if (esValido) {

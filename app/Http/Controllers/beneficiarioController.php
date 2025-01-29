@@ -254,9 +254,12 @@ class beneficiarioController extends Controller
                 'antSalFilePath' => $filePath,
             ]);
             // CREAR ANTECEDENTES SOCIALES
-            $antSocialColumnas = ['antSocFichaFamiliar', 'antSocPtj', 'antSocBeneficio', 'antSocCredDiscapacidad'];
-            $antSocialCampos = ['benFicFam', 'benFicFamPtje', $beneficiosGuardados, 'benCredDisc'];
-            $antSocial = $this->crearRegistro($request, antecedenteSocial::class, $antSocialColumnas, $antSocialCampos);
+            $antSocial = antecedenteSocial::create([
+                'antSocFichaFamiliar' => $request->benFicFam,
+                'antSocPtj' => $request->benFicFamPtje,
+                'antSocBeneficio' => $beneficiosGuardados,
+                'antSocCredDiscapacidad' => $request->benCredDisc,
+            ]);
             // CREAR DIAGNOSTICO
             $diagnosticoColumnas = ['diagnosticoDesc'];
             $diagnosticoCampos = ['benDiag'];
