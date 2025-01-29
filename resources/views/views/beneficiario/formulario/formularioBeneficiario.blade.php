@@ -287,10 +287,12 @@
                 <div>
                     <label for="famRut">Rut:</label>
                     <input type="number" name="famRut" id="famRut">
+                    <div class="errores errores2" id="errorFamRut"></div>
                 </div>
                 <div>
                     <label for="famDv">Dv:</label>
                     <input type="text" name="famDv" id="famDv">
+                    <div class="errores errores2" id="errorFamDv"></div>
                 </div>
             </section>
 
@@ -299,26 +301,32 @@
                 <div>
                     <label for="famPNombre">Primer Nombre:</label>
                     <input type="text" name="famPNombre" id="famPNombre">
+                    <div class="errores errores2" id="errorFamPNombre"></div>
                 </div>
                 <div>
                     <label for="famSNombre">Segundo Nombre:</label>
                     <input type="text" name="famSNombre" id="famSNombre">
+                    <div class="errores errores2" id="errorFamSNombre"></div>
                 </div>
                 <div>
                     <label for="famApPaterno">Apellido Paterno:</label>
                     <input type="text" name="famApPaterno" id="famApPaterno">
+                    <div class="errores errores2" id="errorfamApPaterno"></div>
                 </div>
                 <div>
                     <label for="famApMaterno">Apellido Materno:</label>
                     <input type="text" name="famApMaterno" id="famApMaterno">
+                    <div class="errores errores2" id="errorfamApMaterno"></div>
                 </div>
             </div>
 
             <label for="famTel">Teléfono:</label>
             <input type="number" name="famTel" id="famTel">
+            <div class="errores" id="errorfamTel"></div>
 
             <label for="famEmail">Correo electrónico:</label>
             <input type="email" name="famEmail" id="famEmail">
+            <div class="errores" id="errorfamEmail"></div>
 
             <!-- Cuidador o no -->
             <fieldset>
@@ -330,6 +338,7 @@
                 <input type="radio" id="famCuidadorNo" name="famCuidador" value="No">
                 <label for="famCuidadorNo">No</label>
             </fieldset>
+            <div class="errores" id="errorEsCuidador"></div>
 
             <!-- Situación Laboral -->
             <label for="famSitLab">Situación laboral:</label>
@@ -488,7 +497,7 @@
         <!-- form Diagnostico -->
         <div class="separacionFormulario" id="apartadoDiagnostico">
             <h3>Datos diagnóstico</h3>
-            <textarea name="benDiag" id="benDiag" rows="4" cols="50">{{ $diagnostico->diagnosticoDesc }}</textarea>
+            <textarea name="benDiag" id="benDiag" rows="4" cols="50">{{ $diagnostico->diagnosticoDesc ?? '' }}</textarea>
             <div class="errores" id="errorBenDiag"></div>
         </div>
         
