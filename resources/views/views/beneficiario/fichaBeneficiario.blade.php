@@ -55,73 +55,74 @@
     <div class="separacionFormulario">
       <h3>Datos del colegio</h3>
       <p><span class="letraNegrita">¿Asiste al colegio? </span> {{ $colegio->colegioAsiste == 1 ? 'Sí' : 'No' }}</p>
-      <p><span class="letraNegrita">Nombre: </span> {{ $colegio->colegioNombre == null ? 'N/A' : $colegio->colegioNombre }}</p>
-      <p><span class="letraNegrita">Teléfono: </span> {{ $colegio->colegioTelefono == null ? 'N/A' : $colegio->colegioTelefono }}</p>
-      <p><span class="letraNegrita">Curso: </span> {{ $colegio->colegioCurso == null ? 'N/A' : $colegio->colegioCurso }}</p>
-      <p><span class="letraNegrita">Profesor(a) jefe: </span> {{ $colegio->colegioProfJefe == null ? 'N/A' : $colegio->colegioProfJefe }}</p>
+      <p><span class="letraNegrita">Nombre: </span>
+        {{ $colegio->colegioNombre == null ? 'N/A' : $colegio->colegioNombre }}</p>
+      <p><span class="letraNegrita">Teléfono: </span>
+        {{ $colegio->colegioTelefono == null ? 'N/A' : $colegio->colegioTelefono }}</p>
+      <p><span class="letraNegrita">Curso: </span> {{ $colegio->colegioCurso == null ? 'N/A' : $colegio->colegioCurso }}
+      </p>
+      <p><span class="letraNegrita">Profesor(a) jefe: </span>
+        {{ $colegio->colegioProfJefe == null ? 'N/A' : $colegio->colegioProfJefe }}</p>
     </div>
   </div>
   <br>
   <div class="cardSimple">
     <div class="separacionFormulario">
       <h3>Datos del derivante</h3>
-      <p><span class="letraNegrita">Nombre: </span>{{ $derivante->derivanteNombre == null ? 'N/A' : $derivante->derivanteNombre }}</p>
-      <p><span class="letraNegrita">Observaciones: </span>{{ $derivante->derivanteObservaciones == null ? 'N/A' : $derivante->derivanteObservaciones }}</p>
+      <p><span class="letraNegrita">Nombre:
+        </span>{{ $derivante->derivanteNombre == null ? 'N/A' : $derivante->derivanteNombre }}</p>
+      <p><span class="letraNegrita">Observaciones:
+        </span>{{ $derivante->derivanteObservaciones == null ? 'N/A' : $derivante->derivanteObservaciones }}</p>
     </div>
   </div>
   <br>
-  <div class="cardSimple">
+  @if($familiares->isEmpty())
+    <div class="cardSimple">
     <div class="separacionFormulario">
-      <h3>Juan Esteban Manzo Jorquera</h3>
-      <p><span class="letraNegrita">Tipo de familiar: Padre</span> </p>
-      <p><span class="letraNegrita">Rut: </span> 18487992-1</p>
-      <p><span class="letraNegrita">Teléfono: </span>9 7186 4540</p>
-      <p><span class="letraNegrita">Correo eletrónico: </span>juanmanzo93@gmail.com</p>
-      <p><span class="letraNegrita">Situación laboral: </span> Trabajo estable</p>
-      <p><span class="letraNegrita">¿Es cuidador(a)?: </span> Sí</p>
+      <h3>Familiares</h3>
+      <p><span class="letraNegrita">No hay familiares asociados!</span></p>
     </div>
-  </div>
-  <br>
-  <div class="cardSimple">
-    <div class="separacionFormulario">
-      <h3>Rosa Cecilia Jorquera Díaz</h3>
-      <p><span class="letraNegrita">Nombre: </span> </p>
-      <p><span class="letraNegrita">Rut: </span> 18487992-1</p>
-      <p><span class="letraNegrita">Teléfono: </span>9 7156 4000</p>
-      <p><span class="letraNegrita">Correo eletrónico: </span>N/A</p>
-      <p><span class="letraNegrita">Situación laboral: </span> Sin trabajo</p>
-      <p><span class="letraNegrita">¿Es cuidador(a)?: </span> Sí</p>
     </div>
-  </div>
-  <br>
-  <div class="cardSimple">
-    <div class="separacionFormulario">
-      <h3>Hermanos</h3>
-      <ul class="lista">
-        <li class="listaElemento">Juan Pablo Manzo Jorquera</li>
-        <li class="listaElemento">Carlos Santiago Manzo Jorquera</li>
-      </ul>
-    </div>
-  </div>
-  <br>
+  @else
+    @foreach($familiares as $familiar)
+      <div class="cardSimple">
+      <div class="separacionFormulario">
+        <h3>{{ $familiar->familiarPNombre }} {{ $familiar->familiarSNombre }} {{ $familiar->familiarApPaterno }}</h3>
+        <p><span class="letraNegrita">Parentesco: </span>{{ $familiar->familiarParentesco }}</p>
+        <p><span class="letraNegrita">Rut: </span>{{ $familiar->familiarRut }}-{{ $familiar->familiarDv }}</p>
+        <p><span class="letraNegrita">Teléfono: </span>{{ $familiar->familiarTelefono }}</p>
+        <p><span class="letraNegrita">Correo eletrónico: </span>{{ $familiar->familiarCorreo }}</p>
+        <p><span class="letraNegrita">Situación laboral: </span>{{ $familiar->familiarSitLaboral }}</p>
+        <p><span class="letraNegrita">¿Es cuidador(a)?: </span>{{ $familiar->familiarCuidador == 1 ? 'Sí' : 'No' }}</p>
+      </div>
+      </div>
+      <br>
+    @endforeach
+  @endif
   <div class="cardSimple">
     <div class="separacionFormulario">
       <h3>Antecedentes de salud</h3>
       <p><span class="letraNegrita">NEE: </span>{{ $antSal->antSalNEE == null ? 'N/A' : $antSal->antSalNEE }}</p>
-      <p><span class="letraNegrita">Enfermedades crónicas: </span>{{ $antSal->antSalEnfCronica == null ? 'N/A' : $antSal->antSalEnfCronica }}</p>
-      <p><span class="letraNegrita">Tratamientos actuales: </span>{{ $antSal->antSalTratamiento == null ? 'N/A' : $antSal->antSalTratamiento }}</p>
+      <p><span class="letraNegrita">Enfermedades crónicas:
+        </span>{{ $antSal->antSalEnfCronica == null ? 'N/A' : $antSal->antSalEnfCronica }}</p>
+      <p><span class="letraNegrita">Tratamientos actuales:
+        </span>{{ $antSal->antSalTratamiento == null ? 'N/A' : $antSal->antSalTratamiento }}</p>
       <p><span class="letraNegrita">¿Ha tenido cirugías?: </span>{{ $antSal->antSalCirugia == 1 ? 'Sí' : 'No' }}</p>
-      <p><span class="letraNegrita">¿Cuales?: </span>{{ $antSal->antSalDescCirugia == null ? 'N/A' : $antSal->antSalDescCirugia }}</p>
+      <p><span class="letraNegrita">¿Cuales?:
+        </span>{{ $antSal->antSalDescCirugia == null ? 'N/A' : $antSal->antSalDescCirugia }}</p>
     </div>
   </div>
   <br>
   <div class="cardSimple">
     <div class="separacionFormulario">
       <h3>Antecedentes sociales</h3>
-      <p><span class="letraNegrita">¿Cuenta con ficha familiar?: </span>{{ $antSoc->antSocFichaFamiliar == 1 ? 'Sí' : 'No' }}</p>
+      <p><span class="letraNegrita">¿Cuenta con ficha familiar?:
+        </span>{{ $antSoc->antSocFichaFamiliar == 1 ? 'Sí' : 'No' }}</p>
       <p><span class="letraNegrita">Puntaje: </span>{{ $antSoc->antSocPtj == null ? 'N/A' : $antSoc->antSocPtj }}</p>
-      <p><span class="letraNegrita">Beneficios: </span>{{ $antSoc->antSocBeneficio == null ? 'N/A' : $antSoc->antSocBeneficio }}</p>
-      <p><span class="letraNegrita">¿Cuenta con credencial de discapacidad?: </span>{{ $antSoc->antSocCredDiscapacidad == 1 ? 'Sí' : 'No' }}</p>
+      <p><span class="letraNegrita">Beneficios:
+        </span>{{ $antSoc->antSocBeneficio == null ? 'N/A' : $antSoc->antSocBeneficio }}</p>
+      <p><span class="letraNegrita">¿Cuenta con credencial de discapacidad?:
+        </span>{{ $antSoc->antSocCredDiscapacidad == 1 ? 'Sí' : 'No' }}</p>
     </div>
   </div>
 </div>

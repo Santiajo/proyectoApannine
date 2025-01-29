@@ -15,6 +15,8 @@ use App\Models\Cob_Medica;
 use App\Models\Colegio;
 // IMPORTAR MODELO DERIVANTE
 use App\Models\Derivante;
+// IMPORTAR MODELO FAMILIAR
+use App\Models\Familiar;
 // IMPORTAR MODELO ANTECEDENTES DE SALUD
 use App\Models\antecedenteSalud;
 // IMPORTAR MODELO ANTECEDENTES SOCIAL
@@ -244,6 +246,11 @@ class beneficiarioController extends Controller
             $derivanteColumnas = ['derivanteNombre', 'derivanteObservaciones'];
             $derivanteCampos = ['devNombre', 'devObservaciones'];
             $derivante = $this->crearRegistro($request, Derivante::class, $derivanteColumnas, $derivanteCampos);
+            // CREAR FAMILIAR
+            $familiarColumnas = ['familiarParentesco', 'familiarRut', 'familiarDv', 'familiarPNombre', 'familiarSNombre', 'familiarApPaterno', 
+            'familiarApMaterno', 'familiarTelefono', 'familiarCorreo', 'familiarCuidador', 'familiarSitLaboral'];
+            $familiarCampos = ['famTipo', 'famRut', 'famDv', 'famPNombre', 'famSNombre', 'famApPaterno', 'famApMaterno', 'famTel', 'famEmail', 'famCuidador', 'famSitLab'];
+            $familiar = $this->crearRegistro($request, Familiar::class, $familiarColumnas, $familiarCampos);
             // CREAR ANTECEDENTES DE SALUD
             $antSalud = antecedenteSalud::create([
                 'antSalNEE' => $request->benNee,
@@ -270,22 +277,25 @@ class beneficiarioController extends Controller
             'comuna_id', 'colegio_id', 'derivante_id', 'antSal_id', 'antSoc_id', 'diagnostico_id'];
             $beneficiarioCampos = ['benEstado', 'benRut', 'benDv', 'benPNombre', 'benSNombre', 'benApPaterno', 'benApMaterno', 'benFecNac', 'benTel', 'benDom', 
             'benTipViv', 'benCobMed', 'benNac','benComuna', $colegio->id, $derivante->id, $antSalud->id, $antSocial->id,  $diagnostico->id];
-            $this->crearRegistro($request, Beneficiario::class, $beneficiarioColumnas, $beneficiarioCampos);
-            
+            $beneficiario = $this->crearRegistro($request, Beneficiario::class, $beneficiarioColumnas, $beneficiarioCampos);
+            // ASOCIAR FAMILIAR AL BENEFICIARIO
+            $beneficiario->familiares()->attach($familiar->id);
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario creado correctamente.');
         }
     }
 
-    // MÉTODO PARA ELIMINAR UN BENEFICIARIO
     public function eliminarBeneficiario($id)
     {
         $beneficiario = Beneficiario::findOrFail($id);
+        $beneficiario->familiares()->detach();
         Colegio::findOrFail($beneficiario->colegio_id)->delete();
         Derivante::findOrFail($beneficiario->derivante_id)->delete();
         antecedenteSalud::findOrFail($beneficiario->antSal_id)->delete();
         antecedenteSocial::findOrFail($beneficiario->antSoc_id)->delete();
         Diagnostico::findOrFail($beneficiario->diagnostico_id)->delete();
+        $beneficiario->familiares()->delete();
         $beneficiario->delete();
+
         return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario eliminado correctamente.');
     }
 
@@ -300,6 +310,7 @@ class beneficiarioController extends Controller
         $derivante = Derivante::findOrFail($beneficiario->derivante_id);
         $antSal = antecedenteSalud::findOrFail($beneficiario->antSal_id);
         $antSoc = antecedenteSocial::findOrFail($beneficiario->antSoc_id);
+        $familiares = $beneficiario->familiares;
         return view('views.beneficiario.fichaBeneficiario', 
         compact(
             'beneficiario', 
@@ -309,7 +320,8 @@ class beneficiarioController extends Controller
             'colegio',
             'derivante',
             'antSal',
-            'antSoc'));
+            'antSoc',
+            'familiares'));
     }
 
     // MÉTODO PARA MOSTRAR FORMULARIO BENEFICIARIO RELLENO

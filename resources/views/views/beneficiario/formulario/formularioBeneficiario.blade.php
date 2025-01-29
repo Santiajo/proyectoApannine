@@ -332,10 +332,10 @@
             <fieldset>
                 <legend>¿Es cuidador(a)?</legend>
 
-                <input type="radio" id="famCuidadorSi" name="famCuidador" value="Sí">
+                <input type="radio" id="famCuidadorSi" name="famCuidador" value="1">
                 <label for="famCuidadorSi">Sí</label>
 
-                <input type="radio" id="famCuidadorNo" name="famCuidador" value="No">
+                <input type="radio" id="famCuidadorNo" name="famCuidador" value="0">
                 <label for="famCuidadorNo">No</label>
             </fieldset>
             <div class="errores" id="errorEsCuidador"></div>

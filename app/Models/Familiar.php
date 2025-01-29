@@ -32,7 +32,7 @@ class Familiar extends Model
     // Relación muchos a muchos con Beneficiarios
     public function beneficiarios()
     {
-        return $this->belongsToMany(Beneficiario::class, 'familiarBeneficiario', 'familiar_id', 'beneficiario_id')
+        return $this->belongsToMany(Beneficiario::class, 'familiar_beneficiario', 'familiar_id', 'beneficiario_id')
             ->withTimestamps();
     }
 }

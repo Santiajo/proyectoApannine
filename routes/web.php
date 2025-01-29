@@ -15,6 +15,8 @@ use App\Http\Controllers\nacionalidadController;
 use App\Http\Controllers\cobMedController;
 // CONTROLADOR DE COMUNAS
 use App\Http\Controllers\comunaController;
+// CONTROLADOR DE HISTORIAL MEDICO
+use App\Http\Controllers\histMedicoController;
 
 //Aqui se llama a las rutas
 Route::get('/', [PostController::class, 'login']);
@@ -59,12 +61,11 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
     Route::get('/views/fichaBeneficiario/{id}', [beneficiarioController::class,'fichaBeneficiario'])->name('beneficiarios.fichaBeneficiario');
     // PÁGINA DEL FORMULARIO DEL CRUD RELLENO
     Route::get('/views/formBenRelleno/{id}', [beneficiarioController::class, 'formBenRelleno'])->name('beneficiarios.formBenRelleno');
+    // PAGINA PARA MOSTRAR ANTECEDENTES DE SALUD DEL BENEFICIARIO
+    Route::get('/views/antMedBeneficiario/{id}', [histMedicoController::class, 'antMedBeneficiario'])->name('beneficiarios.antMedBeneficiario');
+    // PARA ELIMINAR ARCHIVOS SUBIDOS EN LOS ANTECEDENTES MEDICOS
+    Route::delete('/views/eliminarArchivo/{id}', [histMedicoController::class,'eliminarArchivo'])->name('beneficiarios.eliminarArchivo');
 
-// HISTORIAL MÉDICO DEL BENEFICIARIO
-Route::get('/views/histMedBeneficiario', [PostController::class, 'histMedBeneficiario'])->name('histMedBeneficiario');
-Route::get('/views/antMedBeneficiario', [PostController::class, 'antMedBeneficiario'])->name('antMedBeneficiario');
-Route::get('/views/diagnosticoBeneficiario', [PostController::class, 'diagnosticoBeneficiario'])->name('diagnosticoBeneficiario');
-Route::get('/views/documentosBeneficiario', [PostController::class, 'documentosBeneficiario'])->name('documentosBeneficiario');
 
 // HORARIO DEL BENEFICIARIO
 Route::get('/views/horarioBeneficiario', [PostController::class, 'horarioBeneficiario'])->name('horarioBeneficiario');

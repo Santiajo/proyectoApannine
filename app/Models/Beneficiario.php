@@ -94,7 +94,7 @@ class Beneficiario extends Model
     // CREAMOS RELACIÓN CON EL MODELO FAMILIAR BENEFICIARIO
     public function familiares()
     {
-        return $this->belongsToMany(Familiar::class, 'familiarBeneficiario', 'beneficiario_id', 'familiar_id')
+        return $this->belongsToMany(Familiar::class, 'familiar_beneficiario', 'beneficiario_id', 'familiar_id')
             ->withTimestamps();
     }
 }

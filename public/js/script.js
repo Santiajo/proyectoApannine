@@ -517,7 +517,7 @@ function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
     }
 }
 
-// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO
+// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
 document.addEventListener('DOMContentLoaded', () => {
     // OBTENER LINKS
     const mostrarBeneficiario = document.getElementById('mostrarBeneficiario');
@@ -1540,5 +1540,56 @@ document.addEventListener('DOMContentLoaded', () => {
             erroBenEvidMed.classList.add('exito');
             erroBenEvidMed.style.display = 'block';
         }
+    });
+});
+
+// FUNCION PARA FILTRAR LAS VISTAS DE LA PAGINA DE ANTECEDENTES DE SALUD DEL BENEFICIARIO 
+document.addEventListener('DOMContentLoaded', () => {
+    // OBTENER LINKS
+    const mostrarSeguimiento = document.getElementById('mostrarSeguimiento');
+    const mostrarAntecedentes = document.getElementById('mostrarAntecedentes');
+    const mostrarDiagnostico = document.getElementById('mostrarDiagnostico');
+    const mostrarDocumentos = document.getElementById('mostrarDocumentos');
+
+    // OBTENER APARTADOS DEL FORMULARIO
+    const apartadoSeguimiento = document.getElementById('apartadoSeguimiento');
+    const apartadoAntecedentes = document.getElementById('apartadoAntecedentes');
+    const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
+    const apartadoDocumentos = document.getElementById('apartadoDocumentos');
+
+    // FUNCION PARA OCULTAR TODOS LOS APARTADOS
+    function ocultarTodosLosApartados2() {
+        const apartados2 = [
+            apartadoSeguimiento,
+            apartadoAntecedentes,
+            apartadoDiagnostico,
+            apartadoDocumentos,
+        ];
+        apartados2.forEach(apartado2 => apartado2.classList.add('ocultar'));
+    }
+
+    // MOSTRAR SOLO EL FORMULARIO DE BENEFICIARIO AL CARGAR
+    ocultarTodosLosApartados2();
+    apartadoSeguimiento.classList.remove('ocultar');
+
+    // CONFIGURAR EVENTOS PARA MOSTRAR LOS FORMULARIOS
+    mostrarSeguimiento.addEventListener('click', () => {
+        ocultarTodosLosApartados2();
+        apartadoSeguimiento.classList.remove('ocultar');
+    });
+
+    mostrarAntecedentes.addEventListener('click', () => {
+        ocultarTodosLosApartados2();
+        apartadoAntecedentes.classList.remove('ocultar');
+    });
+
+    mostrarDiagnostico.addEventListener('click', () => {
+        ocultarTodosLosApartados2();
+        apartadoDiagnostico.classList.remove('ocultar');
+    });
+
+    mostrarDocumentos.addEventListener('click', () => {
+        ocultarTodosLosApartados2();
+        apartadoDocumentos.classList.remove('ocultar');
     });
 });
