@@ -320,7 +320,25 @@ class beneficiarioController extends Controller
         $comunas = Comuna::all();
         $cobMedicas = Cob_Medica::all();
         $colegio = Colegio::findOrFail($beneficiario->colegio_id);
-        $derivante = Colegio::findOrFail($beneficiario->derivante_id);
+        $derivante = Derivante::findOrFail($beneficiario->derivante_id);
+        $antSal = antecedenteSalud::findOrFail($beneficiario->antSal_id);
+        $antSoc = antecedenteSocial::findOrFail($beneficiario->antSoc_id);
+        $diagnostico = Diagnostico::findOrFail($beneficiario->diagnostico_id);
+
+
+        // PROCESAR LA LISTA DE BENEFICIOS SOCIALES
+        $beneficiosConocidos = [
+            'Subsidio familiar',
+            'Pensiones',
+            'Becas',
+            'Chile solidario',
+            'Programa puente',
+            'Subsidio ético familiar'
+        ];
+        $beneficiosSeleccionados = explode(', ', $antSoc->antSocBeneficio);
+        $beneficiosMarcados = array_intersect($beneficiosSeleccionados, $beneficiosConocidos);
+        $beneficioOtro = implode(', ', array_diff($beneficiosSeleccionados, $beneficiosConocidos));
+
         return view('views.beneficiario.formulario.formularioBeneficiario', 
         compact(
             'beneficiario', 
@@ -328,6 +346,11 @@ class beneficiarioController extends Controller
             'comunas', 
             'cobMedicas', 
             'colegio',
-            'derivante'));
+            'derivante',
+            'antSal',
+            'antSoc',
+            'diagnostico',
+            'beneficiosMarcados',
+            'beneficioOtro'));
     }
 }

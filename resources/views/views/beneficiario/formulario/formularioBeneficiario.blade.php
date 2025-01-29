@@ -253,7 +253,7 @@
             <h3>Datos Derivante</h3>
 
             <label for="devNombre">Quien deriva:</label>
-            <input type="text" name="devNombre" id="devNombre">
+            <input type="text" name="devNombre" id="devNombre" value="{{ $derivante->derivanteNombre ?? '' }}">
             <div class="errores" id="errorDevNombre"></div>
             @error('devNombre')
                 <div class="alert alert-danger">El nombre del derivante no cumple con los
@@ -261,7 +261,7 @@
             @enderror
 
             <label for="devObservaciones">Observaciones derivación:</label>
-            <textarea name="devObservaciones" id="devObservaciones"></textarea>
+            <textarea name="devObservaciones" id="devObservaciones">{{ $derivante->derivanteObservaciones ?? '' }}</textarea>
             <div class="errores" id="errorDevObservaciones"></div>
             @error('devObservaciones')
                 <div class="alert alert-danger">Las observaciones del derivante no cumplen los
@@ -347,7 +347,7 @@
 
             <!-- Necesidades educativas especiales -->
             <label for="benNee">NEE:</label>
-            <textarea name="benNee" id="benNee" rows="4" cols="50"></textarea>
+            <textarea name="benNee" id="benNee" rows="4" cols="50">{{ $antSal->antSalNEE ?? '' }}</textarea>
             <div class="errores" id="erroBenNee"></div>
             @error('benNee')
                 <div class="alert alert-danger">Las NEE no cumplen los
@@ -356,7 +356,7 @@
 
             <!-- Enfermadades crónicas -->
             <label for="benEnfCro">Enfermedades crónicas:</label>
-            <textarea name="benEnfCro" id="benEnfCro" rows="4" cols="50"></textarea>
+            <textarea name="benEnfCro" id="benEnfCro" rows="4" cols="50">{{ $antSal->antSalEnfCronica ?? '' }}</textarea>
             <div class="errores" id="erroBenEnfCro"></div>
             @error('benEnfCro')
                 <div class="alert alert-danger">Las enfermadades crónicas no cumplen los
@@ -365,7 +365,7 @@
 
             <!-- Tratamientos -->
             <label for="benTratamientos">Tratamientos actuales:</label>
-            <textarea name="benTratamientos" id="benTratamientos" rows="4" cols="50"></textarea>
+            <textarea name="benTratamientos" id="benTratamientos" rows="4" cols="50">{{ $antSal->antSalTratamiento ?? '' }}</textarea>
             <div class="errores" id="erroBenTratamientos"></div>
             @error('benTratamientos')
                 <div class="alert alert-danger">Las tratamientos no cumplen los
@@ -376,17 +376,17 @@
             <fieldset>
                 <legend>¿Cirugías?</legend>
 
-                <input type="radio" id="benCirugiaSi" name="benCirugia" value="1">
+                <input type="radio" id="benCirugiaSi" name="benCirugia" value="1" {{ (isset($antSal) && $antSal->antSalCirugia == 1) ? 'checked' : '' }}>
                 <label for="benCirugiaSi">Sí</label>
 
-                <input type="radio" id="benCirugiaNo" name="benCirugia" value="0">
+                <input type="radio" id="benCirugiaNo" name="benCirugia" value="0" {{ (isset($antSal) && $antSal->antSalCirugia == 0) ? 'checked' : '' }}>
                 <label for="benCirugiaNo">No</label>
             </fieldset>
             <div class="errores" id="errorTuvoCir"></div>
 
             <!-- Descripción cirugías -->
             <label for="benCirugiaNom">¿Cuales?</label>
-            <textarea name="benCirugiaNom" id="benCirugiaNom" rows="4" cols="50"></textarea>
+            <textarea name="benCirugiaNom" id="benCirugiaNom" rows="4" cols="50">{{ $antSal->antSalDescCirugia ?? '' }}</textarea>
             <div class="errores" id="errorBenCirugiaNom"></div>
             @error('benCirugiaNom')
                 <div class="alert alert-danger">Las cirúgías descritas no cumplen los
@@ -411,10 +411,10 @@
             <fieldset>
                 <legend>¿Cuenta con ficha familiar?</legend>
 
-                <input type="radio" id="benFicFamSi" name="benFicFam" value="1">
+                <input type="radio" id="benFicFamSi" name="benFicFam" value="1" {{ (isset($antSoc) && $antSoc->antSocFichaFamiliar == 1) ? 'checked' : '' }}>
                 <label for="benFicFamSi">Sí</label>
 
-                <input type="radio" id="benFicFamNo" name="benFicFam" value="0">
+                <input type="radio" id="benFicFamNo" name="benFicFam" value="0" {{ (isset($antSoc) && $antSoc->antSocFichaFamiliar == 0) ? 'checked' : '' }}>
                 <label for="benFicFamNo">No</label>
             </fieldset>
             <div class="errores" id="tieneFicFam"></div>
@@ -424,7 +424,7 @@
 
             <!-- Puntaje ficha familiar -->
             <label for="benFicFamPtje">Puntaje:</label>
-            <select name="benFicFamPtje" id="benFicFamPtje">
+            <select name="benFicFamPtje" id="benFicFamPtje" value="{{ $antSoc->antSocPtj ?? '' }}">
                 <option value="Tramo 1">Tramo 1</option>
                 <option value="Tramo 2">Tramo 2</option>
                 <option value="Tramo 3">Tramo 3</option>
@@ -440,24 +440,30 @@
 
             <fieldset>
                 <legend>Beneficios sociales:</legend>
-                <input type="checkbox" id="benBenSoc1" name="benBenSoc[]" value="Subsidio familiar">
+                <input type="checkbox" id="benBenSoc1" name="benBenSoc[]" value="Subsidio familiar"
+                {{ in_array('Subsidio familiar', $beneficiosMarcados ?? []) ? 'checked' : '' }}>
                 <label for="benBenSoc1"> Subsidio familiar</label><br>
-                <input type="checkbox" id="benBenSoc2" name="benBenSoc[]" value="Pensiones">
+                <input type="checkbox" id="benBenSoc2" name="benBenSoc[]" value="Pensiones"
+                {{ in_array('Pensiones', $beneficiosMarcados ?? []) ? 'checked' : '' }}>
                 <label for="benBenSoc2"> Pensiones</label><br>
-                <input type="checkbox" id="benBenSoc3" name="benBenSoc[]" value="Becas">
+                <input type="checkbox" id="benBenSoc3" name="benBenSoc[]" value="Becas"
+                {{ in_array('Becas', $beneficiosMarcados ?? []) ? 'checked' : '' }}>
                 <label for="benBenSoc3"> Becas</label><br>
-                <input type="checkbox" id="benBenSoc4" name="benBenSoc[]" value="Chile solidario">
+                <input type="checkbox" id="benBenSoc4" name="benBenSoc[]" value="Chile solidario"
+                {{ in_array('Chile solidario', $beneficiosMarcados ?? []) ? 'checked' : '' }}>
                 <label for="benBenSoc4"> Chile solidario</label><br>
-                <input type="checkbox" id="benBenSoc5" name="benBenSoc[]" value="Programa puente">
+                <input type="checkbox" id="benBenSoc5" name="benBenSoc[]" value="Programa puente"
+                {{ in_array('Programa puente', $beneficiosMarcados ?? []) ? 'checked' : '' }}>
                 <label for="benBenSoc5"> Programa puente</label><br>
-                <input type="checkbox" id="benBenSoc6" name="benBenSoc[]" value="Subsidio ético familiar">
+                <input type="checkbox" id="benBenSoc6" name="benBenSoc[]" value="Subsidio ético familiar"
+                {{ in_array('Subsidio ético familiar', $beneficiosMarcados ?? []) ? 'checked' : '' }}>
                 <label for="benBenSoc6"> Subsidio ético familiar</label><br>
             </fieldset>
 
 
             <!-- Input para beneficio social extra -->
             <label for="benBenSocOtro">Otro:</label>
-            <input type="text" name="benBenSocOtro" id="benBenSocOtro">
+            <input type="text" name="benBenSocOtro" id="benBenSocOtro" value="{{ $beneficioOtro ?? '' }}">
             <div class="errores" id="errorBenBenSocOtro"></div>
             @error('benBenSocOtro[]')
                 <div class="alert alert-danger">Los beneficios sociales extra no cumplen los requisitos!</div>
@@ -467,10 +473,10 @@
             <fieldset>
                 <legend>¿Cuenta con credencial de discapacidad?</legend>
 
-                <input type="radio" id="benCredDiscSi" name="benCredDisc" value="1">
+                <input type="radio" id="benCredDiscSi" name="benCredDisc" value="1" {{ (isset($antSoc) && $antSoc->antSocCredDiscapacidad == 1) ? 'checked' : '' }}>
                 <label for="benCredDiscSi">Sí</label>
 
-                <input type="radio" id="benCredDiscNo" name="benCredDisc" value="0">
+                <input type="radio" id="benCredDiscNo" name="benCredDisc" value="0" {{ (isset($antSoc) && $antSoc->antSocCredDiscapacidad == 1) ? 'checked' : '' }}>
                 <label for="benCredDiscNo">No</label>
             </fieldset>
             <div class="errores" id="errorCredDiscapacidad"></div>
@@ -482,7 +488,7 @@
         <!-- form Diagnostico -->
         <div class="separacionFormulario" id="apartadoDiagnostico">
             <h3>Datos diagnóstico</h3>
-            <textarea name="benDiag" id="benDiag" rows="4" cols="50"></textarea>
+            <textarea name="benDiag" id="benDiag" rows="4" cols="50">{{ $diagnostico->diagnosticoDesc }}</textarea>
             <div class="errores" id="errorBenDiag"></div>
         </div>
         
