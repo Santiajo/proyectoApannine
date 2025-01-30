@@ -1078,24 +1078,18 @@ h4 {
     padding: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    color: #555;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    color: #456ba5;
+    background-color: white;
+    border-color: #456ba5;
 }
 
 /* Hover sobre los botones */
 .pagination a:hover {
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: #456ba5;
+    color: #ffffff;
 }
 
-/* Página activa */
-.pagination .active span {
-    background-color: #007bff;
-    color: white;
-    border: 1px solid #007bff;
-    padding: 10px 15px;
-    border-radius: 5px;
-}
+
 
 /* Deshabilitar flechas */
 .pagination .disabled span {
@@ -1112,7 +1106,7 @@ h4 {
 
     /* Corregir el tamaño de las flechas */
     .pagination svg {
-        width: 16px; /* Ajusta el tamaño según tus preferencias */
+        width: 16px; /* Ajusta el tamaño  */
         height: 16px;
     }
 
