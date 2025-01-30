@@ -67,9 +67,8 @@ function editarNacionalidad(nacionalidad) {
     document.getElementById('nacionalidadNombre').value = nacionalidad.nombreNacionalidad;
 }
 
-// CARGAMOS EL CONTENIDO DOM
+// CARGAMOS CONTENIDO DOM
 document.addEventListener('DOMContentLoaded', function () {
-    // HACEMOS QUE EL ARCHIVO ESCUCHE CUANDO EL FORMULARIO ESPECIALIDADES SE VA A SUBIR
     const formEspecialidad = document.getElementById('formEspecialidad');
     const formEspecialista = document.getElementById('formEspecialista');
     const formNacionalidad = document.getElementById('formNacionalidad');
@@ -77,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const formCobMedica = document.getElementById('formCobMedica');
     const formBeneficiario = document.getElementById('formBeneficiario');
 
+    // HACEMOS QUE EL ARCHIVO ESCUCHE CUANDO EL FORMULARIO ESPECIALIDADES SE VA A SUBIR
     if (formEspecialidad) {
         formEspecialidad.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -517,7 +517,7 @@ function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
     }
 }
 
-// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO
+// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
 document.addEventListener('DOMContentLoaded', () => {
     // OBTENER LINKS
     const mostrarBeneficiario = document.getElementById('mostrarBeneficiario');
@@ -527,15 +527,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const mostrarAntSalud = document.getElementById('mostrarAntSalud');
     const mostrarAntSocial = document.getElementById('mostrarAntSocial');
     const mostrarDiagnostico = document.getElementById('mostrarDiagnostico');
-    
+    const agregarFamiliar = document.getElementById('agregarFamiliar');
+    const eliminarFamiliar = document.getElementById('eliminarFamiliar');
+
     // OBTENER APARTADOS DEL FORMULARIO
     const apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
     const apartadoColegio = document.getElementById('apartadoColegio');
     const apartadoDerivante = document.getElementById('apartadoDerivante');
     const apartadoFamilia = document.getElementById('apartadoFamilia');
+    const apartadoFamilia2 = document.getElementById('apartadoFamilia2');
     const apartadoAntSalud = document.getElementById('apartadoAntSalud');
     const apartadoAntSocial = document.getElementById('apartadoAntSocial');
     const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
+
+    let contadorFamiliares = 0;
 
     // FUNCION PARA OCULTAR TODOS LOS APARTADOS
     function ocultarTodosLosApartados() {
@@ -544,9 +549,11 @@ document.addEventListener('DOMContentLoaded', () => {
             apartadoColegio,
             apartadoDerivante,
             apartadoFamilia,
+            apartadoFamilia2,
             apartadoAntSalud,
             apartadoAntSocial,
-            apartadoDiagnostico
+            apartadoDiagnostico,
+            grupoBotones
         ];
         apartados.forEach(apartado => apartado.classList.add('ocultar'));
     }
@@ -589,9 +596,128 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarDiagnostico.addEventListener('click', () => {
         ocultarTodosLosApartados();
         apartadoDiagnostico.classList.remove('ocultar');
+        grupoBotones.classList.remove('ocultar');
     });
+
+    agregarFamiliar.addEventListener('click', () => {
+        ocultarTodosLosApartados();
+        contadorFamiliares++;
+        console.log('Contador: ', contadorFamiliares);
+        apartadoFamilia.classList.remove('ocultar');
+        apartadoFamilia2.classList.remove('ocultar');
+
+        if (contadorFamiliares == 0) {
+            eliminarFamiliar.disabled = true;
+        } else {
+            eliminarFamiliar.disabled = false;
+        }
+    });
+
+    eliminarFamiliar.addEventListener('click', () => {
+        contadorFamiliares--;
+        if (contadorFamiliares == 0) {
+            contadorFamiliares = 0;
+            eliminarFamiliar.disabled = true;
+        } else {
+            eliminarFamiliar.disabled = true;
+        }
+        console.log('Contador: ', contadorFamiliares);
+        ocultarTodosLosApartados();
+        apartadoFamilia.classList.remove('ocultar');
+        console.log('Se hizo clic en eliminar');
+    });
+
 });
 
+// FUNCIÓN REUTILIZABLE PARA DESHABILITAR CAMPOS ASOCIADOS A RADIO BUTTONS
+function setupToggleFields(radioYesId, radioNoId, fieldIds) {
+    // OBTENEMOS LOS RADIO BUTTONS
+    const benAsisColSi = document.getElementById(radioYesId);
+    const benAsisColNo = document.getElementById(radioNoId);
+
+    // MAPEAMOS LOS INPUTS ASOCIADOS
+    const fields = fieldIds.map(id => document.getElementById(id));
+
+    // FUNCIÓN PARA DESHABILITAR O HABILITAR CAMPOS
+    const toggleFields = () => {
+        const isDisabled = benAsisColNo.checked; // Si está marcado "No"
+        fields.forEach(field => {
+            field.disabled = isDisabled;
+            if (isDisabled) {
+                field.value = '';
+            }
+        });
+    };
+
+    // ASOCIAMOS EL EVENTO change A LOS RADIO BUTTONS
+    benAsisColSi.addEventListener('change', toggleFields);
+    benAsisColNo.addEventListener('change', toggleFields);
+
+    // LLAMAMOS LA FUNCIÓN AL CARGAR LA PÁGINA PARA AJUSTAR EL ESTADO INICIAL
+    toggleFields();
+}
+
+// FUNCIÓN REUTILIZABLE PARA COMPROBAR QUE LOS RADIO BUTTONS ESTEN MARCADOS
+function isAnyRadioChecked(radioIds) {
+    return radioIds.some(id => {
+        const radio = document.getElementById(id);
+        return radio && radio.checked;
+    });
+}
+
+// FUNCIÓN REUTILIZABLE PARA DESACTIVAR INPUTS DE TEXTO EN CASO DE SER NECESARIO
+function desactivarInputTexto(inputId, inputId2) {
+    const input = document.getElementById(inputId);
+    const input2 = document.getElementById(inputId2);
+
+    // Verifica si los elementos existen
+    if (input && input2) {
+        input2.disabled = true;
+        input.addEventListener('input', () => {
+            console.log(`Valor del input (${inputId}):`, input.value);
+            if (input.value.trim() === '') {
+                input2.value = '';
+                input2.disabled = true;
+            } else {
+                input2.disabled = false;
+            }
+        });
+    } else {
+        console.error(`Elementos con IDs "${inputId}" o "${inputId2}" no encontrados.`);
+    }
+}
+
+// FUNCION PARA VALIDAR LA EXTENSION DEL ARCHIVO
+function validarArchivo(nombreArchivo) {
+    // EXTENSIONES PERMITIDAS
+    const extensionesValidas = ['.pdf', '.docx'];
+
+    // VALIDAR QUE EL NOMBRE DEL INPUT COINCIDA CON LAS COLOCACADAS EN LA LISTA
+    return extensionesValidas.some((extension) => nombreArchivo.toLowerCase().endsWith(extension));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // VALIDAMOS LOS INPUTS QUE DEBEN DE SER DESHABILITADOS
+    desactivarInputTexto('devNombre', 'devObservaciones');
+    // AJUSTAMOS CAMPOS A DESAHIBILITAR DEPENDIENDO DEl VALOR ASISTIR A COLEGIO
+    setupToggleFields(
+        'benAsisColSi', // ID del radio "Sí"
+        'benAsisColNo', // ID del radio "No"
+        ['colNom', 'colTel', 'benCurso', 'colProfJefe'] // IDs de los campos asociados
+    );
+    // AJUSTAMOS CAMPOS A DESAHIBILITAR DEPENDIENDO DEl VALOR SI TUVO CIRUGIAS
+    setupToggleFields(
+        'benCirugiaSi',
+        'benCirugiaNo',
+        ['benCirugiaNom']
+    );
+    // AJUSTAMOS CAMPOS A DESAHIBILITAR DEPENDIENDO DEl VALOR SI TUVO CIRUGIAS
+    setupToggleFields(
+        'benFicFamSi',
+        'benFicFamNo',
+        ['benFicFamPtje']
+    );
+});
 
 
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE BENEFICIARIO
@@ -619,6 +745,83 @@ function validarFormBeneficiario() {
     errorBenFecNac = document.getElementById('errorBenFecNac');
     errorBenTel = document.getElementById('errorBenTel');
     errorBenDom = document.getElementById('errorBenDom');
+
+    // RADIO INPUTS
+    const asisteAColegio = ['benAsisColSi', 'benAsisColNo'];
+    const errorAsistirCol = document.getElementById('errorAsistirCol');
+    const tuvoCirugias = ['benCirugiaSi', 'benCirugiaNo'];
+    const errorTuvoCir = document.getElementById('errorTuvoCir');
+    const fichaFamiliar = ['benFicFamSi', 'benFicFamNo'];
+    const errorFichaFam = document.getElementById('tieneFicFam');
+    const credDiscapacidad = ['benCredDiscSi', 'benCredDiscNo'];
+    const errorCredDiscapacidad = document.getElementById('errorCredDiscapacidad');
+    const esCuidador = ['famCuidadorSi', 'famCuidadorNo'];
+    const errorEsCuidador = document.getElementById('errorEsCuidador');
+
+    // VALIDAR RADIO BUTTON SI ASISTE AL COLEGIO
+    if (!isAnyRadioChecked(asisteAColegio)) {
+        errorAsistirCol.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorAsistirCol.classList.remove('exito');
+        errorAsistirCol.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorAsistirCol.innerHTML = 'Opción válida!';
+        errorAsistirCol.classList.add('exito');
+        errorAsistirCol.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SI TUVO CIRUGÍAS
+    if (!isAnyRadioChecked(tuvoCirugias)) {
+        errorTuvoCir.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorTuvoCir.classList.remove('exito');
+        errorTuvoCir.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorTuvoCir.innerHTML = 'Opción válida!';
+        errorTuvoCir.classList.add('exito');
+        errorTuvoCir.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SI TIENE FICHA FAMILIAR 
+    if (!isAnyRadioChecked(fichaFamiliar)) {
+        errorFichaFam.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorFichaFam.classList.remove('exito');
+        errorFichaFam.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorFichaFam.innerHTML = 'Opción válida!';
+        errorFichaFam.classList.add('exito');
+        errorFichaFam.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SI TIENE CREDENCIAL DE DISCAPACIDAD 
+    if (!isAnyRadioChecked(credDiscapacidad)) {
+        errorCredDiscapacidad.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorCredDiscapacidad.classList.remove('exito');
+        errorCredDiscapacidad.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorCredDiscapacidad.innerHTML = 'Opción válida!';
+        errorCredDiscapacidad.classList.add('exito');
+        errorCredDiscapacidad.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SI FAMILIAR ES CUIDADOR 
+    /* if (!isAnyRadioChecked(esCuidador)) {
+        errorEsCuidador.innerHTML = 'Por favor, seleccione al menos una opción!';
+        errorEsCuidador.classList.remove('exito');
+        errorEsCuidador.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorEsCuidador.innerHTML = 'Opción válida!';
+        errorEsCuidador.classList.add('exito');
+        errorEsCuidador.style.display = 'block';
+        camposValidos.push(true);
+    } */
 
     /// VALIDAR RUT
     const rutValue = benRut.value.trim();
@@ -790,13 +993,7 @@ function validarFormBeneficiario() {
 
     // VALIDAR TELEFONO
     const telValue = benTel.value.trim();
-    if (telValue === '') {
-        errorBenTel.innerHTML = 'El telefono no puede estar vacío!';
-        errorBenTel.style.display = 'block';
-        errorBenTel.classList.remove('exito');
-        errorBenTel.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (telValue.length < 7) {
+    if (telValue != '' && telValue.length < 7) {
         errorBenTel.innerHTML = 'El telefono no puede tener menos de 7 caracteres!';
         errorBenTel.style.display = 'block';
         errorBenTel.classList.remove('exito');
@@ -815,8 +1012,6 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     }
 
-    // VALIDAMOS FECHA DE NACIMIENTO
-
     // VALIDAMOS DOMICILIO
     const domicilioValue = benDom.value.trim();
     if (domicilioValue === '') {
@@ -831,7 +1026,7 @@ function validarFormBeneficiario() {
         errorBenDom.classList.remove('exito');
         errorBenDom.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (/[^a-zA-Z0-9]/.test(domicilioValue)) {
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(domicilioValue)) {
         errorBenDom.innerHTML = 'El domicilio no puede incluir caracteres especiales!';
         errorBenDom.style.display = 'block';
         errorBenDom.classList.remove('exito');
@@ -845,6 +1040,480 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     }
 
+    // INPUTS DEL COLEGIO
+    const colNom = document.getElementById('colNom');
+    const colTel = document.getElementById('colTel');
+    const benCurso = document.getElementById('benCurso');
+    const colProfJefe = document.getElementById('colProfJefe');
+
+    // VALIDAR NOMBRE DEL COLEGIO
+    const colNomValue = colNom.value.trim();
+    const errorColNombre = document.getElementById('errorColNom');
+    if (colNomValue.length > 30) {
+        errorColNombre.innerHTML = 'El nombre del colegio no puede tener más de 30 caracteres!';
+        errorColNombre.style.display = 'block';
+        errorColNombre.classList.remove('exito');
+        errorColNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(colNomValue)) {
+        errorColNombre.innerHTML = 'El nombre del colegio no puede incluir caracteres especiales!';
+        errorColNombre.style.display = 'block';
+        errorColNombre.classList.remove('exito');
+        errorColNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorColNombre.classList.add('exito')
+        errorColNombre.classList.add('exito2')
+        errorColNombre.innerHTML = 'Nombre válido!';
+        errorColNombre.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR TELEFONO DEL COLEGIO
+    const colTelValue = colTel.value.trim();
+    const errorColTel = document.getElementById('errorColTel');
+    if (colTelValue != '' && colTelValue.length < 7) {
+        errorColTel.innerHTML = 'El telefono del colegio no puede tener menos de 7 caracteres!';
+        errorColTel.style.display = 'block';
+        errorColTel.classList.remove('exito');
+        errorColTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (colTelValue.length > 15) {
+        errorColTel.innerHTML = 'El telefono del colegio no puede tener más de 15 caracteres!';
+        errorColTel.style.display = 'block';
+        errorColTel.classList.remove('exito');
+        errorColTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorColTel.classList.add('exito')
+        errorColTel.innerHTML = 'Telefono válido!';
+        errorColTel.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR CURSO
+    const benCursoValue = benCurso.value.trim();
+    const errorBenCurso = document.getElementById('errorBenCurso');
+    if (benCursoValue.length > 25) {
+        errorBenCurso.innerHTML = 'El curso no puede tener más de 25 caracteres!';
+        errorBenCurso.style.display = 'block';
+        errorBenCurso.classList.remove('exito');
+        errorBenCurso.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(benCursoValue)) {
+        errorBenCurso.innerHTML = 'El curso no puede incluir caracteres especiales!';
+        errorBenCurso.style.display = 'block';
+        errorBenCurso.classList.remove('exito');
+        errorBenCurso.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorBenCurso.classList.add('exito')
+        errorBenCurso.classList.add('exito2')
+        errorBenCurso.innerHTML = 'Curso válido!';
+        errorBenCurso.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR PRIMER PROFESOR JEFE
+    const colProfJefeValue = colProfJefe.value.trim();
+    const errorColProfJefe = document.getElementById('errorColProfJefe');
+    if (colProfJefeValue.length > 60) {
+        errorColProfJefe.innerHTML = 'El nombre del profesor no puede tener más de 60 caracteres!';
+        errorColProfJefe.style.display = 'block';
+        errorColProfJefe.classList.remove('exito');
+        errorColProfJefe.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(colProfJefeValue)) {
+        errorColProfJefe.innerHTML = 'El nombre del profesor no puede incluir caracteres especiales!';
+        errorColProfJefe.style.display = 'block';
+        errorColProfJefe.classList.remove('exito');
+        errorColProfJefe.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorColProfJefe.classList.add('exito')
+        errorColProfJefe.classList.add('exito2')
+        errorColProfJefe.innerHTML = 'Nombre del profesor válido!';
+        errorColProfJefe.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR NOMBRE DE DERIVANTE
+    const devNombre = document.getElementById('devNombre');
+    const devNombreValue = devNombre.value.trim();
+    const errorDevNombre = document.getElementById('errorDevNombre');
+    if (devNombreValue.length > 60) {
+        errorDevNombre.innerHTML = 'El nombre del derivante no puede tener más de 60 caracteres!';
+        errorDevNombre.style.display = 'block';
+        errorDevNombre.classList.remove('exito');
+        camposValidos.push(false);
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(devNombreValue)) {
+        errorDevNombre.innerHTML = 'El nombre del derivante no puede incluir caracteres especiales!';
+        errorDevNombre.style.display = 'block';
+        errorDevNombre.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        errorDevNombre.classList.add('exito')
+        errorDevNombre.innerHTML = 'Nombre del derivante válido!';
+        errorDevNombre.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR OBSERVACIONES DE DERIVANTE
+    const devObservaciones = document.getElementById('devObservaciones');
+    const devObservacionesValue = devObservaciones.value.trim();
+    const errorDevObservaciones = document.getElementById('errorDevObservaciones');
+    if (!/^[a-zA-Z0-9 ]*$/.test(devObservacionesValue)) {
+        errorDevObservaciones.innerHTML = 'Las observaciones del derivante no pueden incluir caracteres especiales!';
+        errorDevObservaciones.style.display = 'block';
+        errorDevObservaciones.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        errorDevObservaciones.classList.add('exito')
+        errorDevObservaciones.innerHTML = 'Observaciones del derivante válido!';
+        errorDevObservaciones.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDACIONES DE LA FAMILIA
+    /* // VALIDAR RUT
+    const famRut = document.getElementById('famRut');
+    const famDv = document.getElementById('famDv');
+    const famRutValue = famRut.value.trim();
+    const famDvValue = famDv.value.trim().toUpperCase();
+    const errorFamRut = document.getElementById('errorFamRut');
+    if (famRutValue === '') {
+        errorFamRut.innerHTML = 'El rut no puede estar vacío!';
+        errorFamRut.style.display = 'block';
+        errorFamRut.classList.remove('exito');
+        errorFamRut.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (famRutValue.length > 8) {
+        errorFamRut.innerHTML = 'El rut no puede tener más de 8 caracteres!';
+        errorFamRut.style.display = 'block';
+        errorFamRut.classList.remove('exito');
+        errorFamRut.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^a-zA-Z0-9]/.test(famRutValue)) {
+        errorFamRut.innerHTML = 'El rut no puede incluir caracteres especiales!';
+        errorFamRut.style.display = 'block';
+        errorFamRut.classList.remove('exito');
+        errorFamRut.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (validarRut(famRutValue, famDvValue) === false) {
+        errorFamRut.innerHTML = 'El rut no es válido!';
+        errorFamRut.style.display = 'block';
+        errorFamRut.classList.remove('exito');
+        errorFamRut.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorFamRut.classList.add('exito')
+        errorFamRut.classList.add('exito2')
+        errorFamRut.innerHTML = 'Rut válido!';
+        errorFamRut.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR DV
+    const errorFamDv = document.getElementById('errorFamDv');
+    if (famDvValue === '') {
+        errorFamDv.innerHTML = 'El Dv no puede estar vacío!';
+        errorFamDv.style.display = 'block';
+        errorFamDv.classList.remove('exito');
+        errorFamDv.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (famDvValue.length > 1) {
+        errorFamDv.innerHTML = 'El Dv no puede tener más de 1 caracter!';
+        errorFamDv.style.display = 'block';
+        errorFamDv.classList.remove('exito');
+        errorFamDv.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^a-zA-Z0-9]/.test(famDvValue)) {
+        errorFamDv.innerHTML = 'El Dv no puede incluir caracteres especiales!';
+        errorFamDv.style.display = 'block';
+        errorFamDv.classList.remove('exito');
+        errorFamDv.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorFamDv.classList.add('exito')
+        errorFamDv.classList.add('exito2')
+        errorFamDv.innerHTML = 'Dv válido!';
+        errorFamDv.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR PRIMER NOMBRE
+    const famPNombre = document.getElementById('famPNombre');
+    const famPNombreValue = famPNombre.value.trim();
+    const errorFamPNombre = document.getElementById('errorFamPNombre');
+    if (famPNombreValue === '') {
+        errorFamPNombre.innerHTML = 'El primer nombre no puede estar vacío!';
+        errorFamPNombre.style.display = 'block';
+        errorFamPNombre.classList.remove('exito');
+        errorFamPNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (famPNombreValue.length > 8) {
+        errorFamPNombre.innerHTML = 'El primer nombre no puede tener más de 20 caracteres!';
+        errorFamPNombre.style.display = 'block';
+        errorFamPNombre.classList.remove('exito');
+        errorFamPNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^a-zA-Z0-9]/.test(famPNombreValue)) {
+        errorFamPNombre.innerHTML = 'El primer nombre no puede incluir caracteres especiales!';
+        errorFamPNombre.style.display = 'block';
+        errorFamPNombre.classList.remove('exito');
+        errorFamPNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorFamPNombre.classList.add('exito')
+        errorFamPNombre.classList.add('exito2')
+        errorFamPNombre.innerHTML = 'Primer nombre válido!';
+        errorFamPNombre.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SEGUNDO NOMBRE
+    const famSNombre = document.getElementById('famPNombre');
+    const famSNombreValue = famSNombre.value.trim();
+    const errorFamSNombre = document.getElementById('errorFamSNombre');
+    if (famSNombreValue.length > 8) {
+        errorFamSNombre.innerHTML = 'El segundo nombre no puede tener más de 20 caracteres!';
+        errorFamSNombre.style.display = 'block';
+        errorFamSNombre.classList.remove('exito');
+        errorFamSNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^a-zA-Z0-9]/.test(famSNombreValue)) {
+        errorFamSNombre.innerHTML = 'El segundo nombre no puede incluir caracteres especiales!';
+        errorFamSNombre.style.display = 'block';
+        errorFamSNombre.classList.remove('exito');
+        errorFamSNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorFamSNombre.classList.add('exito')
+        errorFamSNombre.classList.add('exito2')
+        errorFamSNombre.innerHTML = 'Segundo nombre válido!';
+        errorFamSNombre.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR APELLIDO PATERNO
+    const famApPaterno = document.getElementById('famApPaterno');
+    const famApPaternoValue = famApPaterno.value.trim();
+    const errorfamApPaterno = document.getElementById('errorfamApPaterno');
+    if (famApPaternoValue === '') {
+        errorfamApPaterno.innerHTML = 'El apellido paterno no puede estar vacío!';
+        errorfamApPaterno.style.display = 'block';
+        errorfamApPaterno.classList.remove('exito');
+        errorfamApPaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (famApPaternoValue.length > 8) {
+        errorfamApPaterno.innerHTML = 'El apellido paterno no puede tener más de 20 caracteres!';
+        errorfamApPaterno.style.display = 'block';
+        errorfamApPaterno.classList.remove('exito');
+        errorfamApPaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^a-zA-Z0-9]/.test(famApPaternoValue)) {
+        errorfamApPaterno.innerHTML = 'El apellido paterno no puede incluir caracteres especiales!';
+        errorfamApPaterno.style.display = 'block';
+        errorfamApPaterno.classList.remove('exito');
+        errorfamApPaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorfamApPaterno.classList.add('exito')
+        errorfamApPaterno.classList.add('exito2')
+        errorfamApPaterno.innerHTML = 'Apellido paterno válido!';
+        errorfamApPaterno.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR APELLIDO MATERNO
+    const famApMaterno = document.getElementById('famApMaterno');
+    const famApMaternoValue = famApMaterno.value.trim();
+    const errorfamApMaterno = document.getElementById('errorfamApMaterno');
+    if (famApMaternoValue === '') {
+        errorfamApMaterno.innerHTML = 'El apellido materno no puede estar vacío!';
+        errorfamApMaterno.style.display = 'block';
+        errorfamApMaterno.classList.remove('exito');
+        errorfamApMaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (famApMaternoValue.length > 8) {
+        errorfamApMaterno.innerHTML = 'El apellido materno no puede tener más de 20 caracteres!';
+        errorfamApMaterno.style.display = 'block';
+        errorfamApMaterno.classList.remove('exito');
+        errorfamApMaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/[^a-zA-Z0-9]/.test(famApMaternoValue)) {
+        errorfamApMaterno.innerHTML = 'El apellido materno no puede incluir caracteres especiales!';
+        errorfamApMaterno.style.display = 'block';
+        errorfamApMaterno.classList.remove('exito');
+        errorfamApMaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorfamApMaterno.classList.add('exito')
+        errorfamApMaterno.classList.add('exito2')
+        errorfamApMaterno.innerHTML = 'Apellido materno válido!';
+        errorfamApMaterno.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR TELEFONO
+    const famTel = document.getElementById('famTel');
+    const famTelValue = famTel.value.trim();
+    const errorfamTel = document.getElementById('errorfamTel');
+    if (famTelValue === '') {
+        errorfamTel.innerHTML = 'El telefono no puede estar vacío!';
+        errorfamTel.style.display = 'block';
+        errorfamTel.classList.remove('exito');
+        errorfamTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (famTelValue.length < 7) {
+        errorfamTel.innerHTML = 'El telefono no puede tener menos de 7 caracteres!';
+        errorfamTel.style.display = 'block';
+        errorfamTel.classList.remove('exito');
+        errorfamTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (famTelValue.length > 15) {
+        errorfamTel.innerHTML = 'El telefono no puede tener más de 15 caracteres!';
+        errorfamTel.style.display = 'block';
+        errorfamTel.classList.remove('exito');
+        errorfamTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorfamTel.classList.add('exito')
+        errorfamTel.innerHTML = 'Telefono válido!';
+        errorfamTel.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR EMAIL
+    const famEmail = document.getElementById('famEmail');
+    const famEmailValue = famEmail.value.trim();
+    const errorfamEmail = document.getElementById('errorfamEmail');
+    if (famEmailValue === '') {
+        errorfamEmail.innerHTML = 'El correo no puede estar vacío!';
+        errorfamEmail.style.display = 'block';
+        errorfamEmail.classList.remove('exito');
+        errorfamEmail.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (famEmailValue.length > 50) {
+        errorfamEmail.innerHTML = 'El correo no puede tener más de 55 caracteres!';
+        errorfamEmail.style.display = 'block';
+        errorfamEmail.classList.remove('exito');
+        errorfamEmail.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(famEmailValue)) {
+        errorfamEmail.innerHTML = 'El correo no es válido!';
+        errorfamEmail.style.display = 'block';
+        errorfamEmail.classList.remove('exito');
+        errorfamEmail.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorfamEmail.classList.add('exito')
+        errorfamEmail.innerHTML = 'Correo válido!';
+        errorfamEmail.style.display = 'block';
+        camposValidos.push(true);
+    } */
+
+    // VALIDAR NEE DEL BENEFICIARIO
+    const benNee = document.getElementById('benNee');
+    const benNeeValue = benNee.value.trim();
+    const erroBenNee = document.getElementById('erroBenNee');
+    if (!/^[a-zA-Z0-9 ]*$/.test(benNeeValue)) {
+        erroBenNee.innerHTML = 'Las NEE no pueden incluir caracteres especiales!';
+        erroBenNee.style.display = 'block';
+        erroBenNee.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        erroBenNee.classList.add('exito')
+        erroBenNee.innerHTML = 'NEE válidas!';
+        erroBenNee.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR ENFERMEDADES CRONICAS DEL BENEFICIARIO
+    const benEnfCro = document.getElementById('benEnfCro');
+    const benEnfCroValue = benEnfCro.value.trim();
+    const erroBenEnfCro = document.getElementById('erroBenEnfCro');
+    if (!/^[a-zA-Z0-9 ]*$/.test(benEnfCroValue)) {
+        erroBenEnfCro.innerHTML = 'Las enfermedades crónicas no pueden incluir caracteres especiales!';
+        erroBenEnfCro.style.display = 'block';
+        erroBenEnfCro.classList.remove('exito');
+        camposValidos.push(false);
+    } else {
+        erroBenEnfCro.classList.add('exito')
+        erroBenEnfCro.innerHTML = 'Enfermedades crónicas válidas!';
+        erroBenEnfCro.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR TRATAMIENTOS DEL BENEFICIARIO
+    const benTratamientos = document.getElementById('benTratamientos');
+    const benTratamientosValue = benTratamientos.value.trim();
+    const erroBenTratamientos = document.getElementById('erroBenTratamientos');
+    if (!/^[a-zA-Z0-9 ]*$/.test(benTratamientosValue)) {
+        erroBenTratamientos.innerHTML = 'Los tratamientos no pueden incluir caracteres especiales!';
+        erroBenTratamientos.classList.remove('exito');
+        erroBenTratamientos.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        erroBenTratamientos.classList.add('exito')
+        erroBenTratamientos.innerHTML = 'Tratamientos válidos!';
+        erroBenTratamientos.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR DESCRIPCIONES DE LAS OPERACIONES DEL BENEFICIARIO
+    benCirugiaNom = document.getElementById('benCirugiaNom');
+    errorBenCirugiaNom = document.getElementById('errorBenCirugiaNom');
+    benCirugiaNomValue = benCirugiaNom.value.trim();
+    if (!/^[a-zA-Z0-9 ]*$/.test(benCirugiaNomValue)) {
+        errorBenCirugiaNom.innerHTML = 'Los tratamientos no pueden incluir caracteres especiales!';
+        errorBenCirugiaNom.classList.remove('exito');
+        errorBenCirugiaNom.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorBenCirugiaNom.innerHTML = 'Operaciones válidas!';
+        errorBenCirugiaNom.classList.add('exito');
+        errorBenCirugiaNom.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR BENEFICIOS SOCIALES EXTRAS
+    benBenSocOtro = document.getElementById('benBenSocOtro');
+    errorBenBenSocOtro = document.getElementById('errorBenBenSocOtro');
+    benBenSocValue = benBenSocOtro.value.trim();
+    if (!/^[a-zA-Z0-9 ]*$/.test(benBenSocValue)) {
+        errorBenBenSocOtro.innerHTML = 'Los beneficios sociales extra no pueden incluir caracteres especiales!';
+        errorBenBenSocOtro.classList.remove('exito');
+        errorBenBenSocOtro.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorBenBenSocOtro.innerHTML = 'Beneficios sociales extra válidos!';
+        errorBenBenSocOtro.classList.add('exito');
+        errorBenBenSocOtro.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR DIAGNOSTICO
+    benDiag = document.getElementById('benDiag');
+    errorBenDiag = document.getElementById('errorBenDiag');
+    benDiagValue = benDiag.value.trim();
+    if (benDiagValue === '') {
+        errorBenDiag.innerHTML = 'La evaluación diagnóstica no puede estar vacía!';
+        errorBenDiag.classList.remove('exito');
+        errorBenDiag.style.display = 'block';
+        camposValidos.push(false);
+    } else if (!/^[a-zA-Z0-9 ]*$/.test(benDiagValue)) {
+        errorBenDiag.innerHTML = 'La evaluación diagnóstica no puede incluir caracteres especiales!';
+        errorBenDiag.classList.remove('exito');
+        errorBenDiag.style.display = 'block';
+        camposValidos.push(false);
+    } else {
+        errorBenDiag.innerHTML = 'Evaluación diagnóstica válida!';
+        errorBenDiag.classList.add('exito');
+        errorBenDiag.style.display = 'block';
+        camposValidos.push(true);
+    }
+
     // COMPROBAR SI TODOS LOS CAMPOS SON VÁLIDOS
     const esValido = camposValidos.every(Boolean);
 
@@ -853,3 +1522,74 @@ function validarFormBeneficiario() {
         document.querySelector('.formularioPiola').submit();
     }
 }
+
+// VALIDAMOS LAS EXTENSIONES DE LOS ARCHIVOS
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('benEvidMed').addEventListener('change', (event) => {
+        const archivo = event.target.files[0];
+        const nombreArchivo = archivo ? archivo.name : '';
+        const erroBenEvidMed = document.getElementById('erroBenEvidMed');
+
+        if (!validarArchivo(nombreArchivo)) {
+            erroBenEvidMed.innerHTML = 'Los documentos solo pueden ser docx o pdf!';
+            erroBenEvidMed.classList.remove('exito');
+            erroBenEvidMed.style.display = 'block';
+            event.target.value = '';
+        } else {
+            erroBenEvidMed.innerHTML = 'Los documentos son válidos!';
+            erroBenEvidMed.classList.add('exito');
+            erroBenEvidMed.style.display = 'block';
+        }
+    });
+});
+
+// FUNCION PARA FILTRAR LAS VISTAS DE LA PAGINA DE ANTECEDENTES DE SALUD DEL BENEFICIARIO 
+document.addEventListener('DOMContentLoaded', () => {
+    // OBTENER LINKS
+    const mostrarSeguimiento = document.getElementById('mostrarSeguimiento');
+    const mostrarAntecedentes = document.getElementById('mostrarAntecedentes');
+    const mostrarDiagnostico = document.getElementById('mostrarDiagnostico');
+    const mostrarDocumentos = document.getElementById('mostrarDocumentos');
+
+    // OBTENER APARTADOS DEL FORMULARIO
+    const apartadoSeguimiento = document.getElementById('apartadoSeguimiento');
+    const apartadoAntecedentes = document.getElementById('apartadoAntecedentes');
+    const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
+    const apartadoDocumentos = document.getElementById('apartadoDocumentos');
+
+    // FUNCION PARA OCULTAR TODOS LOS APARTADOS
+    function ocultarTodosLosApartados2() {
+        const apartados2 = [
+            apartadoSeguimiento,
+            apartadoAntecedentes,
+            apartadoDiagnostico,
+            apartadoDocumentos,
+        ];
+        apartados2.forEach(apartado2 => apartado2.classList.add('ocultar'));
+    }
+
+    // MOSTRAR SOLO EL FORMULARIO DE BENEFICIARIO AL CARGAR
+    ocultarTodosLosApartados2();
+    apartadoSeguimiento.classList.remove('ocultar');
+
+    // CONFIGURAR EVENTOS PARA MOSTRAR LOS FORMULARIOS
+    mostrarSeguimiento.addEventListener('click', () => {
+        ocultarTodosLosApartados2();
+        apartadoSeguimiento.classList.remove('ocultar');
+    });
+
+    mostrarAntecedentes.addEventListener('click', () => {
+        ocultarTodosLosApartados2();
+        apartadoAntecedentes.classList.remove('ocultar');
+    });
+
+    mostrarDiagnostico.addEventListener('click', () => {
+        ocultarTodosLosApartados2();
+        apartadoDiagnostico.classList.remove('ocultar');
+    });
+
+    mostrarDocumentos.addEventListener('click', () => {
+        ocultarTodosLosApartados2();
+        apartadoDocumentos.classList.remove('ocultar');
+    });
+});

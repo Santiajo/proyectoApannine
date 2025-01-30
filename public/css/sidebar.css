@@ -539,6 +539,11 @@ button {
     row-gap: 5px;
 }
 
+.fila1Perso {
+    padding-top: 0;
+    padding-bottom: 20px;
+}
+
 #fila1Perso {
     padding-top: 0;
     padding-bottom: 20px;

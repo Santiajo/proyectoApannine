@@ -15,6 +15,8 @@ use App\Http\Controllers\nacionalidadController;
 use App\Http\Controllers\cobMedController;
 // CONTROLADOR DE COMUNAS
 use App\Http\Controllers\comunaController;
+// CONTROLADOR DE HISTORIAL MEDICO
+use App\Http\Controllers\histMedicoController;
 
 //Aqui se llama a las rutas
 Route::get('/', [PostController::class, 'login']);
@@ -49,7 +51,7 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 // RUTAS DE BENEFICIARIO
     // PAGINA PRINCIPAL DE LOS CRUD BENEFICIARIOS
     Route::get('/views/listarBeneficiarios', [beneficiarioController::class, 'listarBeneficiarios'])->name('beneficiarios.listarBeneficiarios');
-    // PÁGINA DEL FORMULARIO DEL CRUD PT 1
+    // PÁGINA DEL FORMULARIO DEL CRUD
     Route::get('/views/formularioBeneficiario', [beneficiarioController::class, 'formularioBeneficiario'])->name('beneficiarios.formularioBeneficiario');
     // PARA GUARDAR O ACTUALIZAR BENEFICIARIOS
     Route::post('/views/guardarBeneficiario', [beneficiarioController::class, 'guardarBeneficiario'])->name('beneficiarios.guardarBeneficiario');
@@ -57,22 +59,13 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
     Route::delete('/views/eliminarBeneficiario/{id}', [beneficiarioController::class,'eliminarBeneficiario'])->name('beneficiarios.eliminarBeneficiario');
     // PARA MOSTRAR LA INFORMACIÓN DETALLADA DE UN BENEFICIARIO
     Route::get('/views/fichaBeneficiario/{id}', [beneficiarioController::class,'fichaBeneficiario'])->name('beneficiarios.fichaBeneficiario');
-    // PÁGINA DEL FORMULARIO DEL CRUD PT 1 RELLENO
+    // PÁGINA DEL FORMULARIO DEL CRUD RELLENO
     Route::get('/views/formBenRelleno/{id}', [beneficiarioController::class, 'formBenRelleno'])->name('beneficiarios.formBenRelleno');
+    // PAGINA PARA MOSTRAR ANTECEDENTES DE SALUD DEL BENEFICIARIO
+    Route::get('/views/antMedBeneficiario/{id}', [histMedicoController::class, 'antMedBeneficiario'])->name('beneficiarios.antMedBeneficiario');
+    // PARA ELIMINAR ARCHIVOS SUBIDOS EN LOS ANTECEDENTES MEDICOS
+    Route::delete('/views/eliminarArchivo/{id}', [histMedicoController::class,'eliminarArchivo'])->name('beneficiarios.eliminarArchivo');
 
-
-
-// Route::get('/views/formularioBeneficiarioDerivante', [PostController::class, 'formularioBeneficiarioDerivante'])->name('formularioBeneficiarioDerivante');
-// Route::get('/views/formularioBeneficiarioFamilia', [PostController::class, 'formularioBeneficiarioFamilia'])->name('formularioBeneficiarioFamilia');
-// Route::get('/views/formularioBeneficiarioAntSocial', [PostController::class, 'formularioBeneficiarioAntSocial'])->name('formularioBeneficiarioAntSocial');
-// Route::get('/views/formularioBeneficiarioAntSalud', [PostController::class, 'formularioBeneficiarioAntSalud'])->name('formularioBeneficiarioAntSalud');
-// Route::get('/views/formularioBeneficiarioDiagnostico', [PostController::class, 'formularioBeneficiarioDiagnostico'])->name('formularioBeneficiarioDiagnostico');
-
-// HISTORIAL MÉDICO DEL BENEFICIARIO
-Route::get('/views/histMedBeneficiario', [PostController::class, 'histMedBeneficiario'])->name('histMedBeneficiario');
-Route::get('/views/antMedBeneficiario', [PostController::class, 'antMedBeneficiario'])->name('antMedBeneficiario');
-Route::get('/views/diagnosticoBeneficiario', [PostController::class, 'diagnosticoBeneficiario'])->name('diagnosticoBeneficiario');
-Route::get('/views/documentosBeneficiario', [PostController::class, 'documentosBeneficiario'])->name('documentosBeneficiario');
 
 // HORARIO DEL BENEFICIARIO
 Route::get('/views/horarioBeneficiario', [PostController::class, 'horarioBeneficiario'])->name('horarioBeneficiario');

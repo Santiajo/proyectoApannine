@@ -7,25 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 // PARA PODER DEFINIR LOS CAMPOS QUE SE PUEDEN LLENAR
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Colegio extends Model
+class Diagnostico extends Model
 {
     // LLAMAMOS HasFactory PARA USARLO
     use HasFactory;
 
     // ASIGNAMOS EL NOMBRE DE LA TABLA
-    protected $table = 'colegios';
+    protected $table = 'diagnostico';
 
     // ESPECÍFICAMOS LOS CAMPOS QUE SE PUEDEN LLENAR
     protected $fillable = [
-        'colegioAsiste',
-        'colegioNombre',
-        'colegioTelefono',
-        'colegioCurso',
-        'colegioProfJefe',
+        'diagnosticoUsuario',
+        'diagnosticoDesc',
     ];
 
     // CREAMOS RELACIÓN CON EL MODELO ESPECIALISTA
     public function especialistas() {
-        return $this->hasMany(Especialista::class);
+        return $this->hasOne(Especialista::class);
     }
 }

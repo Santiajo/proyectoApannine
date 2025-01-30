@@ -31,8 +31,13 @@ class Beneficiario extends Model
         'cob_med_id',
         'nacionalidad_id',
         'comuna_id',
+        'derivante_id',
+        'colegio_id',
+        'diagnostico_id',
+        'antSal_id',
+        'antSoc_id',
+        'familiar_beneficiario_id',
     ];
-
     protected $casts = [
         'beneficiarioFecNac' => 'date',
     ];
@@ -53,5 +58,43 @@ class Beneficiario extends Model
     public function comuna()
     {
         return $this->belongsTo(Comuna::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO COLEGIO
+    // Relationship with Colegio
+    public function colegio()
+    {
+        return $this->belongsTo(Colegio::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO DERIVANTE
+    public function derivante()
+    {
+        return $this->belongsTo(Derivante::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO ANTECEDENTES SALUD
+    public function antSalud()
+    {
+        return $this->belongsTo(antecedenteSalud::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO ANTECEDENTES SOCIALES
+    public function antSocial()
+    {
+        return $this->belongsTo(antecedenteSocial::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO ANTECEDENTES DIAGNÓSTICO
+    public function diagnostico()
+    {
+        return $this->belongsTo(Diagnostico::class);
+    }
+
+    // CREAMOS RELACIÓN CON EL MODELO FAMILIAR BENEFICIARIO
+    public function familiares()
+    {
+        return $this->belongsToMany(Familiar::class, 'familiar_beneficiario', 'beneficiario_id', 'familiar_id')
+            ->withTimestamps();
     }
 }
