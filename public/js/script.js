@@ -581,7 +581,7 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarBotonesEliminar();
 });
 
-// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
+// FUNCIÓN PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
 document.addEventListener('DOMContentLoaded', () => {
     // OBTENER LINKS
     const mostrarBeneficiario = document.getElementById('mostrarBeneficiario');
@@ -600,6 +600,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const apartadoAntSalud = document.getElementById('apartadoAntSalud');
     const apartadoAntSocial = document.getElementById('apartadoAntSocial');
     const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
+    
+    // OBTENER EL DIV QUE CONTIENE LOS FAMILIARES
+    const contenedorFamiliares = document.getElementById('contenedorFamiliares');
 
     // FUNCION PARA OCULTAR TODOS LOS APARTADOS
     function ocultarTodosLosApartados() {
@@ -614,6 +617,9 @@ document.addEventListener('DOMContentLoaded', () => {
             grupoBotones
         ];
         apartados.forEach(apartado => apartado.classList.add('ocultar'));
+
+        // También oculta el contenedor de familiares
+        contenedorFamiliares.classList.add('ocultar');
     }
 
     // MOSTRAR SOLO EL FORMULARIO DE BENEFICIARIO AL CARGAR
@@ -639,6 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarFamilia.addEventListener('click', () => {
         ocultarTodosLosApartados();
         apartadoFamilia.classList.remove('ocultar');
+        contenedorFamiliares.classList.remove('ocultar'); // Mostrar familiares solo cuando se selecciona "Familia"
     });
 
     mostrarAntSalud.addEventListener('click', () => {
