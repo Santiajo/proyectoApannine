@@ -23,6 +23,7 @@ class Familiar extends Model
         'familiarPNombre',
         'familiarSNombre',
         'familiarApPaterno',
+        'familiarApMaterno',
         'familiarTelefono',
         'familiarCorreo',
         'familiarCuidador',

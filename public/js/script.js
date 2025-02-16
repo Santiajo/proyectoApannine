@@ -517,6 +517,70 @@ function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    let contadorFamiliares = document.querySelectorAll(".seccion-familiares").length - 1;
+
+    function actualizarBotonesEliminar() {
+        let formularios = document.querySelectorAll(".seccion-familiares");
+        formularios.forEach((formulario, index) => {
+            let botonEliminar = formulario.querySelector("#eliminarFamiliar");
+            if (botonEliminar) {
+                botonEliminar.disabled = formularios.length === 1;
+            }
+            let titulo = formulario.querySelector(".titulo-familiar");
+            if (titulo) {
+                titulo.textContent = `Datos Familiar ${index + 1}`;
+            }
+        });
+    }
+
+    document.addEventListener("click", function (event) {
+        if (event.target.closest("#agregarFamiliar")) {
+            contadorFamiliares++;
+            let formularioActual = event.target.closest(".separacionFormulario");
+            let clon = formularioActual.cloneNode(true);
+
+            clon.querySelectorAll("input, select, fieldset").forEach((elemento) => {
+                if (elemento.name) {
+                    elemento.name = elemento.name.replace(/\[\d+\]/, `[${contadorFamiliares}]`);
+                }
+                if (elemento.tagName === "INPUT") {
+                    elemento.value = "";
+                }
+            });
+
+            let titulo = clon.querySelector(".titulo-familiar");
+            if (titulo) {
+                titulo.textContent = `Datos Familiar ${contadorFamiliares + 1}`;
+            }
+
+            let botonEliminar = clon.querySelector("#eliminarFamiliar");
+            if (!botonEliminar) {
+                botonEliminar = document.createElement("button");
+                botonEliminar.textContent = "Eliminar Familiar";
+                botonEliminar.type = "button";
+                botonEliminar.classList.add("boton-secundario");
+                botonEliminar.id = "eliminarFamiliar";
+                clon.appendChild(botonEliminar);
+            }
+
+            document.getElementById("contenedorFamiliares").appendChild(clon);
+            actualizarBotonesEliminar();
+        }
+
+        if (event.target.closest("#eliminarFamiliar")) {
+            let formulario = event.target.closest(".separacionFormulario");
+            if (document.querySelectorAll(".separacionFormulario").length > 1) {
+                formulario.remove();
+                contadorFamiliares--;
+                actualizarBotonesEliminar();
+            }
+        }
+    });
+
+    actualizarBotonesEliminar();
+});
+
 // FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
 document.addEventListener('DOMContentLoaded', () => {
     // OBTENER LINKS
@@ -527,20 +591,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const mostrarAntSalud = document.getElementById('mostrarAntSalud');
     const mostrarAntSocial = document.getElementById('mostrarAntSocial');
     const mostrarDiagnostico = document.getElementById('mostrarDiagnostico');
-    const agregarFamiliar = document.getElementById('agregarFamiliar');
-    const eliminarFamiliar = document.getElementById('eliminarFamiliar');
 
     // OBTENER APARTADOS DEL FORMULARIO
     const apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
     const apartadoColegio = document.getElementById('apartadoColegio');
     const apartadoDerivante = document.getElementById('apartadoDerivante');
     const apartadoFamilia = document.getElementById('apartadoFamilia');
-    const apartadoFamilia2 = document.getElementById('apartadoFamilia2');
     const apartadoAntSalud = document.getElementById('apartadoAntSalud');
     const apartadoAntSocial = document.getElementById('apartadoAntSocial');
     const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
-
-    let contadorFamiliares = 0;
 
     // FUNCION PARA OCULTAR TODOS LOS APARTADOS
     function ocultarTodosLosApartados() {
@@ -549,7 +608,6 @@ document.addEventListener('DOMContentLoaded', () => {
             apartadoColegio,
             apartadoDerivante,
             apartadoFamilia,
-            apartadoFamilia2,
             apartadoAntSalud,
             apartadoAntSocial,
             apartadoDiagnostico,
@@ -598,35 +656,6 @@ document.addEventListener('DOMContentLoaded', () => {
         apartadoDiagnostico.classList.remove('ocultar');
         grupoBotones.classList.remove('ocultar');
     });
-
-    agregarFamiliar.addEventListener('click', () => {
-        ocultarTodosLosApartados();
-        contadorFamiliares++;
-        console.log('Contador: ', contadorFamiliares);
-        apartadoFamilia.classList.remove('ocultar');
-        apartadoFamilia2.classList.remove('ocultar');
-
-        if (contadorFamiliares == 0) {
-            eliminarFamiliar.disabled = true;
-        } else {
-            eliminarFamiliar.disabled = false;
-        }
-    });
-
-    eliminarFamiliar.addEventListener('click', () => {
-        contadorFamiliares--;
-        if (contadorFamiliares == 0) {
-            contadorFamiliares = 0;
-            eliminarFamiliar.disabled = true;
-        } else {
-            eliminarFamiliar.disabled = true;
-        }
-        console.log('Contador: ', contadorFamiliares);
-        ocultarTodosLosApartados();
-        apartadoFamilia.classList.remove('ocultar');
-        console.log('Se hizo clic en eliminar');
-    });
-
 });
 
 // FUNCIÓN REUTILIZABLE PARA DESHABILITAR CAMPOS ASOCIADOS A RADIO BUTTONS
@@ -823,7 +852,7 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     } */
 
-    /// VALIDAR RUT
+    // VALIDAR RUT
     const rutValue = benRut.value.trim();
     const dvValue = benDv.value.trim().toUpperCase();
     if (rutValue === '') {
@@ -1175,7 +1204,8 @@ function validarFormBeneficiario() {
     }
 
     // VALIDACIONES DE LA FAMILIA
-    /* // VALIDAR RUT
+    // VALIDAR RUT
+    /*
     const famRut = document.getElementById('famRut');
     const famDv = document.getElementById('famDv');
     const famRutValue = famRut.value.trim();

@@ -94,8 +94,15 @@
                 </tr>
             </thead>
             <tbody>
+                @if ($antSal->antSalFilePath == null)
+                    <tr>
+                        <td></td>
+                        <td>No hay documentos subidos!</td>
+                        <td></td>
+                    </tr>
+                @else
                 <tr>
-                    <td data-label="Documentos">{{ $antSal->antSalFilePath == null ? 'N/A' : $antSal->antSalFilePath }}
+                    <td data-label="Documentos">{{ $antSal->antSalFilePath }}
                     </td>
                     <td data-label="Documentos">{{ $antSal->created_at }}</td>
                     <td data-label="Asistencia"><a class="detalles"
@@ -110,6 +117,7 @@
                         </form>
                     </td>
                 </tr>
+                @endif
             </tbody>
         </table>
     </div>

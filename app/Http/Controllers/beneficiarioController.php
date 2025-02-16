@@ -146,6 +146,29 @@ class beneficiarioController extends Controller
         $registro->update($datos);
     }
 
+    // MÉTODO PARA GUARDAR LOS FAMILIARES DE UN BENEFICIARIO
+    public function guardarFamiliares(Request $request, $beneficiario_id)
+    {
+        $familiares = $request->input('familiares');
+
+        foreach ($familiares as $familiar) {
+            $nuevoFamiliar = Familiar::create([
+                'familiarParentesco' => $familiar['famTipo'],
+                'familiarRut' => $familiar['famRut'],
+                'familiarDv' => $familiar['famDv'],
+                'familiarPNombre' => $familiar['famPNombre'],
+                'familiarSNombre' => $familiar['famSNombre'],
+                'familiarApPaterno' => $familiar['famApPaterno'],
+                'familiarApMaterno' => $familiar['famApMaterno'],
+                'familiarTelefono' => $familiar['famTel'],
+                'familiarCorreo' => $familiar['famEmail'],
+                'familiarCuidador' => $familiar['famCuidador'] ?? 0,
+                'familiarSitLaboral' => $familiar['famSitLab'],
+            ]);
+            $nuevoFamiliar->beneficiarios()->attach($beneficiario_id);
+        }
+    }
+
     // MÉTODO PARA GUARDAR O ACTUALIZAR UN BENEFICIARIO
     public function guardarBeneficiario(Request $request)
     {
@@ -246,11 +269,6 @@ class beneficiarioController extends Controller
             $derivanteColumnas = ['derivanteNombre', 'derivanteObservaciones'];
             $derivanteCampos = ['devNombre', 'devObservaciones'];
             $derivante = $this->crearRegistro($request, Derivante::class, $derivanteColumnas, $derivanteCampos);
-            // CREAR FAMILIAR
-            $familiarColumnas = ['familiarParentesco', 'familiarRut', 'familiarDv', 'familiarPNombre', 'familiarSNombre', 'familiarApPaterno', 
-            'familiarApMaterno', 'familiarTelefono', 'familiarCorreo', 'familiarCuidador', 'familiarSitLaboral'];
-            $familiarCampos = ['famTipo', 'famRut', 'famDv', 'famPNombre', 'famSNombre', 'famApPaterno', 'famApMaterno', 'famTel', 'famEmail', 'famCuidador', 'famSitLab'];
-            $familiar = $this->crearRegistro($request, Familiar::class, $familiarColumnas, $familiarCampos);
             // CREAR ANTECEDENTES DE SALUD
             $antSalud = antecedenteSalud::create([
                 'antSalNEE' => $request->benNee,
@@ -278,8 +296,8 @@ class beneficiarioController extends Controller
             $beneficiarioCampos = ['benEstado', 'benRut', 'benDv', 'benPNombre', 'benSNombre', 'benApPaterno', 'benApMaterno', 'benFecNac', 'benTel', 'benDom', 
             'benTipViv', 'benCobMed', 'benNac','benComuna', $colegio->id, $derivante->id, $antSalud->id, $antSocial->id,  $diagnostico->id];
             $beneficiario = $this->crearRegistro($request, Beneficiario::class, $beneficiarioColumnas, $beneficiarioCampos);
-            // ASOCIAR FAMILIAR AL BENEFICIARIO
-            $beneficiario->familiares()->attach($familiar->id);
+            // CREAR FAMILIARES
+            $this->guardarFamiliares($request, $beneficiario->id);
             return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario creado correctamente.');
         }
     }
