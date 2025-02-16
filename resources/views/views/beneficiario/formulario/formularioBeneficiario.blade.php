@@ -276,8 +276,8 @@
                 <h3 class="titulo-familiar">Datos Familiar</h3>
 
                 <!-- Tipo Familiar -->
-                <label for="famTipo">Familiaridad:</label>
-                <select name="familiares[0][famTipo]" id="famTipo">
+                <label for="famTipo_0">Familiaridad:</label>
+                <select name="familiares[0][famTipo]" id="famTipo_0">
                     <option value="Padre">Padre</option>
                     <option value="Madre">Madre</option>
                     <option value="Hermano(a)">Hermano(a)</option>
@@ -286,13 +286,13 @@
                 <!-- Rut familiar -->
                 <section class="layoutTelefono">
                     <div>
-                        <label for="famRut">Rut:</label>
-                        <input type="number" name="familiares[0][famRut]" id="famRut">
+                        <label for="famRut_0">Rut:</label>
+                        <input type="number" name="familiares[0][famRut]" id="famRut_0">
                         <div class="errores errores2" id="errorFamRut"></div>
                     </div>
                     <div>
-                        <label for="famDv">Dv:</label>
-                        <input type="text" name="familiares[0][famDv]" id="famDv">
+                        <label for="famDv_0">Dv:</label>
+                        <input type="text" name="familiares[0][famDv]" id="famDv_0">
                         <div class="errores errores2" id="errorFamDv"></div>
                     </div>
                 </section>
@@ -300,50 +300,50 @@
                 <!-- Nombre familiar -->
                 <div class="layoutNombre">
                     <div>
-                        <label for="famPNombre">Primer Nombre:</label>
-                        <input type="text" name="familiares[0][famPNombre]" id="famPNombre">
+                        <label for="famPNombre_0">Primer Nombre:</label>
+                        <input type="text" name="familiares[0][famPNombre]" id="famPNombre_0">
                         <div class="errores errores2" id="errorFamPNombre"></div>
                     </div>
                     <div>
-                        <label for="famSNombre">Segundo Nombre:</label>
-                        <input type="text" name="familiares[0][famSNombre]" id="famSNombre">
+                        <label for="famSNombre_0">Segundo Nombre:</label>
+                        <input type="text" name="familiares[0][famSNombre]" id="famSNombre_0">
                         <div class="errores errores2" id="errorFamSNombre"></div>
                     </div>
                     <div>
-                        <label for="famApPaterno">Apellido Paterno:</label>
-                        <input type="text" name="familiares[0][famApPaterno]" id="famApPaterno">
+                        <label for="famApPaterno_0">Apellido Paterno:</label>
+                        <input type="text" name="familiares[0][famApPaterno]" id="famApPaterno_0">
                         <div class="errores errores2" id="errorfamApPaterno"></div>
                     </div>
                     <div>
-                        <label for="famApMaterno">Apellido Materno:</label>
-                        <input type="text" name="familiares[0][famApMaterno]" id="famApMaterno">
+                        <label for="famApMaterno_0">Apellido Materno:</label>
+                        <input type="text" name="familiares[0][famApMaterno]" id="famApMaterno_0">
                         <div class="errores errores2" id="errorfamApMaterno"></div>
                     </div>
                 </div>
 
-                <label for="famTel">Teléfono:</label>
-                <input type="number" name="familiares[0][famTel]" id="famTel">
+                <label for="famTel_0">Teléfono:</label>
+                <input type="number" name="familiares[0][famTel]" id="famTel_0">
                 <div class="errores" id="errorfamTel"></div>
 
-                <label for="famEmail">Correo electrónico:</label>
-                <input type="email" name="familiares[0][famEmail]" id="famEmail">
+                <label for="famEmail_0">Correo electrónico:</label>
+                <input type="email" name="familiares[0][famEmail]" id="famEmail_0">
                 <div class="errores" id="errorfamEmail"></div>
 
                 <!-- Cuidador o no -->
                 <fieldset>
                     <legend>¿Es cuidador(a)?</legend>
 
-                    <input type="radio" id="famCuidadorSi" name="familiares[0][famCuidador]" value="1">
-                    <label for="famCuidadorSi">Sí</label>
+                    <input type="radio" id="famCuidadorSi_0" name="familiares[0][famCuidador]" value="1">
+                    <label for="famCuidadorSi_0">Sí</label>
 
-                    <input type="radio" id="famCuidadorNo" name="familiares[0][famCuidador]" value="0">
-                    <label for="famCuidadorNo">No</label>
+                    <input type="radio" id="famCuidadorNo_0" name="familiares[0][famCuidador]" value="0">
+                    <label for="famCuidadorNo_0">No</label>
                 </fieldset>
                 <div class="errores" id="errorEsCuidador"></div>
 
                 <!-- Situación Laboral -->
-                <label for="famSitLab">Situación laboral:</label>
-                <select name="familiares[0][famSitLab]" id="famSitLab">
+                <label for="famSitLab_0">Situación laboral:</label>
+                <select name="familiares[0][famSitLab]" id="famSitLab_0">
                     <option value="Trabajo Estable">Trabajo Estable</option>
                     <option value="Trabajo Ocasional">Trabajo Ocasional</option>
                     <option value="Sin trabajo">Sin trabajo</option>
@@ -409,14 +409,26 @@
                     requisitos!</div>
             @enderror
 
-            <!-- Documentos médicos -->
-            <label for="benEvidMed">Documentos:</label>
-            <input type="file" name="benEvidMed" id="benEvidMed">
+        <div id="documentosContainer">
+            <h3>Documentos</h3>
+            <!-- Contenedor donde se agregarán los documentos dinámicamente -->
+            <div class="documento-item">
+                <label for="benEvidMed_0">Documento 1:</label>
+                <input type="file" name="benEvidMed[0][antSalFilePath]" id="benEvidMed_0">
+                <button class="boton-secundario eliminar-documento" type="button">Eliminar Documento</button>
+            </div>
+
             <div class="errores" id="erroBenEvidMed"></div>
             @error('benEvidMed')
-                <div class="alert alert-danger">La evidencia médica subidas no cumplen los
-                    requisitos!</div>
+                <div class="alert alert-danger">La evidencia médica subida no cumple los requisitos!</div>
             @enderror
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="fila4">
+            <button class="boton-primario" type="button" id="agregarDocumento">
+                <i class='bx bxs-file-plus'></i> Añadir Documento
+            </button>
         </div>
 
         <!-- form Antecedentes social -->

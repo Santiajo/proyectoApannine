@@ -517,13 +517,14 @@ function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
     }
 }
 
+// FUNCIÓN PARA AÑADIR FAMILIARES DINAMICAMENTE
 document.addEventListener("DOMContentLoaded", function () {
     let contadorFamiliares = document.querySelectorAll(".seccion-familiares").length - 1;
 
     function actualizarBotonesEliminar() {
         let formularios = document.querySelectorAll(".seccion-familiares");
         formularios.forEach((formulario, index) => {
-            let botonEliminar = formulario.querySelector("#eliminarFamiliar");
+            let botonEliminar = formulario.querySelector(".eliminarFamiliar");
             if (botonEliminar) {
                 botonEliminar.disabled = formularios.length === 1;
             }
@@ -540,9 +541,12 @@ document.addEventListener("DOMContentLoaded", function () {
             let formularioActual = event.target.closest(".separacionFormulario");
             let clon = formularioActual.cloneNode(true);
 
-            clon.querySelectorAll("input, select, fieldset").forEach((elemento) => {
+            clon.querySelectorAll("input, select, fieldset, label").forEach((elemento) => {
                 if (elemento.name) {
                     elemento.name = elemento.name.replace(/\[\d+\]/, `[${contadorFamiliares}]`);
+                }
+                if (elemento.id) {
+                    elemento.id = elemento.id.replace(/_\d+$/, `_${contadorFamiliares}`);
                 }
                 if (elemento.tagName === "INPUT") {
                     elemento.value = "";
@@ -554,31 +558,111 @@ document.addEventListener("DOMContentLoaded", function () {
                 titulo.textContent = `Datos Familiar ${contadorFamiliares + 1}`;
             }
 
-            let botonEliminar = clon.querySelector("#eliminarFamiliar");
+            let botonEliminar = clon.querySelector(".eliminarFamiliar");
             if (!botonEliminar) {
                 botonEliminar = document.createElement("button");
                 botonEliminar.textContent = "Eliminar Familiar";
                 botonEliminar.type = "button";
-                botonEliminar.classList.add("boton-secundario");
-                botonEliminar.id = "eliminarFamiliar";
+                botonEliminar.classList.add("boton-secundario", "eliminarFamiliar");
                 clon.appendChild(botonEliminar);
             }
 
             document.getElementById("contenedorFamiliares").appendChild(clon);
-            actualizarBotonesEliminar();
+            actualizarNumeracion();
         }
 
-        if (event.target.closest("#eliminarFamiliar")) {
+        if (event.target.closest(".eliminarFamiliar")) {
             let formulario = event.target.closest(".separacionFormulario");
             if (document.querySelectorAll(".separacionFormulario").length > 1) {
                 formulario.remove();
                 contadorFamiliares--;
-                actualizarBotonesEliminar();
+                actualizarNumeracion();
             }
         }
     });
 
+    function actualizarNumeracion() {
+        let familiares = document.querySelectorAll(".seccion-familiares");
+        familiares.forEach((familiar, index) => {
+            let titulo = familiar.querySelector(".titulo-familiar");
+            if (titulo) {
+                titulo.textContent = `Datos Familiar ${index + 1}`;
+            }
+
+            familiar.querySelectorAll("input, select, fieldset, label").forEach((elemento) => {
+                if (elemento.name) {
+                    elemento.name = elemento.name.replace(/\[\d+\]/, `[${index}]`);
+                }
+                if (elemento.id) {
+                    elemento.id = elemento.id.replace(/_\d+$/, `_${index}`);
+                }
+            });
+        });
+    }
+
     actualizarBotonesEliminar();
+});
+
+// FUNCIÓN PARA AÑADIR DOCUMENTOS DINAMICAMENTE
+document.addEventListener("DOMContentLoaded", function () {
+    let contadorDocumentos = 0; // Se inicia en 0
+
+    document.getElementById("agregarDocumento").addEventListener("click", function () {
+        contadorDocumentos++; // Incrementa el contador para el nuevo documento
+
+        // Crear el contenedor del nuevo documento
+        let nuevoDocumento = document.createElement("div");
+        nuevoDocumento.classList.add("documento-item");
+
+        // Crear el label con el nuevo índice
+        let nuevoLabel = document.createElement("label");
+        nuevoLabel.setAttribute("for", `benEvidMed_${contadorDocumentos}`);
+        nuevoLabel.textContent = `Documento ${contadorDocumentos + 1}:`;
+
+        // Crear el input file con el nuevo índice
+        let nuevoInput = document.createElement("input");
+        nuevoInput.setAttribute("type", "file");
+        nuevoInput.setAttribute("name", `benEvidMed[${contadorDocumentos}][antSalFilePath]`);
+        nuevoInput.setAttribute("id", `benEvidMed_${contadorDocumentos}`);
+
+        // Crear botón de eliminar
+        let botonEliminar = document.createElement("button");
+        botonEliminar.classList.add("boton-secundario", "eliminar-documento");
+        botonEliminar.type = "button";
+        botonEliminar.textContent = "Eliminar Documento";
+
+        // Añadir eventos al botón de eliminar
+        botonEliminar.addEventListener("click", function () {
+            nuevoDocumento.remove();
+            actualizarNumeracion();
+        });
+
+        // Agregar elementos al contenedor del documento
+        nuevoDocumento.appendChild(nuevoLabel);
+        nuevoDocumento.appendChild(nuevoInput);
+        nuevoDocumento.appendChild(botonEliminar);
+
+        // Agregar al contenedor principal
+        document.getElementById("documentosContainer").appendChild(nuevoDocumento);
+
+        actualizarNumeracion(); // Asegurar que los labels y nombres sean correctos
+    });
+
+    function actualizarNumeracion() {
+        let documentos = document.querySelectorAll(".documento-item");
+        documentos.forEach((doc, index) => {
+            let label = doc.querySelector("label");
+            let input = doc.querySelector("input");
+            
+            label.setAttribute("for", `benEvidMed_${index}`);
+            label.textContent = `Documento ${index + 1}:`;
+            
+            input.setAttribute("name", `benEvidMed[${index}][antSalFilePath]`);
+            input.setAttribute("id", `benEvidMed_${index}`);
+        });
+
+        contadorDocumentos = documentos.length - 1; // Ajustar el contador correctamente
+    }
 });
 
 // FUNCIÓN PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO

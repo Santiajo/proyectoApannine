@@ -741,6 +741,16 @@ hr {
     gap: 8px;
 }
 
+/* Ordenamos los inputs de documento */
+.documento-item {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    column-gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 /* FORMULARIOS */
 .formularioPiola {
     width: 100%;
