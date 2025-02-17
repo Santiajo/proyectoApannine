@@ -536,7 +536,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.addEventListener("click", function (event) {
-        if (event.target.closest("#agregarFamiliar")) {
+        if (event.target.classList.contains("agregarFamiliar")) {
             contadorFamiliares++;
             let formularioActual = event.target.closest(".separacionFormulario");
             let clon = formularioActual.cloneNode(true);
@@ -558,22 +558,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 titulo.textContent = `Datos Familiar ${contadorFamiliares + 1}`;
             }
 
-            let botonEliminar = clon.querySelector(".eliminarFamiliar");
-            if (!botonEliminar) {
-                botonEliminar = document.createElement("button");
-                botonEliminar.textContent = "Eliminar Familiar";
-                botonEliminar.type = "button";
-                botonEliminar.classList.add("boton-secundario", "eliminarFamiliar");
-                clon.appendChild(botonEliminar);
-            }
-
             document.getElementById("contenedorFamiliares").appendChild(clon);
-            actualizarNumeracion();
+            actualizarBotonesEliminar();
         }
 
-        if (event.target.closest(".eliminarFamiliar")) {
+        if (event.target.classList.contains("eliminarFamiliar")) {
             let formulario = event.target.closest(".separacionFormulario");
-            if (document.querySelectorAll(".separacionFormulario").length > 1) {
+            if (document.querySelectorAll(".seccion-familiares").length > 1) {
                 formulario.remove();
                 contadorFamiliares--;
                 actualizarNumeracion();

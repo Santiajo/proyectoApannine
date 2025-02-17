@@ -351,8 +351,8 @@
                 </select>
                 <!-- Botón para añadir familiar -->
                 <div class="fila4">
-                    <button class="boton-primario" type="button" id="agregarFamiliar"><i class='bx bx-user-plus'></i> Añadir Familiar</button>
-                    <button class="boton-secundario" type="button" id="eliminarFamiliar"><i class='bx bx-user-minus' ></i> Eliminar Familiar</button>
+                    <button class="boton-primario agregarFamiliar" type="button"><i class='bx bx-user-plus'></i> Añadir Familiar</button>
+                    <button class="boton-secundario eliminarFamiliar" type="button"><i class='bx bx-user-minus' ></i> Eliminar Familiar</button>
                 </div>
             </div>
         </div>
