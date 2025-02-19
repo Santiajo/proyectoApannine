@@ -638,7 +638,7 @@ document.addEventListener("DOMContentLoaded", function () {
         documentos.forEach((doc, index) => {
             let label = doc.querySelector("label");
             let input = doc.querySelector("input");
-            
+
             label.setAttribute("for", `benEvidMed_${index}`);
             label.textContent = `Documento ${index + 1}:`;
 
@@ -668,7 +668,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const apartadoAntSalud = document.getElementById('apartadoAntSalud');
     const apartadoAntSocial = document.getElementById('apartadoAntSocial');
     const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
-    
+
     // OBTENER EL DIV QUE CONTIENE LOS FAMILIARES
     const contenedorFamiliares = document.getElementById('contenedorFamiliares');
 

@@ -23,7 +23,7 @@
     onsubmit="return confirmDelete(event)">
     @csrf
     @method('DELETE')
-    <a class="boton-quintiario" id="benAgregar" href="{{ route('beneficiarios.formBenRelleno', $beneficiario->id) }}">
+    <a class="boton-quintiario" id="modificarBeneficiario" href="{{ route('beneficiarios.formBenRelleno', $beneficiario->id) }}">
       <p>Modificar</p>
     </a>
     <button type="submit" class="boton-terciario"><i class='bx bx-trash'></i> Eliminar</button>

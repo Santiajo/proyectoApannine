@@ -409,21 +409,20 @@
                     requisitos!</div>
             @enderror
 
-            <div id="documentosContainer">
+            <div id="documentosContainer"  @if(Route::is('beneficiarios.formBenRelleno')) style="display: none;" @endif>
             <h3>Documentos</h3>
             <div class="documento-item">
                 <label for="benEvidMed_0">Documento 1:</label>
                 <input type="file" name="benEvidMed[]" id="benEvidMed_0">
                 <button class="boton-secundario eliminar-documento" type="button">Eliminar Documento</button>
+                <div class="errores" id="erroBenEvidMed"></div>
+                @error('benEvidMed')
+                    <div class="alert alert-danger">La evidencia médica subida no cumple los requisitos!</div>
+                @enderror
             </div>
-
-            <div class="errores" id="erroBenEvidMed"></div>
-            @error('benEvidMed')
-                <div class="alert alert-danger">La evidencia médica subida no cumple los requisitos!</div>
-            @enderror
         </div>
         <!-- Botones de acción -->
-        <div class="fila4">
+        <div class="fila4"  @if(Route::is('beneficiarios.formBenRelleno')) style="display: none;" @endif>
             <button class="boton-primario" type="button" id="agregarDocumento">
                 <i class='bx bxs-file-plus'></i> Añadir Documento
             </button>
@@ -522,7 +521,6 @@
         <!-- Botones -->
         <div class="fila2" id="grupoBotones">
             <button class="boton-primario" type="submit">Añadir</button>
-            <a class="boton-secundario" href="#" id="mostrarColegio">Siguiente</a>
         </div>
     </form>
 </div>
