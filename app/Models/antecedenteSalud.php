@@ -22,6 +22,7 @@ class antecedenteSalud extends Model
         'antSalTratamiento',
         'antSalCirugia',
         'antSalDescCirugia',
+        'antSalFilePath',
     ];
 
     // CREAMOS RELACIÓN CON EL MODELO ESPECIALISTA

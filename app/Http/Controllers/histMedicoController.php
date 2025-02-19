@@ -10,6 +10,8 @@ use App\Models\Beneficiario;
 use App\Models\antecedenteSalud;
 // IMPORTAR MODELO DIAGNOSTICO
 use App\Models\Diagnostico;
+// IMPORTAR MODELO DOCUMENTO
+use App\Models\Documento;
 
 
 class histMedicoController extends Controller
@@ -26,16 +28,18 @@ class histMedicoController extends Controller
     // MÉTODO PARA ELIMINAR ARCHIVOS SUBIDOS EN LOS ANTECEDENTES MEDICOS
     public function eliminarArchivo($id)
     {
-        $antSal = antecedenteSalud::findOrFail($id);
+        $documento = Documento::findOrFail($id);
 
-        $ruta_fisica = storage_path('app/public/' . $antSal->antSalFilePath);
+        $ruta_fisica = storage_path('app/public/' . $documento->antSalFilePath);
 
         if (file_exists($ruta_fisica)) {
             unlink($ruta_fisica);
-            $antSal->antSalFilePath = null;
-            $antSal->save();
-            return redirect()->back()->with('success', 'Archivo eliminado correctamente.');
         }
-        return redirect()->back()->with('error', 'El archivo no se encontró.');
+
+        $documento->antecedentesSalud()->detach();
+
+        $documento->delete();
+
+        return redirect()->back()->with('success', 'Archivo eliminado correctamente.');
     }
 }

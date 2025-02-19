@@ -23,6 +23,8 @@ use App\Models\antecedenteSalud;
 use App\Models\antecedenteSocial;
 // IMPORTAR MODELO ANTECEDENTES SOCIAL
 use App\Models\Diagnostico;
+// IMPORTAR MODELO DOCUMENTO
+use App\Models\Documento;
 
 class beneficiarioController extends Controller
 {
@@ -92,8 +94,8 @@ class beneficiarioController extends Controller
         $this->validarString($request, 'benFicFamPtje', 'nullable', 40);
         // VALIDAR STRINGS MEDIANOS
         $this->validarString($request, 'colProfJefe', 'nullable', 60);
-        $this->validarString($request, 'devNombre', 'nullable', 60);  
-        $this->validarString($request, 'benDom', 'required', 100);  
+        $this->validarString($request, 'devNombre', 'nullable', 60);
+        $this->validarString($request, 'benDom', 'required', 100);
         // VALIDAR STRINGS GRANDES
         $stringGrandes = ['devObservaciones', 'benNee', 'benEnfCro', 'benTratamientos', 'benCirugiaNom'];
         foreach ($stringGrandes as $stringGrande) {
@@ -106,7 +108,7 @@ class beneficiarioController extends Controller
         foreach ($integers as $integer) {
             $this->validarInteger($request, $integer);
         }
-        
+
         // VALIDAR CAMPOS ESPECIALES
         $request->validate([
             'benRut' => 'required|digits_between:7,8|regex:/^[0-9]+$/|unique:beneficiario,beneficiarioRut,' . $request->benId,
@@ -123,27 +125,12 @@ class beneficiarioController extends Controller
         $datos = [];
         for ($i = 0; $i < count($listaColumnas); $i++) {
             if (isset($listaCampos[$i])) {
-                $datos[$listaColumnas[$i]] = is_string($listaCampos[$i]) 
-                    ? $request->input($listaCampos[$i]) 
+                $datos[$listaColumnas[$i]] = is_string($listaCampos[$i])
+                    ? $request->input($listaCampos[$i])
                     : $listaCampos[$i];
             }
         }
         return $nombreModelo::create($datos);
-    }
-
-    // MÉTODO PARA ACTUALIZAR REGISTROS
-    public function actualizarRegistro(Request $request, $nombreModelo, $id, $listaColumnas, $listaCampos)
-    {
-        $registro = $nombreModelo::findOrFail($id);
-        $datos = [];
-        for ($i = 0; $i < count($listaColumnas); $i++) {
-            if (isset($listaCampos[$i])) {
-                $datos[$listaColumnas[$i]] = is_string($listaCampos[$i]) 
-                    ? $request->input($listaCampos[$i]) 
-                    : $listaCampos[$i];
-            }
-        }
-        $registro->update($datos);
     }
 
     // MÉTODO PARA GUARDAR LOS FAMILIARES DE UN BENEFICIARIO
@@ -169,6 +156,36 @@ class beneficiarioController extends Controller
         }
     }
 
+    // MÉTODO PARA GUARDAR MÚLTIPLES ARCHIVOS
+    public function guardarArchivos(Request $request)
+    {
+        $antSalud = AntecedenteSalud::create([
+            'antSalNEE' => $request->benNee,
+            'antSalEnfCronica' => $request->benEnfCro,
+            'antSalTratamiento' => $request->benTratamientos,
+            'antSalCirugia' => $request->benCirugia,
+            'antSalDescCirugia' => $request->benCirugiaNom,
+        ]);
+
+        $files = $request->file('benEvidMed');
+        if ($files) {
+            foreach ($files as $file) {
+                if ($file->isValid()) { // Verifica que el archivo no tenga errores
+                    $timestamp = now()->format('Ymd_His');
+                    $uniqueName = $timestamp . '_' . $file->getClientOriginalName();
+                    $filePath = $file->storeAs('beneficiarios', $uniqueName, 'public');
+
+                    $documento = Documento::create([
+                        'antSalFilePath' => $filePath
+                    ]);
+
+                    $antSalud->documentos()->attach($documento->id);
+                }
+            }
+        }
+        return $antSalud;
+    }
+
     // MÉTODO PARA GUARDAR O ACTUALIZAR UN BENEFICIARIO
     public function guardarBeneficiario(Request $request)
     {
@@ -185,17 +202,6 @@ class beneficiarioController extends Controller
         }
         // UNIFICAR BENEFICIOS
         $beneficiosGuardados = implode(', ', $beneficios);
-
-        // MANEJO DE SUBIDA DE ARCHIVOS
-        if ($request->hasFile('benEvidMed')) {
-            $filePath = $request->file('benEvidMed')->storeAs(
-                'beneficiarios',
-                $request->file('benEvidMed')->getClientOriginalName(),
-                'public'
-            );
-        } else {
-            $filePath = null;
-        }
 
         // SI SE RECIBE UN ID YA EXISTENTE, ACTUALIZAMOS LA NACIONALIDAD, SINO, LA CREAMOS
         if ($request->benId) {
@@ -269,15 +275,16 @@ class beneficiarioController extends Controller
             $derivanteColumnas = ['derivanteNombre', 'derivanteObservaciones'];
             $derivanteCampos = ['devNombre', 'devObservaciones'];
             $derivante = $this->crearRegistro($request, Derivante::class, $derivanteColumnas, $derivanteCampos);
-            // CREAR ANTECEDENTES DE SALUD
-            $antSalud = antecedenteSalud::create([
+            // CREAR ANTECEDENTES DE SALUD Y GUARDAR ARCHIVOS
+            $antSalud = $this->guardarArchivos($request);
+            /*$antSalud = antecedenteSalud::create([
                 'antSalNEE' => $request->benNee,
                 'antSalEnfCronica' => $request->benEnfCro,
                 'antSalTratamiento' => $request->benTratamientos,
                 'antSalCirugia' => $request->benCirugia,
                 'antSalDescCirugia' => $request->benCirugiaNom,
                 'antSalFilePath' => $filePath,
-            ]);
+            ]);*/
             // CREAR ANTECEDENTES SOCIALES
             $antSocial = antecedenteSocial::create([
                 'antSocFichaFamiliar' => $request->benFicFam,
@@ -290,11 +297,48 @@ class beneficiarioController extends Controller
             $diagnosticoCampos = ['benDiag'];
             $diagnostico = $this->crearRegistro($request, Diagnostico::class, $diagnosticoColumnas, $diagnosticoCampos);
             // CREAR BENEFICIARIO
-            $beneficiarioColumnas = ['beneficiarioEstado', 'beneficiarioRut', 'beneficiarioDv', 'beneficiarioPNombre', 'beneficiarioSNombre', 'beneficiarioApPaterno', 
-            'beneficiarioApMaterno', 'beneficiarioFecNac', 'beneficiarioTelefono', 'beneficiarioDomicilio', 'beneficiarioTipDom', 'cob_med_id', 'nacionalidad_id',
-            'comuna_id', 'colegio_id', 'derivante_id', 'antSal_id', 'antSoc_id', 'diagnostico_id'];
-            $beneficiarioCampos = ['benEstado', 'benRut', 'benDv', 'benPNombre', 'benSNombre', 'benApPaterno', 'benApMaterno', 'benFecNac', 'benTel', 'benDom', 
-            'benTipViv', 'benCobMed', 'benNac','benComuna', $colegio->id, $derivante->id, $antSalud->id, $antSocial->id,  $diagnostico->id];
+            $beneficiarioColumnas = [
+                'beneficiarioEstado',
+                'beneficiarioRut',
+                'beneficiarioDv',
+                'beneficiarioPNombre',
+                'beneficiarioSNombre',
+                'beneficiarioApPaterno',
+                'beneficiarioApMaterno',
+                'beneficiarioFecNac',
+                'beneficiarioTelefono',
+                'beneficiarioDomicilio',
+                'beneficiarioTipDom',
+                'cob_med_id',
+                'nacionalidad_id',
+                'comuna_id',
+                'colegio_id',
+                'derivante_id',
+                'antSal_id',
+                'antSoc_id',
+                'diagnostico_id'
+            ];
+            $beneficiarioCampos = [
+                'benEstado',
+                'benRut',
+                'benDv',
+                'benPNombre',
+                'benSNombre',
+                'benApPaterno',
+                'benApMaterno',
+                'benFecNac',
+                'benTel',
+                'benDom',
+                'benTipViv',
+                'benCobMed',
+                'benNac',
+                'benComuna',
+                $colegio->id,
+                $derivante->id,
+                $antSalud->id,
+                $antSocial->id,
+                $diagnostico->id
+            ];
             $beneficiario = $this->crearRegistro($request, Beneficiario::class, $beneficiarioColumnas, $beneficiarioCampos);
             // CREAR FAMILIARES
             $this->guardarFamiliares($request, $beneficiario->id);
@@ -329,17 +373,20 @@ class beneficiarioController extends Controller
         $antSal = antecedenteSalud::findOrFail($beneficiario->antSal_id);
         $antSoc = antecedenteSocial::findOrFail($beneficiario->antSoc_id);
         $familiares = $beneficiario->familiares;
-        return view('views.beneficiario.fichaBeneficiario', 
-        compact(
-            'beneficiario', 
-            'nacionalidad', 
-            'comuna', 
-            'cobMedica', 
-            'colegio',
-            'derivante',
-            'antSal',
-            'antSoc',
-            'familiares'));
+        return view(
+            'views.beneficiario.fichaBeneficiario',
+            compact(
+                'beneficiario',
+                'nacionalidad',
+                'comuna',
+                'cobMedica',
+                'colegio',
+                'derivante',
+                'antSal',
+                'antSoc',
+                'familiares'
+            )
+        );
     }
 
     // MÉTODO PARA MOSTRAR FORMULARIO BENEFICIARIO RELLENO
@@ -369,18 +416,21 @@ class beneficiarioController extends Controller
         $beneficiosMarcados = array_intersect($beneficiosSeleccionados, $beneficiosConocidos);
         $beneficioOtro = implode(', ', array_diff($beneficiosSeleccionados, $beneficiosConocidos));
 
-        return view('views.beneficiario.formulario.formularioBeneficiario', 
-        compact(
-            'beneficiario', 
-            'nacionalidades', 
-            'comunas', 
-            'cobMedicas', 
-            'colegio',
-            'derivante',
-            'antSal',
-            'antSoc',
-            'diagnostico',
-            'beneficiosMarcados',
-            'beneficioOtro'));
+        return view(
+            'views.beneficiario.formulario.formularioBeneficiario',
+            compact(
+                'beneficiario',
+                'nacionalidades',
+                'comunas',
+                'cobMedicas',
+                'colegio',
+                'derivante',
+                'antSal',
+                'antSoc',
+                'diagnostico',
+                'beneficiosMarcados',
+                'beneficioOtro'
+            )
+        );
     }
 }

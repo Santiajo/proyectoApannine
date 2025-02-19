@@ -409,12 +409,11 @@
                     requisitos!</div>
             @enderror
 
-        <div id="documentosContainer">
+            <div id="documentosContainer">
             <h3>Documentos</h3>
-            <!-- Contenedor donde se agregarán los documentos dinámicamente -->
             <div class="documento-item">
                 <label for="benEvidMed_0">Documento 1:</label>
-                <input type="file" name="benEvidMed[0][antSalFilePath]" id="benEvidMed_0">
+                <input type="file" name="benEvidMed[]" id="benEvidMed_0">
                 <button class="boton-secundario eliminar-documento" type="button">Eliminar Documento</button>
             </div>
 
@@ -423,13 +422,13 @@
                 <div class="alert alert-danger">La evidencia médica subida no cumple los requisitos!</div>
             @enderror
         </div>
-
         <!-- Botones de acción -->
         <div class="fila4">
             <button class="boton-primario" type="button" id="agregarDocumento">
                 <i class='bx bxs-file-plus'></i> Añadir Documento
             </button>
         </div>
+        </div> 
 
         <!-- form Antecedentes social -->
         <div class="separacionFormulario" id="apartadoAntSocial">
@@ -464,7 +463,6 @@
             @error('benFicFamPtje')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
-
 
             <fieldset>
                 <legend>Beneficios sociales:</legend>

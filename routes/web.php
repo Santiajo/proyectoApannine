@@ -64,7 +64,7 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
     // PAGINA PARA MOSTRAR ANTECEDENTES DE SALUD DEL BENEFICIARIO
     Route::get('/views/antMedBeneficiario/{id}', [histMedicoController::class, 'antMedBeneficiario'])->name('beneficiarios.antMedBeneficiario');
     // PARA ELIMINAR ARCHIVOS SUBIDOS EN LOS ANTECEDENTES MEDICOS
-    Route::delete('/views/eliminarArchivo/{id}', [histMedicoController::class,'eliminarArchivo'])->name('beneficiarios.eliminarArchivo');
+    Route::delete('/views/eliminarArchivo/{id}', [histMedicoController::class, 'eliminarArchivo'])->name('beneficiarios.eliminarArchivo');
 
 
 // HORARIO DEL BENEFICIARIO

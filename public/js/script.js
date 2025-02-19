@@ -538,7 +538,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("agregarFamiliar")) {
             contadorFamiliares++;
-            let formularioActual = event.target.closest(".separacionFormulario");
+            // Usamos .seccion-familiares para limitar el alcance al formulario familiar
+            let formularioActual = event.target.closest(".seccion-familiares");
             let clon = formularioActual.cloneNode(true);
 
             clon.querySelectorAll("input, select, fieldset, label").forEach((elemento) => {
@@ -563,7 +564,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (event.target.classList.contains("eliminarFamiliar")) {
-            let formulario = event.target.closest(".separacionFormulario");
+            let formulario = event.target.closest(".seccion-familiares");
             if (document.querySelectorAll(".seccion-familiares").length > 1) {
                 formulario.remove();
                 contadorFamiliares--;
@@ -596,47 +597,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // FUNCIÓN PARA AÑADIR DOCUMENTOS DINAMICAMENTE
 document.addEventListener("DOMContentLoaded", function () {
-    let contadorDocumentos = 0; // Se inicia en 0
+    let contadorDocumentos = document.querySelectorAll(".documento-item").length - 1;
 
     document.getElementById("agregarDocumento").addEventListener("click", function () {
-        contadorDocumentos++; // Incrementa el contador para el nuevo documento
+        contadorDocumentos++;
 
-        // Crear el contenedor del nuevo documento
         let nuevoDocumento = document.createElement("div");
         nuevoDocumento.classList.add("documento-item");
 
-        // Crear el label con el nuevo índice
         let nuevoLabel = document.createElement("label");
         nuevoLabel.setAttribute("for", `benEvidMed_${contadorDocumentos}`);
         nuevoLabel.textContent = `Documento ${contadorDocumentos + 1}:`;
 
-        // Crear el input file con el nuevo índice
         let nuevoInput = document.createElement("input");
         nuevoInput.setAttribute("type", "file");
-        nuevoInput.setAttribute("name", `benEvidMed[${contadorDocumentos}][antSalFilePath]`);
+        nuevoInput.setAttribute("name", "benEvidMed[]");
         nuevoInput.setAttribute("id", `benEvidMed_${contadorDocumentos}`);
 
-        // Crear botón de eliminar
         let botonEliminar = document.createElement("button");
         botonEliminar.classList.add("boton-secundario", "eliminar-documento");
         botonEliminar.type = "button";
         botonEliminar.textContent = "Eliminar Documento";
 
-        // Añadir eventos al botón de eliminar
         botonEliminar.addEventListener("click", function () {
             nuevoDocumento.remove();
             actualizarNumeracion();
         });
 
-        // Agregar elementos al contenedor del documento
         nuevoDocumento.appendChild(nuevoLabel);
         nuevoDocumento.appendChild(nuevoInput);
         nuevoDocumento.appendChild(botonEliminar);
 
-        // Agregar al contenedor principal
         document.getElementById("documentosContainer").appendChild(nuevoDocumento);
 
-        actualizarNumeracion(); // Asegurar que los labels y nombres sean correctos
+        actualizarNumeracion();
     });
 
     function actualizarNumeracion() {
@@ -647,12 +641,11 @@ document.addEventListener("DOMContentLoaded", function () {
             
             label.setAttribute("for", `benEvidMed_${index}`);
             label.textContent = `Documento ${index + 1}:`;
-            
-            input.setAttribute("name", `benEvidMed[${index}][antSalFilePath]`);
+
             input.setAttribute("id", `benEvidMed_${index}`);
         });
 
-        contadorDocumentos = documentos.length - 1; // Ajustar el contador correctamente
+        contadorDocumentos = documentos.length - 1;
     }
 });
 
@@ -679,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // OBTENER EL DIV QUE CONTIENE LOS FAMILIARES
     const contenedorFamiliares = document.getElementById('contenedorFamiliares');
 
-    // FUNCION PARA OCULTAR TODOS LOS APARTADOS
+    // FUNCION PARA OCULTAR TODOS LOS APARTADOS (sin incluir grupoBotones)
     function ocultarTodosLosApartados() {
         const apartados = [
             apartadoBeneficiarios,
@@ -688,11 +681,9 @@ document.addEventListener('DOMContentLoaded', () => {
             apartadoFamilia,
             apartadoAntSalud,
             apartadoAntSocial,
-            apartadoDiagnostico,
-            grupoBotones
+            apartadoDiagnostico
         ];
         apartados.forEach(apartado => apartado.classList.add('ocultar'));
-
         // También oculta el contenedor de familiares
         contenedorFamiliares.classList.add('ocultar');
     }
@@ -720,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarFamilia.addEventListener('click', () => {
         ocultarTodosLosApartados();
         apartadoFamilia.classList.remove('ocultar');
-        contenedorFamiliares.classList.remove('ocultar'); // Mostrar familiares solo cuando se selecciona "Familia"
+        contenedorFamiliares.classList.remove('ocultar'); // Mostrar familiares cuando se selecciona "Familia"
     });
 
     mostrarAntSalud.addEventListener('click', () => {
@@ -736,7 +727,6 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarDiagnostico.addEventListener('click', () => {
         ocultarTodosLosApartados();
         apartadoDiagnostico.classList.remove('ocultar');
-        grupoBotones.classList.remove('ocultar');
     });
 });
 
