@@ -63,6 +63,8 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
     Route::get('/views/formBenRelleno/{id}', [beneficiarioController::class, 'formBenRelleno'])->name('beneficiarios.formBenRelleno');
     // PAGINA PARA MOSTRAR ANTECEDENTES DE SALUD DEL BENEFICIARIO
     Route::get('/views/antMedBeneficiario/{id}', [histMedicoController::class, 'antMedBeneficiario'])->name('beneficiarios.antMedBeneficiario');
+    // PARA AÑADIR ARCHIVOS A LOS ANTECEDENTES MÉDICOS DE UN BENEFICIARIO
+    Route::post('/views/agregarArchivo', [histMedicoController::class, 'agregarArchivo'])->name('beneficiarios.agregarArchivo');
     // PARA ELIMINAR ARCHIVOS SUBIDOS EN LOS ANTECEDENTES MEDICOS
     Route::delete('/views/eliminarArchivo/{id}', [histMedicoController::class, 'eliminarArchivo'])->name('beneficiarios.eliminarArchivo');
 

@@ -875,6 +875,16 @@ fieldset {
     align-items: center;
 }
 
+#especialito {
+    row-gap: 0;
+    padding: 0;
+}
+
+#formTuneado label {
+    display: flex;
+    align-items: center;
+}
+
 #formTuneado select {
     width: max-content;
 }
@@ -887,6 +897,10 @@ fieldset {
     background-color: var(--body-color);
     border: none;
     padding: 0;
+}
+
+.si {
+    margin-bottom: 15px;
 }
 
 /* FORMULARIO2 */

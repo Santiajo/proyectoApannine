@@ -84,6 +84,15 @@
             </div>
         </div>
         <div class="fila1 fila1Perso" id="apartadoDocumentos">
+            <form action="{{ route("beneficiarios.agregarArchivo") }}" method="POST" enctype="multipart/form-data" class="formularioPiola si" id="formTuneado">
+                @csrf
+                <input type="hidden" value="{{ $antSal->id }}" name="antSalId">
+                <div class="separacionFormulario" id="especialito">
+                    <label for="antSalFile">Seleccionar archivo:</label>
+                    <input type="file" name="antSalFile" id="antSalFile">
+                    <button type="submit" class="boton-cuartiario"><i class='bx bx-upload'></i> Subir</button>
+                </div>
+            </form>
             <table>
                 <thead>
                     <tr>
@@ -109,7 +118,8 @@
                                     </a>
                                 </td>
                                 <td data-label="Eliminar">
-                                    <form action="{{ route('beneficiarios.eliminarArchivo', $documento->id) }}" method="POST" onsubmit="return confirmDelete(event)">
+                                    <form action="{{ route('beneficiarios.eliminarArchivo', $documento->id) }}" method="POST"
+                                        onsubmit="return confirmDelete(event)">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="boton-terciario" id="benEliminar">
@@ -122,6 +132,6 @@
                     @endif
                 </tbody>
             </table>
+            </>
         </div>
-    </div>
 @endsection
