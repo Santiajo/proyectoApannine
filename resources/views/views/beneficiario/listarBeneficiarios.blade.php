@@ -16,9 +16,9 @@
     <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudComuna') }}"><p>Agregar comuna</p></a>
     <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudCobMedica') }}"><p><i class='bx bx-plus-medical' ></i> Agregar cobertura medica</p></a>
     <!-- Para buscar productos por texto -->
-    <form method="POST">
-      <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar...">
-      <button type="submit"><i class='bx bx-search' ></i></button>
+    <form method="GET" action="{{ route('beneficiarios.listarBeneficiarios') }}">
+        <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..." value="{{ request('benBuscar') }}">
+        <button type="submit"><i class='bx bx-search' ></i></button>
     </form>
   </div>
   <table>
@@ -53,11 +53,25 @@
       @endforeach
     </tbody>
   </table>
-  <div class="fila4">
-  <a class="boton-primario" id="atras" href="{{ route('beneficiarios.listarBeneficiarios') }}"><< Atras</a>
-  <a class="boton-primario" id="uno" href="{{ route('beneficiarios.listarBeneficiarios') }}">1</a>
-  <a class="boton-primario" id="dos" href="{{ route('beneficiarios.listarBeneficiarios') }}">2</a>
-  <a class="boton-primario" id="adelante" href="{{ route('beneficiarios.listarBeneficiarios') }}">Adelante >></a>
+  
+  <br>
+  <!-- Selector para cantidad de elementos por página -->
+  <form method="GET" action="{{ route('beneficiarios.listarBeneficiarios') }}">
+      @csrf
+      <label for="items_per_page">Resultados por página:</label>
+      <select name="items_per_page" id="items_per_page" onchange="this.form.submit()">
+          <option value="10" {{ request('items_per_page') == 10 ? 'selected' : '' }}>10</option>
+          <option value="15" {{ request('items_per_page') == 15 ? 'selected' : '' }}>15</option>
+          <option value="20" {{ request('items_per_page') == 20 ? 'selected' : '' }}>20</option>
+      </select>
+      <input type="hidden" name="benBuscar" value="{{ request('benBuscar') }}">
+  </form>
+
+  <br>
+  <!-- Paginación -->
+  <div class="pagination">
+      {{ $beneficiarios->links() }}
   </div>
+
 </div>
 @endsection

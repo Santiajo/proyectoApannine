@@ -27,7 +27,7 @@
       <p>Modificar</p>
     </a>
     <button type="submit" class="boton-terciario"><i class='bx bx-trash'></i> Eliminar</button>
-    <a class="boton-secundario" id="benExportar" href="{{ route('beneficiarios.listarBeneficiarios') }}"><i
+    <a class="boton-secundario" id="benExportar" href="{{ route('beneficiario.exportar', $beneficiario->id) }}"><i
         class='bx bx-export'></i>
       Exportar</a>
   </form>

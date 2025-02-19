@@ -73,12 +73,15 @@
                         </ul>
                     </div>
                     <div class="bottom-content">
-                        <li>
-                            <a href="#">
-                                <i class='bx bx-log-out icon'></i>
-                                <span class="text nav-text">Cerrar sesión</span>
-                            </a>
-                        </li>
+                    <li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class='bx bx-log-out icon'></i>
+                            <span class="text nav-text">Cerrar sesión</span>
+                        </a>
+                    </li>
 
                         <li class="mode">
                             <div class="sun-moon">

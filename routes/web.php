@@ -1,5 +1,8 @@
 <?php
 
+// CONTROLADOR REGISTRO
+use App\Http\Controllers\registroController;
+
 use Illuminate\Support\Facades\Route;
 // CONTROLADOR GENERAL PARA COSAS NO CRAFTEADAS
 use App\Http\Controllers\PostController;
@@ -18,114 +21,136 @@ use App\Http\Controllers\comunaController;
 // CONTROLADOR DE HISTORIAL MEDICO
 use App\Http\Controllers\histMedicoController;
 
+use App\Http\Controllers\CuentaController;
+
+use App\Http\Controllers\LoginController;
+
 //Aqui se llama a las rutas
 Route::get('/', [PostController::class, 'login']);
-Route::get('/login/login', [PostController::class, 'login']);
 Route::get('/posts/sidebar', [PostController::class, 'sidebar']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
 
-// NACIONALIDADES DE LOS BENEFICIARIOS
-    //  PARA MOSTRAR EL CRUD NACIONALIDADES
-    Route::get('/views/crudNacionalidad', [nacionalidadController::class, 'crudNacionalidad'])->name('beneficiarios.crudNacionalidad');
-    // PARA CREAR O ACTUALIZAR COBERTURAS
-    Route::post('/views/guardarNacionalidad', [nacionalidadController::class, 'guardarNacionalidad'])->name('beneficiarios.guardarNacionalidad');
-    // PARA ELIMINAR COBERTURA
-    Route::delete('/views/eliminarNacionalidad/{id}', [nacionalidadController::class, 'eliminarNacionalidad'])->name('beneficiarios.eliminarNacionalidad');
+// RUTAS PROTEGIDAS POR AUTENTICACIÓN
+Route::middleware(['auth'])->group(function () {
+    // NACIONALIDADES DE LOS BENEFICIARIOS
+        //  PARA MOSTRAR EL CRUD NACIONALIDADES
+        Route::get('/views/crudNacionalidad', [nacionalidadController::class, 'crudNacionalidad'])->name('beneficiarios.crudNacionalidad');
+        // PARA CREAR O ACTUALIZAR COBERTURAS
+        Route::post('/views/guardarNacionalidad', [nacionalidadController::class, 'guardarNacionalidad'])->name('beneficiarios.guardarNacionalidad');
+        // PARA ELIMINAR COBERTURA
+        Route::delete('/views/eliminarNacionalidad/{id}', [nacionalidadController::class, 'eliminarNacionalidad'])->name('beneficiarios.eliminarNacionalidad');
 
-// COBERTURAS MEDICAS DE LOS BENEFICIARIOS
-    //  PARA MOSTRAR EL CRUD COMUNAS
-    Route::get('/views/crudComuna', [comunaController::class, 'crudComuna'])->name('beneficiarios.crudComuna');
-    // PARA CREAR O ACTUALIZAR COBERTURAS
-    Route::post('/views/guardarComuna', [comunaController::class, 'guardarComuna'])->name('beneficiarios.guardarComuna');
-    // PARA ELIMINAR COBERTURA
-    Route::delete('/views/eliminarComuna/{id}', [comunaController::class, 'eliminarComuna'])->name('beneficiarios.eliminarComuna');
+    // COBERTURAS MEDICAS DE LOS BENEFICIARIOS
+        //  PARA MOSTRAR EL CRUD COMUNAS
+        Route::get('/views/crudComuna', [comunaController::class, 'crudComuna'])->name('beneficiarios.crudComuna');
+        // PARA CREAR O ACTUALIZAR COBERTURAS
+        Route::post('/views/guardarComuna', [comunaController::class, 'guardarComuna'])->name('beneficiarios.guardarComuna');
+        // PARA ELIMINAR COBERTURA
+        Route::delete('/views/eliminarComuna/{id}', [comunaController::class, 'eliminarComuna'])->name('beneficiarios.eliminarComuna');
 
-// COMUNAS DE LOS BENEFICIARIOS
-    //  PARA MOSTRAR EL CRUD DE COBERTURAS MEDICAS
-    Route::get('/views/crudCobMedica', [cobMedController::class, 'crudCobMedica'])->name('beneficiarios.crudCobMedica');
-    // PARA CREAR O ACTUALIZAR COBERTURAS
-    Route::post('/views/guardarCobMedica', [cobMedController::class, 'guardarCobMedica'])->name('beneficiarios.guardarCobMedica');
-    // PARA ELIMINAR COBERTURA
-    Route::delete('/views/eliminarCobMedica/{id}', [cobMedController::class, 'eliminarCobMedica'])->name('beneficiarios.eliminarCobMedica');
+    // COMUNAS DE LOS BENEFICIARIOS
+        //  PARA MOSTRAR EL CRUD DE COBERTURAS MEDICAS
+        Route::get('/views/crudCobMedica', [cobMedController::class, 'crudCobMedica'])->name('beneficiarios.crudCobMedica');
+        // PARA CREAR O ACTUALIZAR COBERTURAS
+        Route::post('/views/guardarCobMedica', [cobMedController::class, 'guardarCobMedica'])->name('beneficiarios.guardarCobMedica');
+        // PARA ELIMINAR COBERTURA
+        Route::delete('/views/eliminarCobMedica/{id}', [cobMedController::class, 'eliminarCobMedica'])->name('beneficiarios.eliminarCobMedica');
 
-// RUTAS DE BENEFICIARIO
-    // PAGINA PRINCIPAL DE LOS CRUD BENEFICIARIOS
-    Route::get('/views/listarBeneficiarios', [beneficiarioController::class, 'listarBeneficiarios'])->name('beneficiarios.listarBeneficiarios');
-    // PÁGINA DEL FORMULARIO DEL CRUD
-    Route::get('/views/formularioBeneficiario', [beneficiarioController::class, 'formularioBeneficiario'])->name('beneficiarios.formularioBeneficiario');
-    // PARA GUARDAR O ACTUALIZAR BENEFICIARIOS
-    Route::post('/views/guardarBeneficiario', [beneficiarioController::class, 'guardarBeneficiario'])->name('beneficiarios.guardarBeneficiario');
-    // PARA ELIMINAR BENEFICIARIOS
-    Route::delete('/views/eliminarBeneficiario/{id}', [beneficiarioController::class,'eliminarBeneficiario'])->name('beneficiarios.eliminarBeneficiario');
-    // PARA MOSTRAR LA INFORMACIÓN DETALLADA DE UN BENEFICIARIO
-    Route::get('/views/fichaBeneficiario/{id}', [beneficiarioController::class,'fichaBeneficiario'])->name('beneficiarios.fichaBeneficiario');
-    // PÁGINA DEL FORMULARIO DEL CRUD RELLENO
-    Route::get('/views/formBenRelleno/{id}', [beneficiarioController::class, 'formBenRelleno'])->name('beneficiarios.formBenRelleno');
-    // PAGINA PARA MOSTRAR ANTECEDENTES DE SALUD DEL BENEFICIARIO
-    Route::get('/views/antMedBeneficiario/{id}', [histMedicoController::class, 'antMedBeneficiario'])->name('beneficiarios.antMedBeneficiario');
-    // PARA ELIMINAR ARCHIVOS SUBIDOS EN LOS ANTECEDENTES MEDICOS
-    Route::delete('/views/eliminarArchivo/{id}', [histMedicoController::class,'eliminarArchivo'])->name('beneficiarios.eliminarArchivo');
+    // RUTAS DE BENEFICIARIO
+        // PAGINA PRINCIPAL DE LOS CRUD BENEFICIARIOS
+        Route::get('/views/listarBeneficiarios', [beneficiarioController::class, 'listarBeneficiarios'])->name('beneficiarios.listarBeneficiarios');
+        // PÁGINA DEL FORMULARIO DEL CRUD
+        Route::get('/views/formularioBeneficiario', [beneficiarioController::class, 'formularioBeneficiario'])->name('beneficiarios.formularioBeneficiario');
+        // PARA GUARDAR O ACTUALIZAR BENEFICIARIOS
+        Route::post('/views/guardarBeneficiario', [beneficiarioController::class, 'guardarBeneficiario'])->name('beneficiarios.guardarBeneficiario');
+        // PARA ELIMINAR BENEFICIARIOS
+        Route::delete('/views/eliminarBeneficiario/{id}', [beneficiarioController::class,'eliminarBeneficiario'])->name('beneficiarios.eliminarBeneficiario');
+        // PARA MOSTRAR LA INFORMACIÓN DETALLADA DE UN BENEFICIARIO
+        Route::get('/views/fichaBeneficiario/{id}', [beneficiarioController::class,'fichaBeneficiario'])->name('beneficiarios.fichaBeneficiario');
+        // PÁGINA DEL FORMULARIO DEL CRUD RELLENO
+        Route::get('/views/formBenRelleno/{id}', [beneficiarioController::class, 'formBenRelleno'])->name('beneficiarios.formBenRelleno');
+        // PAGINA PARA MOSTRAR ANTECEDENTES DE SALUD DEL BENEFICIARIO
+        Route::get('/views/antMedBeneficiario/{id}', [histMedicoController::class, 'antMedBeneficiario'])->name('beneficiarios.antMedBeneficiario');
+        // PARA ELIMINAR ARCHIVOS SUBIDOS EN LOS ANTECEDENTES MEDICOS
+        Route::delete('/views/eliminarArchivo/{id}', [histMedicoController::class,'eliminarArchivo'])->name('beneficiarios.eliminarArchivo');
 
-
-// HORARIO DEL BENEFICIARIO
-Route::get('/views/horarioBeneficiario', [PostController::class, 'horarioBeneficiario'])->name('horarioBeneficiario');
-Route::get('/views/formularioHorario', [PostController::class, 'formularioHorario'])->name('formularioHorario');
-Route::get('/views/histMedicoVerHorario', [PostController::class, 'histMedicoVerHorario'])->name('histMedicoVerHorario');
-Route::get('/views/histMedicoVerCambios', [PostController::class, 'histMedicoVerCambios'])->name('histMedicoVerCambios');
-
-Route::get('/views/verBeneficiario', [PostController::class, 'verBeneficiario'])->name('verBeneficiario');
-Route::get('/views/exportarBeneficiario', [PostController::class, 'exportarBeneficiario'])->name('exportarBeneficiario');
-Route::get('/views/beneficiarioAsistencia', [PostController::class, 'beneficiarioAsistencia'])->name('beneficiarioAsistencia');
-Route::get('/views/registroAsistBeneficiario', [PostController::class, 'registroAsistBeneficiario'])->name('registroAsistBeneficiario');
-Route::get('/views/actividadBeneficiario', [PostController::class, 'actividadBeneficiario'])->name('actividadBeneficiario');
-Route::get('/views/detallesAsistencia', [PostController::class, 'detallesAsistencia'])->name('detallesAsistencia');
-Route::get('/views/detallesAusencia', [PostController::class, 'detallesAusencia'])->name('detallesAusencia');
-Route::get('/views/exportarAsistenciaBen', [PostController::class, 'exportarAsistenciaBen'])->name('exportarAsistenciaBen');
+        Route::get('/exportar-beneficiario/{id}', [BeneficiarioController::class, 'exportarExcel'])->name('beneficiario.exportar');
 
 
-// RUTAS DE ASISTENCIA
-Route::get('/views/asistencia', [PostController::class, 'asistencia'])->name('asistencia');
-Route::get('/views/registroactividad', [PostController::class, 'registroactividad'])->name('registroactividad');
-Route::get('/views/asistenciaTallerYoga', [PostController::class, 'asistenciaTallerYoga'])->name('asistenciaTallerYoga');
-Route::get('/views/asistenciaBeneficiarios', [PostController::class, 'asistenciaBeneficiarios'])->name('asistenciaBeneficiarios');
-Route::get('/views/buscarBeneficiario', [PostController::class, 'buscarBeneficiario'])->name('buscarBeneficiario');
-Route::get('/views/especialistas', [PostController::class, 'especialistas'])->name('especialistas');
-Route::get('/views/dia', [PostController::class, 'dia'])->name('dia');
-Route::get('/views/registrofecha', [PostController::class, 'registrofecha'])->name('registrofecha');
-Route::get('/views/yogaDia', [PostController::class, 'yogaDia'])->name('yogaDia');
-Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yogaTodos');
-Route::get('/views/exportarAsistencia', [PostController::class, 'exportarAsistencia'])->name('exportarAsistencia');
+    // HORARIO DEL BENEFICIARIO
+    Route::get('/views/horarioBeneficiario', [PostController::class, 'horarioBeneficiario'])->name('horarioBeneficiario');
+    Route::get('/views/formularioHorario', [PostController::class, 'formularioHorario'])->name('formularioHorario');
+    Route::get('/views/histMedicoVerHorario', [PostController::class, 'histMedicoVerHorario'])->name('histMedicoVerHorario');
+    Route::get('/views/histMedicoVerCambios', [PostController::class, 'histMedicoVerCambios'])->name('histMedicoVerCambios');
 
-// RUTAS DEL CRUD DE ESPECIALIDADES
-// PARA MOSTRAR LA PÁGINA DEL CRUD DE ESPECIALIDADES
-Route::get('/views/crudEspecialidad', [especialidadController::class, 'crudEspecialidad'])->name('especialistas.crudEspecialidad');
-// PARA GUARDAR O ACTUALIZAR UNA ESPECIALIDAD
-Route::post('/views/guardarEspecialidad', [especialidadController::class, 'guardarEspecialidad'])->name('especialistas.guardarEspecialidad');
-// PARA ELIMINAR UNA ESPECIALIDAD
-Route::delete('/views/eliminarEspecialidad/{id}', [especialidadController::class, 'eliminarEspecialidad'])->name('especialistas.eliminarEspecialidad');
+    Route::get('/views/verBeneficiario', [PostController::class, 'verBeneficiario'])->name('verBeneficiario');
+    Route::get('/views/exportarBeneficiario', [PostController::class, 'exportarBeneficiario'])->name('exportarBeneficiario');
+    Route::get('/views/beneficiarioAsistencia', [PostController::class, 'beneficiarioAsistencia'])->name('beneficiarioAsistencia');
+    Route::get('/views/registroAsistBeneficiario', [PostController::class, 'registroAsistBeneficiario'])->name('registroAsistBeneficiario');
+    Route::get('/views/actividadBeneficiario', [PostController::class, 'actividadBeneficiario'])->name('actividadBeneficiario');
+    Route::get('/views/detallesAsistencia', [PostController::class, 'detallesAsistencia'])->name('detallesAsistencia');
+    Route::get('/views/detallesAusencia', [PostController::class, 'detallesAusencia'])->name('detallesAusencia');
+    Route::get('/views/exportarAsistenciaBen', [PostController::class, 'exportarAsistenciaBen'])->name('exportarAsistenciaBen');
 
-// RUTAS DEL CRUD DE ESPECIALISTAS
-// PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
-Route::get('/views/listarEspecialistas', [especialistaController::class, 'listarEspecialistas'])->name('especialistas.listarEspecialistas');
-// PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA
-Route::get('/views/formularioEspecialista', [especialistaController::class, 'formularioEspecialista'])->name('especialistas.formularioEspecialista');
-// PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA RELLENO
-Route::get('/views/formularioEspecialistaRelleno/{id}', [especialistaController::class, 'formularioEspecialistaRelleno'])->name('especialistas.formularioEspecialistaRelleno');
-//EXCEL
-Route::get('/views/exportarEspecialistas', [especialistaController::class, 'exportarEspecialistas'])->name('especialistas.exportarEspecialistas');
-// PARA GUARDAR O ACTUALIZAR UN ESPECIALISTA
-Route::post('/views/guardarEspecialista', [especialistaController::class, 'guardarEspecialista'])->name('especialistas.guardarEspecialista');
-// PARA ELIMINAR UN ESPECIALISTA
-Route::delete('/views/eliminarEspecialista/{id}', [especialistaController::class, 'eliminarEspecialista'])->name('especialistas.eliminarEspecialista');
 
-// RUTAS DEL CRUD PARA EL LOGIN
-Route::get('/views/fichausuarios', [PostController::class, 'fichausuarios'])->name('fichausuarios');
-Route::get('/views/formulariousuario', [PostController::class, 'formulariousuario'])->name('formulariousuario');
-Route::get('/views/vistaUsuario', [PostController::class, 'vistaUsuario'])->name('vistaUsuario');
-Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
-Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
+    // RUTAS DE ASISTENCIA
+    Route::get('/views/asistencia', [PostController::class, 'asistencia'])->name('asistencia');
+    Route::get('/views/registroactividad', [PostController::class, 'registroactividad'])->name('registroactividad');
+    Route::get('/views/asistenciaTallerYoga', [PostController::class, 'asistenciaTallerYoga'])->name('asistenciaTallerYoga');
+    Route::get('/views/asistenciaBeneficiarios', [PostController::class, 'asistenciaBeneficiarios'])->name('asistenciaBeneficiarios');
+    Route::get('/views/buscarBeneficiario', [PostController::class, 'buscarBeneficiario'])->name('buscarBeneficiario');
+    Route::get('/views/especialistas', [PostController::class, 'especialistas'])->name('especialistas');
+    Route::get('/views/dia', [PostController::class, 'dia'])->name('dia');
+    Route::get('/views/registrofecha', [PostController::class, 'registrofecha'])->name('registrofecha');
+    Route::get('/views/yogaDia', [PostController::class, 'yogaDia'])->name('yogaDia');
+    Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yogaTodos');
+    Route::get('/views/exportarAsistencia', [PostController::class, 'exportarAsistencia'])->name('exportarAsistencia');
 
-// RUTAS PARA ASISTENCIAS DESDE POV DEL MEDICO
-Route::get('/views/asistenciasEspecialistas', [PostController::class, 'asistenciasEspecialistas'])->name('asistenciasEspecialistas');
-Route::get('/views/formAsistenciaMedico', [PostController::class, 'formAsistenciaMedico'])->name('formAsistenciaMedico');
+    // RUTAS DEL CRUD DE ESPECIALIDADES
+    // PARA MOSTRAR LA PÁGINA DEL CRUD DE ESPECIALIDADES
+    Route::get('/views/crudEspecialidad', [especialidadController::class, 'crudEspecialidad'])->name('especialistas.crudEspecialidad');
+    // PARA GUARDAR O ACTUALIZAR UNA ESPECIALIDAD
+    Route::post('/views/guardarEspecialidad', [especialidadController::class, 'guardarEspecialidad'])->name('especialistas.guardarEspecialidad');
+    // PARA ELIMINAR UNA ESPECIALIDAD
+    Route::delete('/views/eliminarEspecialidad/{id}', [especialidadController::class, 'eliminarEspecialidad'])->name('especialistas.eliminarEspecialidad');
 
+    // RUTAS DEL CRUD DE ESPECIALISTAS
+    // PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
+    Route::get('/views/listarEspecialistas', [especialistaController::class, 'listarEspecialistas'])->name('especialistas.listarEspecialistas');
+    // PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA
+    Route::get('/views/formularioEspecialista', [especialistaController::class, 'formularioEspecialista'])->name('especialistas.formularioEspecialista');
+    // PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA RELLENO
+    Route::get('/views/formularioEspecialistaRelleno/{id}', [especialistaController::class, 'formularioEspecialistaRelleno'])->name('especialistas.formularioEspecialistaRelleno');
+    //EXCEL
+    Route::get('/views/exportarEspecialistas', [especialistaController::class, 'exportarEspecialistas'])->name('especialistas.exportarEspecialistas');
+    // PARA GUARDAR O ACTUALIZAR UN ESPECIALISTA
+    Route::post('/views/guardarEspecialista', [especialistaController::class, 'guardarEspecialista'])->name('especialistas.guardarEspecialista');
+    // PARA ELIMINAR UN ESPECIALISTA
+    Route::delete('/views/eliminarEspecialista/{id}', [especialistaController::class, 'eliminarEspecialista'])->name('especialistas.eliminarEspecialista');
+
+    // RUTAS DEL CRUD PARA EL LOGIN
+    Route::get('/views/fichausuarios', [PostController::class, 'fichausuarios'])->name('fichausuarios');
+    Route::get('/views/formulariousuario', [PostController::class, 'formulariousuario'])->name('formulariousuario');
+    Route::get('/views/vistaUsuario', [PostController::class, 'vistaUsuario'])->name('vistaUsuario');
+    Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
+    Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
+
+    // RUTAS PARA ASISTENCIAS DESDE POV DEL MEDICO
+    Route::get('/views/asistenciasEspecialistas', [PostController::class, 'asistenciasEspecialistas'])->name('asistenciasEspecialistas');
+    Route::get('/views/formAsistenciaMedico', [PostController::class, 'formAsistenciaMedico'])->name('formAsistenciaMedico');
+
+});
+
+
+Route::resource('cuenta', CuentaController::class);
+
+Route::get('/cuenta/{id}/edit', [CuentaController::class, 'edit'])->name('cuenta.edit');
+Route::put('/cuenta/{id}', [CuentaController::class, 'update'])->name('cuenta.update');
+Route::delete('/cuenta/{id}', [CuentaController::class, 'destroy'])->name('cuenta.destroy');
+
+
+Route::get('/', function () {return redirect()->route('login');});
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

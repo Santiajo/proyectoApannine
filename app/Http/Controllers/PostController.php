@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function login()
-    {
-        return view('login.login');
-    }
+    // public function login()
+    // {
+    //     return view('login.login');
+    // }
     public function sidebar()
     {
         return view('posts.sidebar');
