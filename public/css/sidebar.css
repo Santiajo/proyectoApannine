@@ -741,6 +741,16 @@ hr {
     gap: 8px;
 }
 
+/* Ordenamos los inputs de documento */
+.documento-item {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    column-gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 /* FORMULARIOS */
 .formularioPiola {
     width: 100%;
@@ -865,6 +875,16 @@ fieldset {
     align-items: center;
 }
 
+#especialito {
+    row-gap: 0;
+    padding: 0;
+}
+
+#formTuneado label {
+    display: flex;
+    align-items: center;
+}
+
 #formTuneado select {
     width: max-content;
 }
@@ -877,6 +897,10 @@ fieldset {
     background-color: var(--body-color);
     border: none;
     padding: 0;
+}
+
+.si {
+    margin-bottom: 15px;
 }
 
 /* FORMULARIO2 */

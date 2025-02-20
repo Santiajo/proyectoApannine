@@ -517,7 +517,139 @@ function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
     }
 }
 
-// FUNCION PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
+// FUNCIÓN PARA AÑADIR FAMILIARES DINAMICAMENTE
+document.addEventListener("DOMContentLoaded", function () {
+    let contadorFamiliares = document.querySelectorAll(".seccion-familiares").length - 1;
+
+    function actualizarBotonesEliminar() {
+        let formularios = document.querySelectorAll(".seccion-familiares");
+        formularios.forEach((formulario, index) => {
+            let botonEliminar = formulario.querySelector(".eliminarFamiliar");
+            if (botonEliminar) {
+                botonEliminar.disabled = formularios.length === 1;
+            }
+            let titulo = formulario.querySelector(".titulo-familiar");
+            if (titulo) {
+                titulo.textContent = `Datos Familiar ${index + 1}`;
+            }
+        });
+    }
+
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("agregarFamiliar")) {
+            contadorFamiliares++;
+            // Usamos .seccion-familiares para limitar el alcance al formulario familiar
+            let formularioActual = event.target.closest(".seccion-familiares");
+            let clon = formularioActual.cloneNode(true);
+
+            clon.querySelectorAll("input, select, fieldset, label").forEach((elemento) => {
+                if (elemento.name) {
+                    elemento.name = elemento.name.replace(/\[\d+\]/, `[${contadorFamiliares}]`);
+                }
+                if (elemento.id) {
+                    elemento.id = elemento.id.replace(/_\d+$/, `_${contadorFamiliares}`);
+                }
+                if (elemento.tagName === "INPUT") {
+                    elemento.value = "";
+                }
+            });
+
+            let titulo = clon.querySelector(".titulo-familiar");
+            if (titulo) {
+                titulo.textContent = `Datos Familiar ${contadorFamiliares + 1}`;
+            }
+
+            document.getElementById("contenedorFamiliares").appendChild(clon);
+            actualizarBotonesEliminar();
+        }
+
+        if (event.target.classList.contains("eliminarFamiliar")) {
+            let formulario = event.target.closest(".seccion-familiares");
+            if (document.querySelectorAll(".seccion-familiares").length > 1) {
+                formulario.remove();
+                contadorFamiliares--;
+                actualizarNumeracion();
+            }
+        }
+    });
+
+    function actualizarNumeracion() {
+        let familiares = document.querySelectorAll(".seccion-familiares");
+        familiares.forEach((familiar, index) => {
+            let titulo = familiar.querySelector(".titulo-familiar");
+            if (titulo) {
+                titulo.textContent = `Datos Familiar ${index + 1}`;
+            }
+
+            familiar.querySelectorAll("input, select, fieldset, label").forEach((elemento) => {
+                if (elemento.name) {
+                    elemento.name = elemento.name.replace(/\[\d+\]/, `[${index}]`);
+                }
+                if (elemento.id) {
+                    elemento.id = elemento.id.replace(/_\d+$/, `_${index}`);
+                }
+            });
+        });
+    }
+
+    actualizarBotonesEliminar();
+});
+
+// FUNCIÓN PARA AÑADIR DOCUMENTOS DINAMICAMENTE
+document.addEventListener("DOMContentLoaded", function () {
+    let contadorDocumentos = document.querySelectorAll(".documento-item").length - 1;
+
+    document.getElementById("agregarDocumento").addEventListener("click", function () {
+        contadorDocumentos++;
+
+        let nuevoDocumento = document.createElement("div");
+        nuevoDocumento.classList.add("documento-item");
+
+        let nuevoLabel = document.createElement("label");
+        nuevoLabel.setAttribute("for", `benEvidMed_${contadorDocumentos}`);
+        nuevoLabel.textContent = `Documento ${contadorDocumentos + 1}:`;
+
+        let nuevoInput = document.createElement("input");
+        nuevoInput.setAttribute("type", "file");
+        nuevoInput.setAttribute("name", "benEvidMed[]");
+        nuevoInput.setAttribute("id", `benEvidMed_${contadorDocumentos}`);
+
+        let botonEliminar = document.createElement("button");
+        botonEliminar.classList.add("boton-secundario", "eliminar-documento");
+        botonEliminar.type = "button";
+        botonEliminar.textContent = "Eliminar Documento";
+
+        botonEliminar.addEventListener("click", function () {
+            nuevoDocumento.remove();
+            actualizarNumeracion();
+        });
+
+        nuevoDocumento.appendChild(nuevoLabel);
+        nuevoDocumento.appendChild(nuevoInput);
+        nuevoDocumento.appendChild(botonEliminar);
+
+        document.getElementById("documentosContainer").appendChild(nuevoDocumento);
+
+        actualizarNumeracion();
+    });
+
+    function actualizarNumeracion() {
+        let documentos = document.querySelectorAll(".documento-item");
+        documentos.forEach((doc, index) => {
+            let label = doc.querySelector("label");
+            let input = doc.querySelector("input");
+
+            label.setAttribute("for", `benEvidMed_${index}`);
+            label.textContent = `Documento ${index + 1}:`;
+
+            input.setAttribute("id", `benEvidMed_${index}`);
+        });
+
+        contadorDocumentos = documentos.length - 1;
+    }
+});
+
+// FUNCIÓN PARA FILTRAR LAS VISTAS DEL FORMULARIO BENEFICIARIO
 document.addEventListener('DOMContentLoaded', () => {
     // OBTENER LINKS
     const mostrarBeneficiario = document.getElementById('mostrarBeneficiario');
@@ -527,35 +659,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const mostrarAntSalud = document.getElementById('mostrarAntSalud');
     const mostrarAntSocial = document.getElementById('mostrarAntSocial');
     const mostrarDiagnostico = document.getElementById('mostrarDiagnostico');
-    const agregarFamiliar = document.getElementById('agregarFamiliar');
-    const eliminarFamiliar = document.getElementById('eliminarFamiliar');
 
     // OBTENER APARTADOS DEL FORMULARIO
     const apartadoBeneficiarios = document.getElementById('apartadoBeneficiarios');
     const apartadoColegio = document.getElementById('apartadoColegio');
     const apartadoDerivante = document.getElementById('apartadoDerivante');
     const apartadoFamilia = document.getElementById('apartadoFamilia');
-    const apartadoFamilia2 = document.getElementById('apartadoFamilia2');
     const apartadoAntSalud = document.getElementById('apartadoAntSalud');
     const apartadoAntSocial = document.getElementById('apartadoAntSocial');
     const apartadoDiagnostico = document.getElementById('apartadoDiagnostico');
 
-    let contadorFamiliares = 0;
+    // OBTENER EL DIV QUE CONTIENE LOS FAMILIARES
+    const contenedorFamiliares = document.getElementById('contenedorFamiliares');
 
-    // FUNCION PARA OCULTAR TODOS LOS APARTADOS
+    // FUNCION PARA OCULTAR TODOS LOS APARTADOS (sin incluir grupoBotones)
     function ocultarTodosLosApartados() {
         const apartados = [
             apartadoBeneficiarios,
             apartadoColegio,
             apartadoDerivante,
             apartadoFamilia,
-            apartadoFamilia2,
             apartadoAntSalud,
             apartadoAntSocial,
-            apartadoDiagnostico,
-            grupoBotones
+            apartadoDiagnostico
         ];
         apartados.forEach(apartado => apartado.classList.add('ocultar'));
+        // También oculta el contenedor de familiares
+        contenedorFamiliares.classList.add('ocultar');
     }
 
     // MOSTRAR SOLO EL FORMULARIO DE BENEFICIARIO AL CARGAR
@@ -581,6 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarFamilia.addEventListener('click', () => {
         ocultarTodosLosApartados();
         apartadoFamilia.classList.remove('ocultar');
+        contenedorFamiliares.classList.remove('ocultar'); // Mostrar familiares cuando se selecciona "Familia"
     });
 
     mostrarAntSalud.addEventListener('click', () => {
@@ -596,37 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarDiagnostico.addEventListener('click', () => {
         ocultarTodosLosApartados();
         apartadoDiagnostico.classList.remove('ocultar');
-        grupoBotones.classList.remove('ocultar');
     });
-
-    agregarFamiliar.addEventListener('click', () => {
-        ocultarTodosLosApartados();
-        contadorFamiliares++;
-        console.log('Contador: ', contadorFamiliares);
-        apartadoFamilia.classList.remove('ocultar');
-        apartadoFamilia2.classList.remove('ocultar');
-
-        if (contadorFamiliares == 0) {
-            eliminarFamiliar.disabled = true;
-        } else {
-            eliminarFamiliar.disabled = false;
-        }
-    });
-
-    eliminarFamiliar.addEventListener('click', () => {
-        contadorFamiliares--;
-        if (contadorFamiliares == 0) {
-            contadorFamiliares = 0;
-            eliminarFamiliar.disabled = true;
-        } else {
-            eliminarFamiliar.disabled = true;
-        }
-        console.log('Contador: ', contadorFamiliares);
-        ocultarTodosLosApartados();
-        apartadoFamilia.classList.remove('ocultar');
-        console.log('Se hizo clic en eliminar');
-    });
-
 });
 
 // FUNCIÓN REUTILIZABLE PARA DESHABILITAR CAMPOS ASOCIADOS A RADIO BUTTONS
@@ -823,7 +924,7 @@ function validarFormBeneficiario() {
         camposValidos.push(true);
     } */
 
-    /// VALIDAR RUT
+    // VALIDAR RUT
     const rutValue = benRut.value.trim();
     const dvValue = benDv.value.trim().toUpperCase();
     if (rutValue === '') {
@@ -1175,7 +1276,8 @@ function validarFormBeneficiario() {
     }
 
     // VALIDACIONES DE LA FAMILIA
-    /* // VALIDAR RUT
+    // VALIDAR RUT
+    /*
     const famRut = document.getElementById('famRut');
     const famDv = document.getElementById('famDv');
     const famRutValue = famRut.value.trim();
