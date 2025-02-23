@@ -14,6 +14,7 @@ class LoginController extends Controller
         return view('login.login');
     }
 
+
     // Procesar el inicio de sesión
     public function login(Request $request)
     {
@@ -48,6 +49,28 @@ class LoginController extends Controller
             'email' => 'Las credenciales proporcionadas no son correctas.',
         ])->onlyInput('email');
     }
+
+
+    // protected function redirectTo()
+    // {
+    //     $user = auth()->user();
+        
+    //     // Obtener las vistas permitidas del usuario
+    //     $vistasPermitidas = json_decode($user->vistas, true) ?? [];
+    
+    //     // Redirigir según las vistas permitidas
+    //     if (in_array('Beneficiarios', $vistasPermitidas)) {
+    //         return '/beneficiarios';
+    //     } elseif (in_array('Usuarios', $vistasPermitidas)) {
+    //         return '/usuarios';
+    //     } elseif (in_array('Especialistas', $vistasPermitidas)) {
+    //         return '/especialistas';
+    //     } else {
+    //         return '/403'; // Redirigir a una página de acceso denegado si no tiene vistas permitidas
+    //     }
+    // }
+    
+
 
     // Cerrar sesión
     public function logout(Request $request)

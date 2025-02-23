@@ -5,17 +5,6 @@
 
 @section('content')
 
-    <div class="container" id="container">
-        <div class="form-container sign-up">
-            <form>
-                <h1>Crear Cuenta</h1>
-                <input type="text" placeholder="Nombre">
-                <input type="email" placeholder="Correo">
-                <input type="password" placeholder="Contraseña">
-                <button>Registrar</button>
-            </form>
-        </div>
-
         
         <div class="form-container sign-in">
             <form action="{{ route('login') }}" method="POST" class="login-imput">
@@ -41,16 +30,6 @@
             </form>
         </div>
 
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-right">
-                    <h1>¡Bienvenido a Apanine!</h1>
-                    <p>Regístrate con tus datos personales para ingresar a nuestro sistema</p>
-                    <button class="hidden" id="register"><a href="{{ route('cuenta.create') }}">Registrar</a></button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
 

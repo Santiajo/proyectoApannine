@@ -143,16 +143,27 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/views/asistenciasEspecialistas', [PostController::class, 'asistenciasEspecialistas'])->name('asistenciasEspecialistas');
         Route::get('/views/formAsistenciaMedico', [PostController::class, 'formAsistenciaMedico'])->name('formAsistenciaMedico');
 
+        // Ruta para mostrar el formulario de registro
+        Route::resource('usuarios', CuentaController::class)->except(['show']);
+        // Route::get('/usuarios/{id}/edit', [CuentaController::class, 'edit'])->name('usuarios.edit');
+        Route::put('/usuarios/{id}', [CuentaController::class, 'update'])->name('usuarios.update');
+        Route::delete('/usuarios/{id}', [CuentaController::class, 'destroy'])->name('usuarios.destroy');
+        Route::post('/usuarios/store', [CuentaController::class, 'store'])->name('usuarios.store');
+        Route::get('/usuarios', [CuentaController::class, 'index'])->name('usuarios.lista');
+        Route::get('/usuarios', [CuentaController::class, 'listarUsuarios'])->name('usuarios.listar');
+        Route::get('/usuarios/lista', [CuentaController::class, 'listarUsuarios'])->name('usuarios.lista');
+
+        // Route::get('/usuarios', [CuentaController::class, 'index'])->name('usuarios.lista')->middleware('checkVista:Usuarios');
+        // Route::get('/beneficiarios', [beneficiarioController::class, 'listarBeneficiarios'])->name('beneficiarios.listarBeneficiarios')->middleware('checkVista:Beneficiarios');
+        // Route::get('/especialistas', [especialistaController::class, 'listarEspecialistas'])->name('especialistas.listarEspecialistas')->middleware('checkVista:Especialistas');
+        // // Route::get('/asistencia', [AsistenciaController::class, 'index'])->name('asistencia')->middleware('checkVista:Especialidades');
+        // Route::get('/especialidades', [especialistadController::class, 'index'])->name('asistenciasEspecialistas')->middleware('checkVista:Asistencias');
 });
 
 
-Route::resource('cuenta', CuentaController::class);
-
-Route::get('/cuenta/{id}/edit', [CuentaController::class, 'edit'])->name('cuenta.edit');
-Route::put('/cuenta/{id}', [CuentaController::class, 'update'])->name('cuenta.update');
-Route::delete('/cuenta/{id}', [CuentaController::class, 'destroy'])->name('cuenta.destroy');
 
 
+// Rutas para el login
 Route::get('/', function () {return redirect()->route('login');});
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

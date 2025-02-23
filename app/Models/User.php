@@ -12,14 +12,26 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'rut', 'dv', 
+        'primer_nombre', 
+        'segundo_nombre', 
+        'apellido_paterno', 
+        'apellido_materno', 
+        'telefono', 
+        'email', 
+        'password', 
+        'vistas',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $casts = [
+        'vistas' => 'array',
     ];
 
     protected function casts(): array

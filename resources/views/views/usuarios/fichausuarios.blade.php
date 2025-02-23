@@ -17,11 +17,16 @@
         <a class="boton-secundario" id="benExportar" href="{{ route('exportarUsuarios') }}"><i class='bx bx-export'></i>
             Exportar</a>
         <!-- Para buscar productos por texto -->
-        <form method="POST">
-            <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar...">
+        <form method="GET" action="{{ route('usuarios.listar') }}">
+            <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..." value="{{ request('benBuscar') }}">
             <button type="submit"><i class='bx bx-search'></i></button>
         </form>
     </div>
+    @if(isset($usuarios) && count($usuarios) > 0)
+            <p>Usuarios cargados correctamente.</p>
+        @else
+            <p>No hay usuarios registrados.</p>
+        @endif
     <table>
         <thead>
             <tr>
@@ -35,36 +40,63 @@
                 <th>Eliminar</th>
             </tr>
         </thead>
+
         <tbody>
+    @if(isset($usuarios) && count($usuarios) > 0)
+        @foreach ($usuarios as $usuario)
             <tr>
-                <td data-label="Rut">20880574-6</td>
-                <td data-label="Nombre">Simón Hernández</td>
-                <td data-label="Teléfono">9 6687 6669</td>
-                <td data-label="Correo electrónico">simon.hernandez.2001@gmail.com</td>
-                <td data-label="Fecha de registro">13/11/2024</td>
-                <td data-label="Acciones"><a class="detalles" href="{{ route('vistaUsuario') }}"><i
-                            class='bx bxs-file-doc'></i></a></td>
-                <td data-label="Modificar"><a class="boton-quintiario" href="{{ route('formulariousuario') }}">
-                        Modificar</a></td>
-                <td data-label="Eliminar"><a class="boton-terciario" id="benEliminar"
-                        href="{{ route('fichausuarios') }}"><i class='bx bx-trash'></i>
-                        Eliminar</a></td>
+                <td data-label="Rut">{{ $usuario->rut }}-{{ $usuario->dv }}</td>
+                <td data-label="Nombre">
+                    {{ $usuario->primer_nombre }} 
+                    {{ $usuario->segundo_nombre ? $usuario->segundo_nombre : '' }} 
+                    {{ $usuario->apellido_paterno }} 
+                    {{ $usuario->apellido_materno }}
+                </td>
+                <td data-label="Teléfono">{{ $usuario->telefono }}</td>
+                <td data-label="Correo electrónico">{{ $usuario->email }}</td>
+                <td data-label="Fecha de registro">{{ $usuario->created_at->format('d/m/Y') }}</td>
+                <td data-label="Acciones">
+                    <a class="detalles" href="{{ route('vistaUsuario', $usuario->id) }}">
+                        <i class='bx bxs-file-doc'></i>
+                    </a>
+                </td>
+                <td data-label="Modificar">
+                    <a class="boton-quintiario" href="{{ route('usuarios.edit', $usuario->id) }}">Modificar</a>
+                </td>
+                <td data-label="Eliminar">
+                    <form method="POST" action="{{ route('usuarios.destroy', $usuario->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="boton-terciario">
+                            <i class='bx bx-trash'></i> Eliminar
+                        </button>
+                    </form>
+                </td>
             </tr>
+        @endforeach
+        @else
             <tr>
-                <td data-label="Rut">18487992-1</td>
-                <td data-label="Nombre">Joaquín Muñoz</td>
-                <td data-label="Teléfono">9 9412 6722</td>
-                <td data-label="Correo electrónico">joaquin.muñoz.2001@gmail.com</td>
-                <td data-label="Fecha de registro">13/11/2024</td>
-                <td data-label="Acciones"><a class="detalles" href="{{ route('vistaUsuario') }}"><i
-                            class='bx bxs-file-doc'></i></a></td>
-                <td data-label="Modificar"><a class="boton-quintiario" href="{{ route('formulariousuario') }}">
-                        Modificar</a></td>
-                <td data-label="Eliminar"><a class="boton-terciario" href="{{ route('fichausuarios') }}"><i
-                            class='bx bx-trash'></i>
-                        Eliminar</a></td>
+                <td colspan="8">No hay usuarios registrados.</td>
             </tr>
-        </tbody>
-    </table>
+        @endif
+            </tbody>
+     </table>
+        <br>
+        <!-- Selector para cantidad de elementos por página -->
+        <form method="GET" action="{{ route('usuarios.listar') }}">
+            <label for="items_per_page">Resultados por página:</label>
+            <select name="items_per_page" id="items_per_page" onchange="this.form.submit()">
+                <option value="10" {{ request('items_per_page') == 10 ? 'selected' : '' }}>10</option>
+                <option value="15" {{ request('items_per_page') == 15 ? 'selected' : '' }}>15</option>
+                <option value="20" {{ request('items_per_page') == 20 ? 'selected' : '' }}>20</option>
+            </select>
+            <input type="hidden" name="benBuscar" value="{{ request('benBuscar') }}">
+        </form>
+
+        <br>
+        <!-- Paginación -->
+        <div class="pagination">
+            {{ $usuarios->links() }}
+        </div>
 </div>
 @endsection
