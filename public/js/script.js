@@ -42,6 +42,9 @@ function confirmDelete(event) {
     });
 }
 
+
+
+
 // FUNCIÓN PARA LLENAR EL FORMULARIO DE ESPECIALIDADES AL DARLE CLICK EN EDITAR
 function editarEspecialidad(especialidad) {
     document.getElementById('especialidadId').value = especialidad.id;
@@ -148,6 +151,10 @@ function validarRut(rut, dv) {
         return false;
     }
 }
+
+
+
+
 
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE ESPECIALIDADES
 function validarFormEspecialidad() {
@@ -1500,6 +1507,267 @@ function validarFormBeneficiario() {
     }
 }
 
+function validarFormularioUsuario() {
+    let camposValidos = [];
+
+    // OBTENEMOS RUT Y DV
+    const userRut = document.getElementById('userRut');
+    const userDv = document.getElementById('userDv');
+
+    // OBTENEMOS NOMBRES Y APELLIDOS
+    const userPNombre = document.getElementById('userPNombre');
+    const userSNombre = document.getElementById('userSNombre');
+    const userApPaterno = document.getElementById('userApPaterno');
+    const userApMaterno = document.getElementById('userApMaterno');
+
+    // OBTENER TELEFONO
+    const userTel = document.getElementById('userTel');
+
+    // OBTENER CORREO
+    const userEmail = document.getElementById('userEmail');
+
+    // OBTENEMOS LOS DIV DE ERROR
+    const errorUserRut = document.getElementById('errorUserRut');
+    const errorUserDv = document.getElementById('errorUserDv');
+    const errorUserPNombre = document.getElementById('errorUserPNombre');
+    const errorUserSNombre = document.getElementById('errorUserSNombre');
+    const errorUserApPaterno = document.getElementById('errorUserApPaterno');
+    const errorUserApMaterno = document.getElementById('errorUserApMaterno');
+    const errorUserTel = document.getElementById('errorUserTel');
+    const errorUserEmail = document.getElementById('errorUserEmail');
+
+    // VALIDAR RUT
+    const rutValue = userRut.value.trim();
+    const dvValue = userDv.value.trim().toUpperCase();
+    if (rutValue === '') {
+        errorUserRut.innerHTML = 'El rut no puede estar vacío!';
+        errorUserRut.style.display = 'block';
+        errorUserRut.classList.remove('exito');
+        errorUserRut.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (rutValue.length > 8) {
+        errorUserRut.innerHTML = 'El rut no puede tener más de 8 caracteres!';
+        errorUserRut.style.display = 'block';
+        errorUserRut.classList.remove('exito');
+        errorUserRut.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/^[0-9Kk]$/.test(rutValue)) {
+        errorUserRut.innerHTML = 'El rut no puede incluir caracteres especiales!';
+        errorUserRut.style.display = 'block';
+        errorUserRut.classList.remove('exito');
+        errorUserRut.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (validarRut(rutValue, dvValue) === false) {
+        errorUserRut.innerHTML = 'El rut no es válido!';
+        errorUserRut.style.display = 'block';
+        errorUserRut.classList.remove('exito');
+        errorUserRut.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorUserRut.classList.add('exito')
+        errorUserRut.classList.add('exito2')
+        errorUserRut.innerHTML = 'Rut válido!';
+        errorUserRut.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR DV
+    if (dvValue === '') {
+        errorUserDv.innerHTML = 'El Dv no puede estar vacío!';
+        errorUserDv.style.display = 'block';
+        errorUserDv.classList.remove('exito');
+        errorUserDv.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (dvValue.length > 1) {
+        errorUserDv.innerHTML = 'El Dv no puede tener más de 1 caracter!';
+        errorUserDv.style.display = 'block';
+        errorUserDv.classList.remove('exito');
+        errorUserDv.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(dvValue)) {
+        errorUserDv.innerHTML = 'El Dv no puede incluir caracteres especiales!';
+        errorUserDv.style.display = 'block';
+        errorUserDv.classList.remove('exito');
+        errorUserDv.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorUserDv.classList.add('exito')
+        errorUserDv.classList.add('exito2')
+        errorUserDv.innerHTML = 'Dv válido!';
+        errorUserDv.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR PRIMER NOMBRE
+    const pNombreValue = userPNombre.value.trim();
+    if (pNombreValue === '') {
+        errorUserPNombre.innerHTML = 'El primer nombre no puede estar vacío!';
+        errorUserPNombre.style.display = 'block';
+        errorUserPNombre.classList.remove('exito');
+        errorUserPNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (pNombreValue.length > 8) {
+        errorUserPNombre.innerHTML = 'El primer nombre no puede tener más de 20 caracteres!';
+        errorUserPNombre.style.display = 'block';
+        errorUserPNombre.classList.remove('exito');
+        errorUserPNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(pNombreValue)) {
+        errorUserPNombre.innerHTML = 'El primer nombre no puede incluir caracteres especiales!';
+        errorUserPNombre.style.display = 'block';
+        errorUserPNombre.classList.remove('exito');
+        errorUserPNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorUserPNombre.classList.add('exito')
+        errorUserPNombre.classList.add('exito2')
+        errorUserPNombre.innerHTML = 'Primer nombre válido!';
+        errorUserPNombre.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR SEGUNDO NOMBRE
+    const sNombreValue = userSNombre.value.trim();
+    if (sNombreValue.length > 8) {
+        errorUserSNombre.innerHTML = 'El segundo nombre no puede tener más de 20 caracteres!';
+        errorUserSNombre.style.display = 'block';
+        errorUserSNombre.classList.remove('exito');
+        errorUserSNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(sNombreValue)) {
+        errorUserSNombre.innerHTML = 'El segundo nombre no puede incluir caracteres especiales!';
+        errorUserSNombre.style.display = 'block';
+        errorUserSNombre.classList.remove('exito');
+        errorUserSNombre.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorUserSNombre.classList.add('exito')
+        errorUserSNombre.classList.add('exito2')
+        errorUserSNombre.innerHTML = 'Segundo nombre válido!';
+        errorUserSNombre.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR APELLIDO PATERNO
+    const apPaternoValue = userApPaterno.value.trim();
+    if (apPaternoValue === '') {
+        errorUserApPaterno.innerHTML = 'El apellido paterno no puede estar vacío!';
+        errorUserApPaterno.style.display = 'block';
+        errorUserApPaterno.classList.remove('exito');
+        errorUserApPaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (apPaternoValue.length > 8) {
+        errorUserApPaterno.innerHTML = 'El apellido paterno no puede tener más de 20 caracteres!';
+        errorUserApPaterno.style.display = 'block';
+        errorUserApPaterno.classList.remove('exito');
+        errorUserApPaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(apPaternoValue)) {
+        errorUserApPaterno.innerHTML = 'El apellido paterno no puede incluir caracteres especiales!';
+        errorUserApPaterno.style.display = 'block';
+        errorUserApPaterno.classList.remove('exito');
+        errorUserApPaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorUserApPaterno.classList.add('exito')
+        errorUserApPaterno.classList.add('exito2')
+        errorUserApPaterno.innerHTML = 'Apellido paterno válido!';
+        errorUserApPaterno.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR APELLIDO MATERNO
+    const apMaternoValue = userApMaterno.value.trim();
+    if (apMaternoValue === '') {
+        errorUserApMaterno.innerHTML = 'El apellido materno no puede estar vacío!';
+        errorUserApMaterno.style.display = 'block';
+        errorUserApMaterno.classList.remove('exito');
+        errorUserApMaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (apMaternoValue.length > 8) {
+        errorUserApMaterno.innerHTML = 'El apellido materno no puede tener más de 20 caracteres!';
+        errorUserApMaterno.style.display = 'block';
+        errorUserApMaterno.classList.remove('exito');
+        errorUserApMaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(apMaternoValue)) {
+        errorUserApMaterno.innerHTML = 'El apellido materno no puede incluir caracteres especiales!';
+        errorUserApMaterno.style.display = 'block';
+        errorUserApMaterno.classList.remove('exito');
+        errorUserApMaterno.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorUserApMaterno.classList.add('exito')
+        errorUserApMaterno.classList.add('exito2')
+        errorUserApMaterno.innerHTML = 'Apellido materno válido!';
+        errorUserApMaterno.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR TELEFONO
+    const telValue = userTel.value.trim();
+    if (telValue === '') {
+        errorUserTel.innerHTML = 'El telefono no puede estar vacío!';
+        errorUserTel.style.display = 'block';
+        errorUserTel.classList.remove('exito');
+        errorUserTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (telValue.length < 7) {
+        errorUserTel.innerHTML = 'El telefono no puede tener menos de 7 caracteres!';
+        errorUserTel.style.display = 'block';
+        errorUserTel.classList.remove('exito');
+        errorUserTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (telValue.length > 15) {
+        errorUserTel.innerHTML = 'El telefono no puede tener más de 15 caracteres!';
+        errorUserTel.style.display = 'block';
+        errorUserTel.classList.remove('exito');
+        errorUserTel.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorUserTel.classList.add('exito')
+        errorUserTel.innerHTML = 'Telefono válido!';
+        errorUserTel.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+    // VALIDAR CORREO
+    const emailValue = userEmail.value.trim();
+    if (emailValue === '') {
+        errorUserEmail.innerHTML = 'El correo no puede estar vacío!';
+        errorUserEmail.style.display = 'block';
+        errorUserEmail.classList.remove('exito');
+        errorUserEmail.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (emailValue.length > 50) {
+        errorUserEmail.innerHTML = 'El correo no puede tener más de 55 caracteres!';
+        errorUserEmail.style.display = 'block';
+        errorUserEmail.classList.remove('exito');
+        errorUserEmail.classList.remove('exito2');
+        camposValidos.push(false);
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue)) {
+        errorUserEmail.innerHTML = 'Correo inválido!';
+        errorUserEmail.style.display = 'block';
+        errorUserEmail.classList.remove('exito');
+        errorUserEmail.classList.remove('exito2');
+        camposValidos.push(false);
+    } else {
+        errorUserEmail.classList.add('exito')
+        errorUserEmail.classList.add('exito2')
+        errorUserEmail.innerHTML = 'Correo válido!';
+        errorUserEmail.style.display = 'block';
+        camposValidos.push(true);
+    }
+
+   // COMPROBAR SI TODOS LOS CAMPOS SON VÁLIDOS
+   const esValido = camposValidos.every(Boolean);
+
+   // SI TODO ESTÁ CORRECTO, ENVIAR EL FORMULARIO
+   if (esValido) {
+       document.querySelector('.formularioPiola').submit();
+   }
+}
+
 // VALIDAMOS LAS EXTENSIONES DE LOS ARCHIVOS
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('benEvidMed').addEventListener('change', (event) => {
@@ -1569,4 +1837,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ocultarTodosLosApartados2();
         apartadoDocumentos.classList.remove('ocultar');
     });
-});
+}
+
+
+
+);

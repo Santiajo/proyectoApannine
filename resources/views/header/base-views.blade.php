@@ -19,6 +19,7 @@
 
 <body>
     <div class="container">
+
         <!-- Sidebar -->
         <nav class="sidebar close">
             <header>
@@ -40,45 +41,54 @@
                             <input type="text" placeholder="Buscar...">
                         </li>
                         <ul class="menu-links">
+
                             <li class="nav-link">
-                                <a href="{{ route('fichausuarios') }}">
+                                <a href="{{ route('usuarios.lista') }}">
                                     <i class='bx bx-user icon'></i>
                                     <span class="text nav-text">Usuarios</span>
                                 </a>
                             </li>
+
                             <li class="nav-link">
                                 <a href="{{ route('beneficiarios.listarBeneficiarios') }}">
                                     <i class='bx bx-notepad icon'></i>
                                     <span class="text nav-text">Beneficiarios</span>
                                 </a>
                             </li>
+
                             <li class="nav-link">
                                 <a href="{{ route('especialistas.listarEspecialistas') }}">
                                     <i class='bx bx-band-aid icon'></i>
                                     <span class="text nav-text">Especialistas</span>
                                 </a>
                             </li>
+
                             <li class="nav-link">
                                 <a href="{{ route('asistencia') }}">
                                     <i class='bx bxs-school icon'></i>
                                     <span class="text nav-text">Talleres</span>
                                 </a>
                             </li>
+
                             <li class="nav-link">
                                 <a href="{{ route('asistenciasEspecialistas') }}">
                                     <i class='bx bx-calendar-check icon'></i>
                                     <span class="text nav-text">Asistencias</span>
                                 </a>
                             </li>
+
                         </ul>
                     </div>
                     <div class="bottom-content">
-                        <li>
-                            <a href="#">
-                                <i class='bx bx-log-out icon'></i>
-                                <span class="text nav-text">Cerrar sesión</span>
-                            </a>
-                        </li>
+                    <li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class='bx bx-log-out icon'></i>
+                            <span class="text nav-text">Cerrar sesión</span>
+                        </a>
+                    </li>
 
                         <li class="mode">
                             <div class="sun-moon">

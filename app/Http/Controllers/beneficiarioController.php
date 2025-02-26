@@ -26,14 +26,31 @@ use App\Models\Diagnostico;
 // IMPORTAR MODELO DOCUMENTO
 use App\Models\Documento;
 
+// PARA EXPORTAR A EXCEL
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BeneficiariosExport;
+
 class beneficiarioController extends Controller
 {
     // MÉTODO PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
-    public function listarBeneficiarios()
-    {
-        $beneficiarios = Beneficiario::all(); // LISTAR BENEFICIARIOS 
-        return view('views.beneficiario.listarBeneficiarios', compact('beneficiarios'));
-    }
+    public function listarBeneficiarios(Request $request)
+{
+    $search = $request->input('benBuscar'); // Captura el texto de búsqueda
+
+    // Captura la cantidad de elementos por página seleccionados por el usuario (default 10)
+    $itemsPerPage = $request->input('items_per_page', 10);
+
+    $beneficiarios = Beneficiario::query()
+        ->when($search, function ($query) use ($search) {
+            $query->where('beneficiarioPNombre', 'LIKE', "%{$search}%")
+                  ->orWhere('beneficiarioApPaterno', 'LIKE', "%{$search}%")
+                  ->orWhere('beneficiarioRut', 'LIKE', "%{$search}%");
+        })
+        ->paginate($itemsPerPage) // Aplicar paginación
+        ->withQueryString(); // Mantener query params en la paginación
+
+    return view('views.beneficiario.listarBeneficiarios', compact('beneficiarios', 'search', 'itemsPerPage'));
+}
 
     // MÉTODO PARA MOSTRAR EL FORMULARIO DEL CRUD
     public function formularioBeneficiario()
@@ -433,4 +450,12 @@ class beneficiarioController extends Controller
             )
         );
     }
+
+
+
+    public function exportarExcel($id)
+    {
+        return Excel::download(new BeneficiariosExport($id), 'beneficiario_'.$id.'.xlsx');
+    }
+
 }
