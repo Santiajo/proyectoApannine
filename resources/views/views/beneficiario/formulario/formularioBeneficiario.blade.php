@@ -284,50 +284,42 @@
                 </select>
 
                 <!-- Rut familiar -->
-                <section class="layoutTelefono">
+                <section class="layoutTelefono" id="layoutTelefono">
                     <div>
                         <label for="famRut_0">Rut:</label>
                         <input type="number" name="familiares[0][famRut]" id="famRut_0">
-                        <div class="errores errores2" id="errorFamRut"></div>
                     </div>
                     <div>
                         <label for="famDv_0">Dv:</label>
                         <input type="text" name="familiares[0][famDv]" id="famDv_0">
-                        <div class="errores errores2" id="errorFamDv"></div>
                     </div>
                 </section>
 
                 <!-- Nombre familiar -->
-                <div class="layoutNombre">
+                <div class="layoutNombre" id="layoutNombre">
                     <div>
                         <label for="famPNombre_0">Primer Nombre:</label>
                         <input type="text" name="familiares[0][famPNombre]" id="famPNombre_0">
-                        <div class="errores errores2" id="errorFamPNombre"></div>
                     </div>
                     <div>
                         <label for="famSNombre_0">Segundo Nombre:</label>
                         <input type="text" name="familiares[0][famSNombre]" id="famSNombre_0">
-                        <div class="errores errores2" id="errorFamSNombre"></div>
                     </div>
                     <div>
                         <label for="famApPaterno_0">Apellido Paterno:</label>
                         <input type="text" name="familiares[0][famApPaterno]" id="famApPaterno_0">
-                        <div class="errores errores2" id="errorfamApPaterno"></div>
                     </div>
                     <div>
                         <label for="famApMaterno_0">Apellido Materno:</label>
                         <input type="text" name="familiares[0][famApMaterno]" id="famApMaterno_0">
-                        <div class="errores errores2" id="errorfamApMaterno"></div>
                     </div>
                 </div>
 
                 <label for="famTel_0">Teléfono:</label>
                 <input type="number" name="familiares[0][famTel]" id="famTel_0">
-                <div class="errores" id="errorfamTel"></div>
 
                 <label for="famEmail_0">Correo electrónico:</label>
                 <input type="email" name="familiares[0][famEmail]" id="famEmail_0">
-                <div class="errores" id="errorfamEmail"></div>
 
                 <!-- Cuidador o no -->
                 <fieldset>

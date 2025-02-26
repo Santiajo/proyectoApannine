@@ -520,6 +520,7 @@ function validarCampo(idCampo, nombreCampo, IdErrorCampo) {
 // FUNCIÓN PARA AÑADIR FAMILIARES DINAMICAMENTE
 document.addEventListener("DOMContentLoaded", function () {
     let contadorFamiliares = document.querySelectorAll(".seccion-familiares").length - 1;
+    let contenedor = document.getElementById("contenedorFamiliares");
 
     function actualizarBotonesEliminar() {
         let formularios = document.querySelectorAll(".seccion-familiares");
@@ -535,14 +536,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    document.addEventListener("click", function (event) {
+    contenedor.addEventListener("click", function (event) {
         if (event.target.classList.contains("agregarFamiliar")) {
             contadorFamiliares++;
-            // Usamos .seccion-familiares para limitar el alcance al formulario familiar
             let formularioActual = event.target.closest(".seccion-familiares");
             let clon = formularioActual.cloneNode(true);
 
-            clon.querySelectorAll("input, select, fieldset, label").forEach((elemento) => {
+            clon.querySelectorAll("input, select, fieldset, label, .errores").forEach((elemento) => {
                 if (elemento.name) {
                     elemento.name = elemento.name.replace(/\[\d+\]/, `[${contadorFamiliares}]`);
                 }
@@ -552,12 +552,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (elemento.tagName === "INPUT") {
                     elemento.value = "";
                 }
+                if (elemento.classList.contains("errores")) {
+                    elemento.innerHTML = "";
+                }
             });
-
-            let titulo = clon.querySelector(".titulo-familiar");
-            if (titulo) {
-                titulo.textContent = `Datos Familiar ${contadorFamiliares + 1}`;
-            }
 
             document.getElementById("contenedorFamiliares").appendChild(clon);
             actualizarBotonesEliminar();
@@ -581,7 +579,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 titulo.textContent = `Datos Familiar ${index + 1}`;
             }
 
-            familiar.querySelectorAll("input, select, fieldset, label").forEach((elemento) => {
+            familiar.querySelectorAll("input, select, fieldset, label, .errores").forEach((elemento) => {
                 if (elemento.name) {
                     elemento.name = elemento.name.replace(/\[\d+\]/, `[${index}]`);
                 }
@@ -590,6 +588,105 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         });
+    }
+
+    // Función separada para validar un campo individualmente
+    function validarCampo(input) {
+        let id = input.id;
+        let valor = input.value.trim();
+        let errorDiv = document.getElementById(`error${id.charAt(0).toUpperCase() + id.slice(1)}`);
+    
+        if (!errorDiv) {
+            errorDiv = document.createElement("div");
+            errorDiv.className = "errores";
+            errorDiv.id = `error${id.charAt(0).toUpperCase() + id.slice(1)}`;
+            input.insertAdjacentElement("afterend", errorDiv);
+        }
+    
+        let parentLayoutTelefono = input.closest("#layoutTelefono");
+        let parentLayoutNombre = input.closest("#layoutNombre");
+    
+        if (parentLayoutTelefono || parentLayoutNombre) {
+            errorDiv.classList.add("errores2");
+        } else {
+            errorDiv.classList.remove("errores2");
+        }
+    
+        let valido = true;
+        let mensajeError = "";
+    
+        // Evitar validación de mensaje en radio y select
+        if (input.type === "radio" || input.tagName === "SELECT") {
+            errorDiv.style.display = "none";
+            return;
+        }
+    
+        if (id.includes("famRut") && (isNaN(valor) || valor.length < 7 || valor.length > 9)) {
+            mensajeError = "El RUT debe tener entre 7 y 9 dígitos.";
+            valido = false;
+        } else if (id.includes("famDv") && !/^[0-9kK]$/.test(valor)) {
+            mensajeError = "El dígito verificador debe ser un número o 'K'.";
+            valido = false;
+        } else if (id.includes("famPNombre") || id.includes("famSNombre") || id.includes("famApPaterno") || id.includes("famApMaterno")) {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(valor)) {
+                mensajeError = "El nombre/apellido solo puede contener letras y espacios.";
+                valido = false;
+            }
+        } else if (id.includes("famTel") && !/^\d{9,12}$/.test(valor)) {
+            mensajeError = "El teléfono debe tener entre 9 y 12 dígitos.";
+            valido = false;
+        } else if (id.includes("famEmail") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) {
+            mensajeError = "Ingrese un correo electrónico válido.";
+            valido = false;
+        }
+    
+        if (!valido) {
+            errorDiv.textContent = mensajeError;
+            errorDiv.classList.add("errores");
+            errorDiv.style.display = "block";
+        } else {
+            mensajeError = "Campo válido!";
+            errorDiv.textContent = mensajeError;
+    
+            errorDiv.classList.remove("errores");
+            errorDiv.classList.remove("errores2");
+            errorDiv.classList.add("exito");
+    
+            if (parentLayoutTelefono || parentLayoutNombre) {
+                errorDiv.classList.add("exito2");
+            } else {
+                errorDiv.classList.remove("exito2");
+            }
+    
+            errorDiv.style.display = "block";
+        }
+    
+        return valido;
+    }
+    
+
+    function validarFormulario(event) {
+        let camposValidos = [];
+        let formularios = document.querySelectorAll(".seccion-familiares");
+
+        formularios.forEach((formulario) => {
+            let inputs = formulario.querySelectorAll("input, select");
+            inputs.forEach((input) => {
+                let esValido = validarCampo(input);
+                camposValidos.push(esValido);
+            });
+        });
+
+        const esValido = camposValidos.every(Boolean);
+        if (!esValido) {
+            event.preventDefault();
+        }
+    }
+
+    // 📌 Asignar validación al envío del formulario
+    let formularioPrincipal = document.getElementById("formBeneficiario");
+    if (formularioPrincipal) {
+        formularioPrincipal.addEventListener("submit", validarFormulario);
     }
 
     actualizarBotonesEliminar();
@@ -766,6 +863,22 @@ function isAnyRadioChecked(radioIds) {
     });
 }
 
+// FUNCIÓN PARA CHECKEAR LOS RADIO BUTTONS DE CUIDADOR
+function areAllRadioButtonsCheckedInSections(sectionClass, radioName) {
+    const sections = document.querySelectorAll(`.${sectionClass}`);
+    let allChecked = true;
+
+    sections.forEach(section => {
+        const radios = section.querySelectorAll(`input[name="${radioName}"]`);
+        const isChecked = Array.from(radios).some(radio => radio.checked);
+        if (!isChecked) {
+            allChecked = false;
+        }
+    });
+
+    return allChecked;
+}
+
 // FUNCIÓN REUTILIZABLE PARA DESACTIVAR INPUTS DE TEXTO EN CASO DE SER NECESARIO
 function desactivarInputTexto(inputId, inputId2) {
     const input = document.getElementById(inputId);
@@ -819,7 +932,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ['benFicFamPtje']
     );
 });
-
 
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE BENEFICIARIO
 function validarFormBeneficiario() {
@@ -1276,244 +1388,7 @@ function validarFormBeneficiario() {
     }
 
     // VALIDACIONES DE LA FAMILIA
-    // VALIDAR RUT
-    /*
-    const famRut = document.getElementById('famRut');
-    const famDv = document.getElementById('famDv');
-    const famRutValue = famRut.value.trim();
-    const famDvValue = famDv.value.trim().toUpperCase();
-    const errorFamRut = document.getElementById('errorFamRut');
-    if (famRutValue === '') {
-        errorFamRut.innerHTML = 'El rut no puede estar vacío!';
-        errorFamRut.style.display = 'block';
-        errorFamRut.classList.remove('exito');
-        errorFamRut.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (famRutValue.length > 8) {
-        errorFamRut.innerHTML = 'El rut no puede tener más de 8 caracteres!';
-        errorFamRut.style.display = 'block';
-        errorFamRut.classList.remove('exito');
-        errorFamRut.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (/[^a-zA-Z0-9]/.test(famRutValue)) {
-        errorFamRut.innerHTML = 'El rut no puede incluir caracteres especiales!';
-        errorFamRut.style.display = 'block';
-        errorFamRut.classList.remove('exito');
-        errorFamRut.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (validarRut(famRutValue, famDvValue) === false) {
-        errorFamRut.innerHTML = 'El rut no es válido!';
-        errorFamRut.style.display = 'block';
-        errorFamRut.classList.remove('exito');
-        errorFamRut.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorFamRut.classList.add('exito')
-        errorFamRut.classList.add('exito2')
-        errorFamRut.innerHTML = 'Rut válido!';
-        errorFamRut.style.display = 'block';
-        camposValidos.push(true);
-    }
 
-    // VALIDAR DV
-    const errorFamDv = document.getElementById('errorFamDv');
-    if (famDvValue === '') {
-        errorFamDv.innerHTML = 'El Dv no puede estar vacío!';
-        errorFamDv.style.display = 'block';
-        errorFamDv.classList.remove('exito');
-        errorFamDv.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (famDvValue.length > 1) {
-        errorFamDv.innerHTML = 'El Dv no puede tener más de 1 caracter!';
-        errorFamDv.style.display = 'block';
-        errorFamDv.classList.remove('exito');
-        errorFamDv.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (/[^a-zA-Z0-9]/.test(famDvValue)) {
-        errorFamDv.innerHTML = 'El Dv no puede incluir caracteres especiales!';
-        errorFamDv.style.display = 'block';
-        errorFamDv.classList.remove('exito');
-        errorFamDv.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorFamDv.classList.add('exito')
-        errorFamDv.classList.add('exito2')
-        errorFamDv.innerHTML = 'Dv válido!';
-        errorFamDv.style.display = 'block';
-        camposValidos.push(true);
-    }
-
-    // VALIDAR PRIMER NOMBRE
-    const famPNombre = document.getElementById('famPNombre');
-    const famPNombreValue = famPNombre.value.trim();
-    const errorFamPNombre = document.getElementById('errorFamPNombre');
-    if (famPNombreValue === '') {
-        errorFamPNombre.innerHTML = 'El primer nombre no puede estar vacío!';
-        errorFamPNombre.style.display = 'block';
-        errorFamPNombre.classList.remove('exito');
-        errorFamPNombre.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (famPNombreValue.length > 8) {
-        errorFamPNombre.innerHTML = 'El primer nombre no puede tener más de 20 caracteres!';
-        errorFamPNombre.style.display = 'block';
-        errorFamPNombre.classList.remove('exito');
-        errorFamPNombre.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (/[^a-zA-Z0-9]/.test(famPNombreValue)) {
-        errorFamPNombre.innerHTML = 'El primer nombre no puede incluir caracteres especiales!';
-        errorFamPNombre.style.display = 'block';
-        errorFamPNombre.classList.remove('exito');
-        errorFamPNombre.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorFamPNombre.classList.add('exito')
-        errorFamPNombre.classList.add('exito2')
-        errorFamPNombre.innerHTML = 'Primer nombre válido!';
-        errorFamPNombre.style.display = 'block';
-        camposValidos.push(true);
-    }
-
-    // VALIDAR SEGUNDO NOMBRE
-    const famSNombre = document.getElementById('famPNombre');
-    const famSNombreValue = famSNombre.value.trim();
-    const errorFamSNombre = document.getElementById('errorFamSNombre');
-    if (famSNombreValue.length > 8) {
-        errorFamSNombre.innerHTML = 'El segundo nombre no puede tener más de 20 caracteres!';
-        errorFamSNombre.style.display = 'block';
-        errorFamSNombre.classList.remove('exito');
-        errorFamSNombre.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (/[^a-zA-Z0-9]/.test(famSNombreValue)) {
-        errorFamSNombre.innerHTML = 'El segundo nombre no puede incluir caracteres especiales!';
-        errorFamSNombre.style.display = 'block';
-        errorFamSNombre.classList.remove('exito');
-        errorFamSNombre.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorFamSNombre.classList.add('exito')
-        errorFamSNombre.classList.add('exito2')
-        errorFamSNombre.innerHTML = 'Segundo nombre válido!';
-        errorFamSNombre.style.display = 'block';
-        camposValidos.push(true);
-    }
-
-    // VALIDAR APELLIDO PATERNO
-    const famApPaterno = document.getElementById('famApPaterno');
-    const famApPaternoValue = famApPaterno.value.trim();
-    const errorfamApPaterno = document.getElementById('errorfamApPaterno');
-    if (famApPaternoValue === '') {
-        errorfamApPaterno.innerHTML = 'El apellido paterno no puede estar vacío!';
-        errorfamApPaterno.style.display = 'block';
-        errorfamApPaterno.classList.remove('exito');
-        errorfamApPaterno.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (famApPaternoValue.length > 8) {
-        errorfamApPaterno.innerHTML = 'El apellido paterno no puede tener más de 20 caracteres!';
-        errorfamApPaterno.style.display = 'block';
-        errorfamApPaterno.classList.remove('exito');
-        errorfamApPaterno.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (/[^a-zA-Z0-9]/.test(famApPaternoValue)) {
-        errorfamApPaterno.innerHTML = 'El apellido paterno no puede incluir caracteres especiales!';
-        errorfamApPaterno.style.display = 'block';
-        errorfamApPaterno.classList.remove('exito');
-        errorfamApPaterno.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorfamApPaterno.classList.add('exito')
-        errorfamApPaterno.classList.add('exito2')
-        errorfamApPaterno.innerHTML = 'Apellido paterno válido!';
-        errorfamApPaterno.style.display = 'block';
-        camposValidos.push(true);
-    }
-
-    // VALIDAR APELLIDO MATERNO
-    const famApMaterno = document.getElementById('famApMaterno');
-    const famApMaternoValue = famApMaterno.value.trim();
-    const errorfamApMaterno = document.getElementById('errorfamApMaterno');
-    if (famApMaternoValue === '') {
-        errorfamApMaterno.innerHTML = 'El apellido materno no puede estar vacío!';
-        errorfamApMaterno.style.display = 'block';
-        errorfamApMaterno.classList.remove('exito');
-        errorfamApMaterno.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (famApMaternoValue.length > 8) {
-        errorfamApMaterno.innerHTML = 'El apellido materno no puede tener más de 20 caracteres!';
-        errorfamApMaterno.style.display = 'block';
-        errorfamApMaterno.classList.remove('exito');
-        errorfamApMaterno.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (/[^a-zA-Z0-9]/.test(famApMaternoValue)) {
-        errorfamApMaterno.innerHTML = 'El apellido materno no puede incluir caracteres especiales!';
-        errorfamApMaterno.style.display = 'block';
-        errorfamApMaterno.classList.remove('exito');
-        errorfamApMaterno.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorfamApMaterno.classList.add('exito')
-        errorfamApMaterno.classList.add('exito2')
-        errorfamApMaterno.innerHTML = 'Apellido materno válido!';
-        errorfamApMaterno.style.display = 'block';
-        camposValidos.push(true);
-    }
-
-    // VALIDAR TELEFONO
-    const famTel = document.getElementById('famTel');
-    const famTelValue = famTel.value.trim();
-    const errorfamTel = document.getElementById('errorfamTel');
-    if (famTelValue === '') {
-        errorfamTel.innerHTML = 'El telefono no puede estar vacío!';
-        errorfamTel.style.display = 'block';
-        errorfamTel.classList.remove('exito');
-        errorfamTel.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (famTelValue.length < 7) {
-        errorfamTel.innerHTML = 'El telefono no puede tener menos de 7 caracteres!';
-        errorfamTel.style.display = 'block';
-        errorfamTel.classList.remove('exito');
-        errorfamTel.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (famTelValue.length > 15) {
-        errorfamTel.innerHTML = 'El telefono no puede tener más de 15 caracteres!';
-        errorfamTel.style.display = 'block';
-        errorfamTel.classList.remove('exito');
-        errorfamTel.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorfamTel.classList.add('exito')
-        errorfamTel.innerHTML = 'Telefono válido!';
-        errorfamTel.style.display = 'block';
-        camposValidos.push(true);
-    }
-
-    // VALIDAR EMAIL
-    const famEmail = document.getElementById('famEmail');
-    const famEmailValue = famEmail.value.trim();
-    const errorfamEmail = document.getElementById('errorfamEmail');
-    if (famEmailValue === '') {
-        errorfamEmail.innerHTML = 'El correo no puede estar vacío!';
-        errorfamEmail.style.display = 'block';
-        errorfamEmail.classList.remove('exito');
-        errorfamEmail.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (famEmailValue.length > 50) {
-        errorfamEmail.innerHTML = 'El correo no puede tener más de 55 caracteres!';
-        errorfamEmail.style.display = 'block';
-        errorfamEmail.classList.remove('exito');
-        errorfamEmail.classList.remove('exito2');
-        camposValidos.push(false);
-    } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(famEmailValue)) {
-        errorfamEmail.innerHTML = 'El correo no es válido!';
-        errorfamEmail.style.display = 'block';
-        errorfamEmail.classList.remove('exito');
-        errorfamEmail.classList.remove('exito2');
-        camposValidos.push(false);
-    } else {
-        errorfamEmail.classList.add('exito')
-        errorfamEmail.innerHTML = 'Correo válido!';
-        errorfamEmail.style.display = 'block';
-        camposValidos.push(true);
-    } */
 
     // VALIDAR NEE DEL BENEFICIARIO
     const benNee = document.getElementById('benNee');
