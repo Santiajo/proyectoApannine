@@ -360,13 +360,21 @@ class beneficiarioController extends Controller
     public function eliminarBeneficiario($id)
     {
         $beneficiario = Beneficiario::findOrFail($id);
+
+        $familiaresIds = $beneficiario->familiares->pluck('id');
+
         $beneficiario->familiares()->detach();
+
         Colegio::findOrFail($beneficiario->colegio_id)->delete();
         Derivante::findOrFail($beneficiario->derivante_id)->delete();
         antecedenteSalud::findOrFail($beneficiario->antSal_id)->delete();
         antecedenteSocial::findOrFail($beneficiario->antSoc_id)->delete();
         Diagnostico::findOrFail($beneficiario->diagnostico_id)->delete();
-        $beneficiario->familiares()->delete();
+
+        Familiar::whereIn('id', $familiaresIds)
+            ->doesntHave('beneficiarios')
+            ->delete();
+
         $beneficiario->delete();
 
         return redirect()->route('beneficiarios.listarBeneficiarios')->with('success', 'Beneficiario eliminado correctamente.');
