@@ -113,38 +113,34 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             validarFormBeneficiario();
         })
-    }
-    else if (formBuscarUser) {
+    } else if (formBuscarUser) {
         formBuscarUser.addEventListener('submit', function (event) {
-            event.preventDefault();
-            validarBarraBusqueda('benBuscar', 'errorBarraBusqueda');
-        })
+            validarBarraBusqueda(event, 'benBuscar', 'errorBarraBusqueda', formBuscarUser);
+        });
     } else if (formBuscarEsp) {
         formBuscarEsp.addEventListener('submit', function (event) {
-            event.preventDefault();
-            validarBarraBusqueda('benBuscar', 'errorBarraBusqueda');
-        })
+            validarBarraBusqueda(event, 'benBuscar', 'errorBarraBusqueda', formBuscarEsp);
+        });
     } else if (formBuscarBen) {
         formBuscarBen.addEventListener('submit', function (event) {
-            event.preventDefault();
-            validarBarraBusqueda('benBuscar', 'errorBarraBusqueda');
-        })
+            validarBarraBusqueda(event, 'benBuscar', 'errorBarraBusqueda', formBuscarBen);
+        });
     }
 });
 
 
-function validarBarraBusqueda(input, divError) {
-    // Obtenemos el input de barra de busqueda
+function validarBarraBusqueda(event, input, divError, form) {
     const Buscar = document.getElementById(input);
-    // Obtenemos el valor del input recortado
     const valorInput = Buscar.value.trim();
-    // Obtenemos el div para escribir errores
     const errorBarraBusqueda = document.getElementById(divError);
 
-    // Validaciones
     if (valorInput === '') {
-        return;
-    } else if (valorInput.length > 30) {
+        return;  
+    }
+
+    let esValido = true;
+
+    if (valorInput.length > 30) {
         errorBarraBusqueda.innerHTML = "El campo no puede ser mayor a 30 caracteres";
         errorBarraBusqueda.style.display = 'block';
         esValido = false;
@@ -159,11 +155,10 @@ function validarBarraBusqueda(input, divError) {
         errorBarraBusqueda.innerHTML = 'Campo válido!';
         errorBarraBusqueda.style.display = 'block';
         esValido = true;
-        console.log(esValido);
     }
 
-    if (esValido) {
-        document.querySelector('.barraBusqueda').submit();
+    if (!esValido) {
+        event.preventDefault();
     }
 }
 

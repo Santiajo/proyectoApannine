@@ -48,8 +48,8 @@ class beneficiarioController extends Controller
                   ->orWhere('beneficiarioApPaterno', 'LIKE', "%{$search}%")
                   ->orWhere('beneficiarioRut', 'LIKE', "%{$search}%");
         })
-        ->paginate($itemsPerPage) // Aplicar paginación
-        ->withQueryString(); // Mantener query params en la paginación
+        ->paginate($itemsPerPage)
+        ->withQueryString();
 
     return view('views.beneficiario.listarBeneficiarios', compact('beneficiarios', 'search', 'itemsPerPage'));
 }
@@ -296,14 +296,6 @@ class beneficiarioController extends Controller
             $derivante = $this->crearRegistro($request, Derivante::class, $derivanteColumnas, $derivanteCampos);
             // CREAR ANTECEDENTES DE SALUD Y GUARDAR ARCHIVOS
             $antSalud = $this->guardarArchivos($request);
-            /*$antSalud = antecedenteSalud::create([
-                'antSalNEE' => $request->benNee,
-                'antSalEnfCronica' => $request->benEnfCro,
-                'antSalTratamiento' => $request->benTratamientos,
-                'antSalCirugia' => $request->benCirugia,
-                'antSalDescCirugia' => $request->benCirugiaNom,
-                'antSalFilePath' => $filePath,
-            ]);*/
             // CREAR ANTECEDENTES SOCIALES
             $antSocial = antecedenteSocial::create([
                 'antSocFichaFamiliar' => $request->benFicFam,
@@ -452,8 +444,6 @@ class beneficiarioController extends Controller
             )
         );
     }
-
-
 
     public function exportarExcel($id)
     {
