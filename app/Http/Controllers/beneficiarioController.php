@@ -36,7 +36,9 @@ class beneficiarioController extends Controller
     public function listarBeneficiarios(Request $request)
 {
     $search = $request->input('benBuscar'); // Captura el texto de búsqueda
-
+    $request->validate([
+        'benBuscar' => 'nullable|string|max:30|regex:/^[^<>]*$/',
+    ]);
     // Captura la cantidad de elementos por página seleccionados por el usuario (default 10)
     $itemsPerPage = $request->input('items_per_page', 10);
 

@@ -16,12 +16,16 @@
     <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudComuna') }}"><p>Agregar comuna</p></a>
     <a class="boton-primario" id="benAgregar" href="{{ route('beneficiarios.crudCobMedica') }}"><p><i class='bx bx-plus-medical' ></i> Agregar cobertura medica</p></a>
     <!-- Para buscar productos por texto -->
-    <form method="GET" action="{{ route('beneficiarios.listarBeneficiarios') }}">
+    <form id='formBuscarBen' class='barraBusqueda' method="GET" action="{{ route('beneficiarios.listarBeneficiarios') }}">
         <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..." value="{{ request('benBuscar') }}">
         <button type="submit"><i class='bx bx-search' ></i></button>
+        @error('benBuscar')
+        <div class="alert alert-danger alert2">El valor ingresado no cumple los requisitos</div>
+        @enderror
     </form>
   </div>
   <table>
+    
     <thead>
       <tr>
         <th>Fecha ingreso</th>

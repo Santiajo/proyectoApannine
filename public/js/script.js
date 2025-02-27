@@ -72,6 +72,9 @@ function editarNacionalidad(nacionalidad) {
 
 // CARGAMOS CONTENIDO DOM
 document.addEventListener('DOMContentLoaded', function () {
+    const formBuscarUser = document.getElementById('formBuscarUser');
+    const formBuscarEsp = document.getElementById('formBuscarEsp');
+    const formBuscarBen = document.getElementById('formBuscarBen');
     const formEspecialidad = document.getElementById('formEspecialidad');
     const formEspecialista = document.getElementById('formEspecialista');
     const formNacionalidad = document.getElementById('formNacionalidad');
@@ -111,7 +114,48 @@ document.addEventListener('DOMContentLoaded', function () {
             validarFormBeneficiario();
         })
     }
+    else if (formBuscarUser) {
+        formBuscarUser.addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarBarraBusqueda('benBuscar','errorBarraBusqueda');
+        })
+    }
+    else if (formBuscarEsp) {
+        formBuscarEsp.addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarBarraBusqueda('benBuscar','errorBarraBusqueda');
+        })
+    }
+    else if (formBuscarBen) {
+        formBuscarBen.addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarBarraBusqueda('benBuscar','errorBarraBusqueda');
+        })
+    }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    function validarBarraBusqueda(input,divError) {
+        const Buscar = document.getElementById(input);
+        const valorInput = Buscar.value.trim();
+        const errorBarraBusqueda = document.getElementById(divError);
+        if (valorInput.length() > 30) {
+            errorBarraBusqueda.innerHTML = "El campo no puede ser mayor a 30 caracteres";
+            errorBarraBusqueda.style.display = 'block';
+            esValido = false;
+        }
+        else if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]+$/.test(valorInput)) {
+            errorBarraBusqueda.innerHTML = "El campo no puede incluir caracteres especiales";
+            errorBarraBusqueda.style.display = 'block';
+            esValido = false;
+        }
+        if (esValido) {
+            document.querySelector('barraBusqueda').submit();
+        }
+    }
+});
+
 
 // FUNCIÓN PARA VALIDAR LOS RUT
 function validarRut(rut, dv) {
@@ -224,6 +268,7 @@ function validarFormEspecialidad() {
         document.querySelector('.formularioPiola').submit();
     }
 }
+
 
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE ESPECIALISTAS
 function validarFormEspecialista() {
@@ -1759,13 +1804,13 @@ function validarFormularioUsuario() {
         camposValidos.push(true);
     }
 
-   // COMPROBAR SI TODOS LOS CAMPOS SON VÁLIDOS
-   const esValido = camposValidos.every(Boolean);
+    // COMPROBAR SI TODOS LOS CAMPOS SON VÁLIDOS
+    const esValido = camposValidos.every(Boolean);
 
-   // SI TODO ESTÁ CORRECTO, ENVIAR EL FORMULARIO
-   if (esValido) {
-       document.querySelector('.formularioPiola').submit();
-   }
+    // SI TODO ESTÁ CORRECTO, ENVIAR EL FORMULARIO
+    if (esValido) {
+        document.querySelector('.formularioPiola').submit();
+    }
 }
 
 // VALIDAMOS LAS EXTENSIONES DE LOS ARCHIVOS
