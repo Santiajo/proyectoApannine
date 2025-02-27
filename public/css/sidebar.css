@@ -423,8 +423,9 @@ button {
 .boton-cuartiario,
 .boton-quintiario {
     text-decoration: none;
+    height: max-content;
     font-size: (14px, 2vw, 16px);
-    padding: 6px 10px;
+    padding: 8px 10px;
     border-radius: 5px;
     transition: all ease .25s;
     cursor: pointer;
@@ -567,6 +568,7 @@ hr {
 
 .fila2 {
     width: 100%;
+    height: max-content;
     display: flex;
     justify-content: end;
     column-gap: 20px;
@@ -940,6 +942,27 @@ fieldset {
     border-bottom: 1px var(--text-color-secondary) solid;
     border-radius: 0;
     cursor: pointer;
+}
+
+/* FORMULARIO BARRAS DE BUSQUEDA */
+.barraBusqueda {
+    width: min-content;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    row-gap: 3px;
+    flex-wrap: wrap;
+}
+
+.inputBarraBusqueda {
+    width: 100%;
+    height: max-content;
+    display: flex;
+}
+
+#errorBarraBusqueda {
+    width: 100%;
+    height: max-content;
 }
 
 /* modificamos los botones */

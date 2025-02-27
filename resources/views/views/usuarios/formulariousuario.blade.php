@@ -56,15 +56,15 @@
         <!-- Accesos del usuario a la página -->
         <fieldset>
             <legend>Vistas a la página:</legend>
-            <input type="checkbox" id="userVista1" name="userVista1" value="Usuarios">
+            <input type="checkbox" id="userVista1" name="userVista1" value="1">
             <label for="userVista1"> Usuarios</label><br>
-            <input type="checkbox" id="userVista2" name="userVista2" value="Beneficiarios">
+            <input type="checkbox" id="userVista2" name="userVista2" value="1">
             <label for="userVista2"> Beneficiarios</label><br>
-            <input type="checkbox" id="userVista3" name="userVista3" value="Especialistas">
+            <input type="checkbox" id="userVista3" name="userVista3" value="1">
             <label for="userVista3"> Especialistas</label><br>
-            <input type="checkbox" id="userVista4" name="userVista4" value="Especialidades">
+            <input type="checkbox" id="userVista4" name="userVista4" value="1">
             <label for="userVista4"> Especialidades</label><br>
-            <input type="checkbox" id="userVista5" name="userVista5" value="Asistencias">
+            <input type="checkbox" id="userVista5" name="userVista5" value="1">
             <label for="userVista5"> Asistencias</label><br>
         </fieldset>
     </div>

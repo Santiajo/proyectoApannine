@@ -22,6 +22,7 @@
             <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..."
                 value="{{ request('benBuscar') }}">
             <button type="submit"><i class='bx bx-search'></i></button>
+            <div id='errorBarraBusqueda' class='errores'></div>
             @error('benBuscar')
             <div class="alert alert-danger alert2">El valor ingresado no cumple los requisitos</div>
             @enderror

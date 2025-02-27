@@ -117,45 +117,55 @@ document.addEventListener('DOMContentLoaded', function () {
     else if (formBuscarUser) {
         formBuscarUser.addEventListener('submit', function (event) {
             event.preventDefault();
-            validarBarraBusqueda('benBuscar','errorBarraBusqueda');
+            validarBarraBusqueda('benBuscar', 'errorBarraBusqueda');
         })
-    }
-    else if (formBuscarEsp) {
+    } else if (formBuscarEsp) {
         formBuscarEsp.addEventListener('submit', function (event) {
             event.preventDefault();
-            validarBarraBusqueda('benBuscar','errorBarraBusqueda');
+            validarBarraBusqueda('benBuscar', 'errorBarraBusqueda');
         })
-    }
-    else if (formBuscarBen) {
+    } else if (formBuscarBen) {
         formBuscarBen.addEventListener('submit', function (event) {
             event.preventDefault();
-            validarBarraBusqueda('benBuscar','errorBarraBusqueda');
+            validarBarraBusqueda('benBuscar', 'errorBarraBusqueda');
         })
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
 
-    function validarBarraBusqueda(input,divError) {
-        const Buscar = document.getElementById(input);
-        const valorInput = Buscar.value.trim();
-        const errorBarraBusqueda = document.getElementById(divError);
-        if (valorInput.length() > 30) {
-            errorBarraBusqueda.innerHTML = "El campo no puede ser mayor a 30 caracteres";
-            errorBarraBusqueda.style.display = 'block';
-            esValido = false;
-        }
-        else if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]+$/.test(valorInput)) {
-            errorBarraBusqueda.innerHTML = "El campo no puede incluir caracteres especiales";
-            errorBarraBusqueda.style.display = 'block';
-            esValido = false;
-        }
-        if (esValido) {
-            document.querySelector('barraBusqueda').submit();
-        }
+function validarBarraBusqueda(input, divError) {
+    // Obtenemos el input de barra de busqueda
+    const Buscar = document.getElementById(input);
+    // Obtenemos el valor del input recortado
+    const valorInput = Buscar.value.trim();
+    // Obtenemos el div para escribir errores
+    const errorBarraBusqueda = document.getElementById(divError);
+
+    // Validaciones
+    if (valorInput === '') {
+        return;
+    } else if (valorInput.length > 30) {
+        errorBarraBusqueda.innerHTML = "El campo no puede ser mayor a 30 caracteres";
+        errorBarraBusqueda.style.display = 'block';
+        esValido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]+$/.test(valorInput)) {
+        errorBarraBusqueda.innerHTML = "El campo no puede incluir caracteres especiales";
+        errorBarraBusqueda.style.display = 'block';
+        esValido = false;
+    } else {
+        errorBarraBusqueda.classList.remove('errores');
+        errorBarraBusqueda.classList.remove('errores2');
+        errorBarraBusqueda.classList.add('exito');
+        errorBarraBusqueda.innerHTML = 'Campo válido!';
+        errorBarraBusqueda.style.display = 'block';
+        esValido = true;
+        console.log(esValido);
     }
-});
 
+    if (esValido) {
+        document.querySelector('.barraBusqueda').submit();
+    }
+}
 
 // FUNCIÓN PARA VALIDAR LOS RUT
 function validarRut(rut, dv) {
@@ -195,10 +205,6 @@ function validarRut(rut, dv) {
         return false;
     }
 }
-
-
-
-
 
 // FUNCIÓN PARA VALIDAR EL FORMULARIO DE ESPECIALIDADES
 function validarFormEspecialidad() {
@@ -647,32 +653,32 @@ document.addEventListener("DOMContentLoaded", function () {
         let id = input.id;
         let valor = input.value.trim();
         let errorDiv = document.getElementById(`error${id.charAt(0).toUpperCase() + id.slice(1)}`);
-    
+
         if (!errorDiv) {
             errorDiv = document.createElement("div");
             errorDiv.className = "errores";
             errorDiv.id = `error${id.charAt(0).toUpperCase() + id.slice(1)}`;
             input.insertAdjacentElement("afterend", errorDiv);
         }
-    
+
         let parentLayoutTelefono = input.closest("#layoutTelefono");
         let parentLayoutNombre = input.closest("#layoutNombre");
-    
+
         if (parentLayoutTelefono || parentLayoutNombre) {
             errorDiv.classList.add("errores2");
         } else {
             errorDiv.classList.remove("errores2");
         }
-    
+
         let valido = true;
         let mensajeError = "";
-    
+
         // Evitar validación de mensaje en radio y select
         if (input.type === "radio" || input.tagName === "SELECT") {
             errorDiv.style.display = "none";
             return;
         }
-    
+
         if (id.includes("famRut") && (isNaN(valor) || valor.length < 7 || valor.length > 9)) {
             mensajeError = "El RUT debe tener entre 7 y 9 dígitos.";
             valido = false;
@@ -691,7 +697,7 @@ document.addEventListener("DOMContentLoaded", function () {
             mensajeError = "Ingrese un correo electrónico válido.";
             valido = false;
         }
-    
+
         if (!valido) {
             errorDiv.textContent = mensajeError;
             errorDiv.classList.add("errores");
@@ -699,23 +705,23 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             mensajeError = "Campo válido!";
             errorDiv.textContent = mensajeError;
-    
+
             errorDiv.classList.remove("errores");
             errorDiv.classList.remove("errores2");
             errorDiv.classList.add("exito");
-    
+
             if (parentLayoutTelefono || parentLayoutNombre) {
                 errorDiv.classList.add("exito2");
             } else {
                 errorDiv.classList.remove("exito2");
             }
-    
+
             errorDiv.style.display = "block";
         }
-    
+
         return valido;
     }
-    
+
 
     function validarFormulario(event) {
         let camposValidos = [];
