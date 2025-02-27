@@ -33,26 +33,26 @@ use App\Exports\BeneficiariosExport;
 class beneficiarioController extends Controller
 {
     // MÉTODO PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
-    public function listarBeneficiarios(Request $request)
-{
-    $search = $request->input('benBuscar'); // Captura el texto de búsqueda
-    $request->validate([
-        'benBuscar' => 'nullable|string|max:30|regex:/^[^<>]*$/',
-    ]);
-    // Captura la cantidad de elementos por página seleccionados por el usuario (default 10)
-    $itemsPerPage = $request->input('items_per_page', 10);
+    public function listarBeneficiarios(Request $request) {
+        $search = $request->input('benBuscar');
+        $request->validate([
+            'benBuscar' => 'nullable|string|max:30|regex:/^[^<>]*$/',
+        ]);
 
-    $beneficiarios = Beneficiario::query()
-        ->when($search, function ($query) use ($search) {
-            $query->where('beneficiarioPNombre', 'LIKE', "%{$search}%")
-                  ->orWhere('beneficiarioApPaterno', 'LIKE', "%{$search}%")
-                  ->orWhere('beneficiarioRut', 'LIKE', "%{$search}%");
-        })
-        ->paginate($itemsPerPage)
-        ->withQueryString();
+        $itemsPerPage = $request->input('items_per_page', 10);
 
-    return view('views.beneficiario.listarBeneficiarios', compact('beneficiarios', 'search', 'itemsPerPage'));
-}
+        $beneficiarios = Beneficiario::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('beneficiarioPNombre', 'LIKE', "%{$search}%")
+                    ->orWhere('beneficiarioApPaterno', 'LIKE', "%{$search}%")
+                    ->orWhere('beneficiarioRut', 'LIKE', "%{$search}%");
+            })
+            ->with('familiarCuidador')
+            ->paginate($itemsPerPage)
+            ->withQueryString();
+
+        return view('views.beneficiario.listarBeneficiarios', compact('beneficiarios', 'search', 'itemsPerPage'));
+    }
 
     // MÉTODO PARA MOSTRAR EL FORMULARIO DEL CRUD
     public function formularioBeneficiario()

@@ -65,8 +65,24 @@
           <td data-label="Fecha ingreso">{{ $beneficiario->created_at }}</td>
           <td data-label="Rut">{{ $beneficiario->beneficiarioRut }} - {{ $beneficiario->beneficiarioDv }}</td>
           <td data-label="Nombre">{{ $beneficiario->beneficiarioPNombre }} {{ $beneficiario->beneficiarioApPaterno }}</td>
-          <td data-label="Nombre cuidador">Juan Manzo</td>
-          <td data-label="Teléfono">981267512</td>
+          <td data-label="Nombre cuidador">
+            @if ($beneficiario->familiarCuidador->isNotEmpty())
+                @foreach ($beneficiario->familiarCuidador as $cuidador)
+                    {{ $cuidador->familiarPNombre }} {{ $cuidador->familiarApPaterno }} ({{ $cuidador->familiarParentesco }})
+                @endforeach
+            @else
+              No tiene cuidador
+            @endif
+          </td>
+          <td data-label="Telefono cuidador">
+            @if ($beneficiario->familiarCuidador->isNotEmpty())
+                @foreach ($beneficiario->familiarCuidador as $cuidador)
+                    {{ $cuidador->familiarTelefono }}
+                @endforeach
+            @else
+              No tiene cuidador
+            @endif
+          </td>
           <td data-label="Acciones"><a class="detalles" href="{{ route('beneficiarios.fichaBeneficiario', $beneficiario->id) }}"><i class='bx bxs-file-doc'></i></a></td>
           <td data-label="Actividad"><a class="detalles" href="actividadBeneficiario"><i class='bx bx-line-chart'></i></a></td>
           <td data-label="Historial médico"><a class="detalles" href="{{ route('beneficiarios.antMedBeneficiario', $beneficiario->id) }}"><i class='bx bxs-capsule'></i></a>

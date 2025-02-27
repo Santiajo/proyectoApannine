@@ -97,4 +97,12 @@ class Beneficiario extends Model
         return $this->belongsToMany(Familiar::class, 'familiar_beneficiario', 'beneficiario_id', 'familiar_id')
             ->withTimestamps();
     }
+
+    // FILTRAMOS FAMILIAR CUIDADOR
+    public function familiarCuidador() 
+    {
+        return $this->belongsToMany(Familiar::class, 'familiar_beneficiario', 'beneficiario_id', 'familiar_id')
+            ->where('familiarCuidador', 1)
+            ->withTimestamps();
+    }
 }
