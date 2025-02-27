@@ -18,10 +18,13 @@
             <p><i class='bx bx-plus-medical'></i> Agregar especialidad</p>
         </a>
         <!-- Para buscar productos por texto -->
-        <form method="GET" action="{{ route('especialistas.listarEspecialistas') }}">
+        <form id='formBuscarEsp' class='barraBusqueda' method="GET" action="{{ route('especialistas.listarEspecialistas') }}">
             <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..."
                 value="{{ request('benBuscar') }}">
             <button type="submit"><i class='bx bx-search'></i></button>
+            @error('benBuscar')
+            <div class="alert alert-danger alert2">El valor ingresado no cumple los requisitos</div>
+            @enderror
         </form>
     </div>
     <div class="fila4" id="fila1Perso">

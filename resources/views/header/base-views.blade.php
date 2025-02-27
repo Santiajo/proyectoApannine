@@ -41,42 +41,49 @@
                             <input type="text" placeholder="Buscar...">
                         </li>
                         <ul class="menu-links">
-
+                        @if(Auth::check())
+                        @php $user = Auth::user(); @endphp
+                            @if($user->Usuarios)
                             <li class="nav-link">
                                 <a href="{{ route('usuarios.lista') }}">
                                     <i class='bx bx-user icon'></i>
                                     <span class="text nav-text">Usuarios</span>
                                 </a>
                             </li>
-
+                            @endif
+                            @if($user->Usuarios)
                             <li class="nav-link">
                                 <a href="{{ route('beneficiarios.listarBeneficiarios') }}">
                                     <i class='bx bx-notepad icon'></i>
                                     <span class="text nav-text">Beneficiarios</span>
                                 </a>
                             </li>
-
+                            @endif
+                            @if($user->Especialistas)
                             <li class="nav-link">
                                 <a href="{{ route('especialistas.listarEspecialistas') }}">
                                     <i class='bx bx-band-aid icon'></i>
                                     <span class="text nav-text">Especialistas</span>
                                 </a>
                             </li>
-
+                            @endif
+                            @if($user->Talleres)
                             <li class="nav-link">
                                 <a href="{{ route('asistencia') }}">
                                     <i class='bx bxs-school icon'></i>
                                     <span class="text nav-text">Talleres</span>
                                 </a>
                             </li>
-
+                            @endif
+                            @if($user->Asistencias)
                             <li class="nav-link">
                                 <a href="{{ route('asistenciasEspecialistas') }}">
                                     <i class='bx bx-calendar-check icon'></i>
                                     <span class="text nav-text">Asistencias</span>
                                 </a>
                             </li>
-
+                            @endif
+                        @endif
                         </ul>
                     </div>
                     <div class="bottom-content">

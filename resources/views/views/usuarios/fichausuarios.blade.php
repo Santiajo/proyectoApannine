@@ -17,9 +17,13 @@
         <a class="boton-secundario" id="benExportar" href="{{ route('exportarUsuarios') }}"><i class='bx bx-export'></i>
             Exportar</a>
         <!-- Para buscar productos por texto -->
-        <form method="GET" action="{{ route('usuarios.listar') }}">
+        <form id='formBuscarUser' class='barraBusqueda' method="GET" action="{{ route('usuarios.listar') }}">
             <input type="text" name="benBuscar" id="benBuscar" placeholder="Buscar..." value="{{ request('benBuscar') }}">
             <button type="submit"><i class='bx bx-search'></i></button>
+            <div id='errorBarraBusqueda' class='errores'></div>
+            @error('benBuscar')
+            <div class="alert alert-danger alert2">El valor ingresado no cumple los requisitos</div>
+            @enderror
         </form>
     </div>
     @if(isset($usuarios) && count($usuarios) > 0)

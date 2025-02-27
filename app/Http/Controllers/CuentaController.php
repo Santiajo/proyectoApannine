@@ -124,8 +124,11 @@ class CuentaController extends Controller
     {
         
         $search = $request->input('benBuscar'); // Captura el texto de búsqueda
+        $request->validate([
+            'benBuscar' => 'nullable|string|max:30|regex:/^[^<>]*$/',
+        ]);
         $itemsPerPage = $request->input('items_per_page', 10); // Cantidad de elementos por página
-    
+        
         $usuarios = User::query()
             ->when($search, function ($query) use ($search) {
                 $query->where('primer_nombre', 'LIKE', "%{$search}%")
