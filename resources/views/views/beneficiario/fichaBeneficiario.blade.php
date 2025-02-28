@@ -37,7 +37,7 @@
       <h3>{{ $beneficiario->beneficiarioPNombre }} {{ $beneficiario->beneficiarioSNombre }}
         {{ $beneficiario->beneficiarioApPaterno }} {{ $beneficiario->beneficiarioApMaterno }}
       </h3>
-      <p><span class="letraNegrita">Estado: </span> {{ $beneficiario->beneficiarioEstado }}</p>
+      <p><span class="letraNegrita">Estado: </span> {{ $beneficiario->beneficiarioEstado == 1 ? 'Activo' : 'Inactivo' }}</p>
       <p><span class="letraNegrita">Rut: </span> {{ $beneficiario->beneficiarioRut }} -
         {{ $beneficiario->beneficiarioDv }}
       </p>
