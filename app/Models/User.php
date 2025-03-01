@@ -20,11 +20,12 @@ class User extends Authenticatable
         'apellido_paterno', 
         'apellido_materno', 
         'telefono', 
-        'email', 
-        'password', 
-        'vistas',
+        'usuarios',
+        'beneficiarios',
+        'especialistas',
+        'talleres',
+        'asistencias',
     ];
-
     protected $hidden = [
         'password',
         'remember_token',
@@ -32,6 +33,11 @@ class User extends Authenticatable
 
     protected $casts = [
         'vistas' => 'array',
+        'usuarios' => 'boolean',
+        'beneficiarios' => 'boolean',
+        'especialistas' => 'boolean',
+        'talleres' => 'boolean',
+        'asistencias' => 'boolean',
     ];
 
     protected function casts(): array

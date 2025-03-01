@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('Usuarios')->default(false)->nullable();
-            $table->boolean('Beneficiarios')->default(false)->nullable();
-            $table->boolean('Especialistas')->default(false)->nullable();
-            $table->boolean('Talleres')->default(false)->nullable();
-            $table->boolean('Asistencia')->default(false)->nullable();
+            $table->boolean('usuarios')->default(false)->nullable();
+            $table->boolean('beneficiarios')->default(false)->nullable();
+            $table->boolean('especialistas')->default(false)->nullable();
+            $table->boolean('talleres')->default(false)->nullable();
+            $table->boolean('asistencias')->default(false)->nullable();
         });
     }
 
@@ -26,11 +26,22 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('Usuarios');
-            $table->dropColumn('Beneficiarios');
-            $table->dropColumn('Especialistas');
-            $table->dropColumn('Talleres');
-            $table->dropColumn('Asistencia');
+            if (Schema::hasColumn('users', 'Usuarios')) {
+                $table->dropColumn('Usuarios');
+            }
+            if (Schema::hasColumn('users', 'Beneficiarios')) {
+                $table->dropColumn('Beneficiarios');
+            }
+            if (Schema::hasColumn('users', 'Especialistas')) {
+                $table->dropColumn('Especialistas');
+            }
+            if (Schema::hasColumn('users', 'Talleres')) {
+                $table->dropColumn('Talleres');
+            }
+            if (Schema::hasColumn('users', 'Asistencia')) {
+                $table->dropColumn('Asistencia');
+            }
         });
     }
 };
+

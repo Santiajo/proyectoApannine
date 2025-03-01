@@ -8,18 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckVista
 {
-    // public function handle(Request $request, Closure $next, $vista)
-    // {
-    //     $user = Auth::user(); // Obtener al usuario autenticado
+    public function handle(Request $request, Closure $next, string $vista)
+    {
+        $user = Auth::user();
 
-    //     // Verificar si el usuario tiene la vista correspondiente en su listado de permisos
-    //     if (!$user || !in_array($vista, $user->vistas ?? [])) {
-    //         // Si no tiene acceso, retornar error 403
-    //         abort(403, 'No tienes permiso para acceder a esta sección.');
-    //     }
+        // Verifica si el usuario está autenticado y tiene el permiso correspondiente
+        if (!$user || !$user->$vista) {
+            abort(403, 'No tienes permiso para acceder a esta sección.');
+        }
 
-    //     return $next($request); // Continuar con la solicitud
-    // }
+        return $next($request);
+    }
 }
+
 
 

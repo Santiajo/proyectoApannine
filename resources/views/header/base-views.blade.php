@@ -43,15 +43,15 @@
                         <ul class="menu-links">
                         @if(Auth::check())
                         @php $user = Auth::user(); @endphp
-                            @if($user->Usuarios)
+                            @if($user->usuarios)
                             <li class="nav-link">
-                                <a href="{{ route('usuarios.lista') }}">
+                                <a href="{{ route('usuarios.listar') }}">
                                     <i class='bx bx-user icon'></i>
                                     <span class="text nav-text">Usuarios</span>
                                 </a>
                             </li>
                             @endif
-                            @if($user->Usuarios)
+                            @if($user->beneficiarios)
                             <li class="nav-link">
                                 <a href="{{ route('beneficiarios.listarBeneficiarios') }}">
                                     <i class='bx bx-notepad icon'></i>
@@ -59,7 +59,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if($user->Especialistas)
+                            @if($user->especialistas)
                             <li class="nav-link">
                                 <a href="{{ route('especialistas.listarEspecialistas') }}">
                                     <i class='bx bx-band-aid icon'></i>
@@ -67,7 +67,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if($user->Talleres)
+                            @if($user->talleres)
                             <li class="nav-link">
                                 <a href="{{ route('asistencia') }}">
                                     <i class='bx bxs-school icon'></i>
@@ -75,7 +75,7 @@
                                 </a>
                             </li>
                             @endif
-                            @if($user->Asistencias)
+                            @if($user->asistencias)
                             <li class="nav-link">
                                 <a href="{{ route('asistenciasEspecialistas') }}">
                                     <i class='bx bx-calendar-check icon'></i>

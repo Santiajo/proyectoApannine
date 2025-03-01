@@ -32,7 +32,9 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 
 // RUTAS PROTEGIDAS POR AUTENTICACIÓN
 Route::middleware(['auth'])->group(function () {
-    // NACIONALIDADES DE LOS BENEFICIARIOS
+    
+    // Route::middleware(['checkVista:beneficiarios'])->group(function () {
+        // NACIONALIDADES DE LOS BENEFICIARIOS
         //  PARA MOSTRAR EL CRUD NACIONALIDADES
         Route::get('/views/crudNacionalidad', [nacionalidadController::class, 'crudNacionalidad'])->name('beneficiarios.crudNacionalidad');
         // PARA CREAR O ACTUALIZAR COBERTURAS
@@ -57,8 +59,6 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/views/eliminarCobMedica/{id}', [cobMedController::class, 'eliminarCobMedica'])->name('beneficiarios.eliminarCobMedica');
 
       
-
-            
     // RUTAS DE BENEFICIARIO
         // PAGINA PRINCIPAL DE LOS CRUD BENEFICIARIOS
         Route::get('/views/listarBeneficiarios', [beneficiarioController::class, 'listarBeneficiarios'])->name('beneficiarios.listarBeneficiarios');
@@ -95,9 +95,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/views/detallesAsistencia', [PostController::class, 'detallesAsistencia'])->name('detallesAsistencia');
         Route::get('/views/detallesAusencia', [PostController::class, 'detallesAusencia'])->name('detallesAusencia');
         Route::get('/views/exportarAsistenciaBen', [PostController::class, 'exportarAsistenciaBen'])->name('exportarAsistenciaBen');
+    // });
 
-
-    // RUTAS DE ASISTENCIA
+    // Route::middleware(['checkVista:asistencias'])->group(function () {
+        // RUTAS DE ASISTENCIA
         Route::get('/views/asistencia', [PostController::class, 'asistencia'])->name('asistencia');
         Route::get('/views/registroactividad', [PostController::class, 'registroactividad'])->name('registroactividad');
         Route::get('/views/asistenciaTallerYoga', [PostController::class, 'asistenciaTallerYoga'])->name('asistenciaTallerYoga');
@@ -110,7 +111,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/views/yogaTodos', [PostController::class, 'yogaTodos'])->name('yogaTodos');
         Route::get('/views/exportarAsistencia', [PostController::class, 'exportarAsistencia'])->name('exportarAsistencia');
 
-    // RUTAS DEL CRUD DE ESPECIALIDADES
+        // RUTAS PARA ASISTENCIAS DESDE POV DEL MEDICO
+        Route::get('/views/asistenciasEspecialistas', [PostController::class, 'asistenciasEspecialistas'])->name('asistenciasEspecialistas');
+        Route::get('/views/formAsistenciaMedico', [PostController::class, 'formAsistenciaMedico'])->name('formAsistenciaMedico');
+    // });
+
+    // Route::middleware(['checkVista:especialistas'])->group(function () {
+        // RUTAS DEL CRUD DE ESPECIALIDADES
         // PARA MOSTRAR LA PÁGINA DEL CRUD DE ESPECIALIDADES
         Route::get('/views/crudEspecialidad', [especialidadController::class, 'crudEspecialidad'])->name('especialistas.crudEspecialidad');
         // PARA GUARDAR O ACTUALIZAR UNA ESPECIALIDAD
@@ -118,7 +125,7 @@ Route::middleware(['auth'])->group(function () {
         // PARA ELIMINAR UNA ESPECIALIDAD
         Route::delete('/views/eliminarEspecialidad/{id}', [especialidadController::class, 'eliminarEspecialidad'])->name('especialistas.eliminarEspecialidad');
 
-    // RUTAS DEL CRUD DE ESPECIALISTAS
+        // RUTAS DEL CRUD DE ESPECIALISTAS
         // PARA MOSTRAR LA PÁGINA PRINCIPAL DEL CRUD
         Route::get('/views/listarEspecialistas', [especialistaController::class, 'listarEspecialistas'])->name('especialistas.listarEspecialistas');
         // PARA MOSTRAR EL FORMULARIO DE CREACIÓN DE ESPECIALISTA
@@ -131,33 +138,26 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/views/guardarEspecialista', [especialistaController::class, 'guardarEspecialista'])->name('especialistas.guardarEspecialista');
         // PARA ELIMINAR UN ESPECIALISTA
         Route::delete('/views/eliminarEspecialista/{id}', [especialistaController::class, 'eliminarEspecialista'])->name('especialistas.eliminarEspecialista');
+    // });
 
-    // RUTAS DEL CRUD PARA EL LOGIN
+    // Route::middleware(['checkVista:usuarios'])->group(function () {
+        // RUTAS DEL CRUD PARA EL LOGIN
         Route::get('/views/fichausuarios', [PostController::class, 'fichausuarios'])->name('fichausuarios');
         Route::get('/views/formulariousuario', [PostController::class, 'formulariousuario'])->name('formulariousuario');
         Route::get('/views/vistaUsuario', [PostController::class, 'vistaUsuario'])->name('vistaUsuario');
         Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
         Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
 
-    // RUTAS PARA ASISTENCIAS DESDE POV DEL MEDICO
-        Route::get('/views/asistenciasEspecialistas', [PostController::class, 'asistenciasEspecialistas'])->name('asistenciasEspecialistas');
-        Route::get('/views/formAsistenciaMedico', [PostController::class, 'formAsistenciaMedico'])->name('formAsistenciaMedico');
 
-        // Ruta para mostrar el formulario de registro
+        // RUTAS PARA USUARIOS
         Route::resource('usuarios', CuentaController::class)->except(['show']);
-        // Route::get('/usuarios/{id}/edit', [CuentaController::class, 'edit'])->name('usuarios.edit');
+        Route::get('/usuarios/{id}/edit', [CuentaController::class, 'edit'])->name('usuarios.edit');
         Route::put('/usuarios/{id}', [CuentaController::class, 'update'])->name('usuarios.update');
         Route::delete('/usuarios/{id}', [CuentaController::class, 'destroy'])->name('usuarios.destroy');
         Route::post('/usuarios/store', [CuentaController::class, 'store'])->name('usuarios.store');
-        Route::get('/usuarios', [CuentaController::class, 'index'])->name('usuarios.lista');
-        Route::get('/usuarios', [CuentaController::class, 'listarUsuarios'])->name('usuarios.listar');
-        Route::get('/usuarios/lista', [CuentaController::class, 'listarUsuarios'])->name('usuarios.lista');
-
-        // Route::get('/usuarios', [CuentaController::class, 'index'])->name('usuarios.lista')->middleware('checkVista:Usuarios');
-        // Route::get('/beneficiarios', [beneficiarioController::class, 'listarBeneficiarios'])->name('beneficiarios.listarBeneficiarios')->middleware('checkVista:Beneficiarios');
-        // Route::get('/especialistas', [especialistaController::class, 'listarEspecialistas'])->name('especialistas.listarEspecialistas')->middleware('checkVista:Especialistas');
-        // // Route::get('/asistencia', [AsistenciaController::class, 'index'])->name('asistencia')->middleware('checkVista:Especialidades');
-        // Route::get('/especialidades', [especialistadController::class, 'index'])->name('asistenciasEspecialistas')->middleware('checkVista:Asistencias');
+        Route::get('/usuarios', [CuentaController::class, 'index'])->name('usuarios.listar');
+        Route::get('/fichausuarios', [CuentaController::class, 'index'])->name('fichausuarios');
+    // });
 });
 
 

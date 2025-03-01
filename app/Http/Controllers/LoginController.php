@@ -50,25 +50,24 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
-
-    // protected function redirectTo()
-    // {
-    //     $user = auth()->user();
-        
-    //     // Obtener las vistas permitidas del usuario
-    //     $vistasPermitidas = json_decode($user->vistas, true) ?? [];
+    protected function redirectTo()
+    {
+        $user = auth()->user();
     
-    //     // Redirigir según las vistas permitidas
-    //     if (in_array('Beneficiarios', $vistasPermitidas)) {
-    //         return '/beneficiarios';
-    //     } elseif (in_array('Usuarios', $vistasPermitidas)) {
-    //         return '/usuarios';
-    //     } elseif (in_array('Especialistas', $vistasPermitidas)) {
-    //         return '/especialistas';
-    //     } else {
-    //         return '/403'; // Redirigir a una página de acceso denegado si no tiene vistas permitidas
-    //     }
-    // }
+        if ($user->Beneficiarios) {
+            return '/beneficiarios';
+        } elseif ($user->Usuarios) {
+            return '/usuarios';
+        } elseif ($user->Especialistas) {
+            return '/especialistas';
+        } elseif ($user->Talleres) {
+            return '/talleres';
+        } elseif ($user->Asistencia) {
+            return '/asistencia';
+        } else {
+            return '/403'; // Página de acceso denegado si no tiene permisos
+        }
+    }
     
 
 

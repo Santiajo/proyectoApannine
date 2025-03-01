@@ -3,7 +3,7 @@
 @section('title', 'Ficha Beneficiario')
 
 @section('content')
-
+    
     <!-- Div para que el sidebar no moleste -->
     <div class="content">
         <div class="fila1">
@@ -29,11 +29,11 @@
                 @enderror
             </form>
         </div>
-        @if(isset($usuarios) && count($usuarios) > 0)
+        <!-- @if(isset($usuarios) && count($usuarios) > 0)
             <p>Usuarios cargados correctamente.</p>
         @else
             <p>No hay usuarios registrados.</p>
-        @endif
+        @endif -->
         <table>
             <thead>
                 <tr>
@@ -89,21 +89,26 @@
             </tbody>
         </table>
         <br>
+        @php
+         $itemsPerPage = request('items_per_page', 10);
+        @endphp
         <!-- Selector para cantidad de elementos por página -->
         <form method="GET" action="{{ route('usuarios.listar') }}">
             <label for="items_per_page">Resultados por página:</label>
             <select name="items_per_page" id="items_per_page" onchange="this.form.submit()">
-                <option value="10" {{ request('items_per_page') == 10 ? 'selected' : '' }}>10</option>
-                <option value="15" {{ request('items_per_page') == 15 ? 'selected' : '' }}>15</option>
-                <option value="20" {{ request('items_per_page') == 20 ? 'selected' : '' }}>20</option>
+                <option value="10" {{ $itemsPerPage == 10 ? 'selected' : '' }}>10</option>
+                <option value="15" {{ $itemsPerPage == 15 ? 'selected' : '' }}>15</option>
+                <option value="20" {{ $itemsPerPage == 20 ? 'selected' : '' }}>20</option>
             </select>
-            <input type="hidden" name="benBuscar" value="{{ request('benBuscar') }}">
+            <!-- <input type="hidden" name="benBuscar" value="{{ request('benBuscar') }}"> -->
         </form>
 
         <br>
         <!-- Paginación -->
-        <div class="pagination">
-            {{ $usuarios->links() }}
-        </div>
+        @if (isset($usuarios) && $usuarios->hasPages())
+            <div class="pagination">
+                {{ $usuarios->links() }}
+            </div>
+        @endif
     </div>
 @endsection
