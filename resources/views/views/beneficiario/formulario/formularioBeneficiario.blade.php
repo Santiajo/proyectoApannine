@@ -271,82 +271,167 @@
 
         <!-- form Familia -->
         <div id="contenedorFamiliares">
-            <div class="separacionFormulario seccion-familiares" id="apartadoFamilia">
-                <!-- Subtítulo -->
-                <h3 class="titulo-familiar">Datos Familiar</h3>
+            @if (isset($familiares))
+                @foreach ($familiares as $index => $familiar)
+                    <div class="separacionFormulario seccion-familiares" id="apartadoFamilia">
+                        <!-- Subtítulo -->
+                        <h3 class="titulo-familiar">Datos Familiar</h3>
 
-                <!-- Tipo Familiar -->
-                <label for="famTipo_0">Familiaridad:</label>
-                <select name="familiares[0][famTipo]" id="famTipo_0">
-                    <option value="Padre">Padre</option>
-                    <option value="Madre">Madre</option>
-                    <option value="Hermano(a)">Hermano(a)</option>
-                </select>
+                        <!-- Input del id del familiar -->
+                         <input type="hidden" name="familiares[{{ $index }}][famId]" id="famId_{{ $index }}" value="{{ $familiar->id }}">
 
-                <!-- Rut familiar -->
-                <section class="layoutTelefono" id="layoutTelefono">
-                    <div>
-                        <label for="famRut_0">Rut:</label>
-                        <input type="number" name="familiares[0][famRut]" id="famRut_0">
-                    </div>
-                    <div>
-                        <label for="famDv_0">Dv:</label>
-                        <input type="text" name="familiares[0][famDv]" id="famDv_0">
-                    </div>
-                </section>
+                        <!-- Tipo Familiar -->
+                        <label for="famTipo_{{ $index }}">Familiaridad:</label>
+                        <select name="familiares[{{ $index }}][famTipo]" id="famTipo_{{ $index }}">
+                            <option value="Padre" {{ $familiar->familiarParentesco == 'Padre' ? 'selected' : '' }}>Padre</option>
+                            <option value="Madre" {{ $familiar->familiarParentesco == 'Madre' ? 'selected' : '' }}>Madre</option>
+                            <option value="Hermano(a)" {{ $familiar->familiarParentesco == 'Hermano(a)' ? 'selected' : '' }}>Hermano(a)</option>
+                        </select>
 
-                <!-- Nombre familiar -->
-                <div class="layoutNombre" id="layoutNombre">
-                    <div>
-                        <label for="famPNombre_0">Primer Nombre:</label>
-                        <input type="text" name="familiares[0][famPNombre]" id="famPNombre_0">
+                        <!-- Rut familiar -->
+                        <section class="layoutTelefono">
+                            <div>
+                                <label for="famRut_{{ $index }}">Rut:</label>
+                                <input type="number" name="familiares[{{ $index }}][famRut]" id="famRut_{{ $index }}" value="{{ $familiar->familiarRut }}">
+                            </div>
+                            <div>
+                                <label for="famDv_{{ $index }}">Dv:</label>
+                                <input type="text" name="familiares[{{ $index }}][famDv]" id="famDv_{{ $index }}" value="{{ $familiar->familiarDv }}">
+                            </div>
+                        </section>
+
+                        <!-- Nombre familiar -->
+                        <div class="layoutNombre">
+                            <div>
+                                <label for="famPNombre_{{ $index }}">Primer Nombre:</label>
+                                <input type="text" name="familiares[{{ $index }}][famPNombre]" id="famPNombre_{{ $index }}" value="{{ $familiar->familiarPNombre }}">
+                            </div>
+                            <div>
+                                <label for="famSNombre_{{ $index }}">Segundo Nombre:</label>
+                                <input type="text" name="familiares[{{ $index }}][famSNombre]" id="famSNombre_{{ $index }}" value="{{ $familiar->familiarSNombre }}">
+                            </div>
+                            <div>
+                                <label for="famApPaterno_{{ $index }}">Apellido Paterno:</label>
+                                <input type="text" name="familiares[{{ $index }}][famApPaterno]" id="famApPaterno_{{ $index }}" value="{{ $familiar->familiarApPaterno }}">
+                            </div>
+                            <div>
+                                <label for="famApMaterno_{{ $index }}">Apellido Materno:</label>
+                                <input type="text" name="familiares[{{ $index }}][famApMaterno]" id="famApMaterno_{{ $index }}" value="{{ $familiar->familiarApMaterno }}">
+                            </div>
+                        </div>
+
+                        <label for="famTel_{{ $index }}">Teléfono:</label>
+                        <input type="number" name="familiares[{{ $index }}][famTel]" id="famTel_{{ $index }}" value="{{ $familiar->familiarTelefono }}">
+
+                        <label for="famEmail_{{ $index }}">Correo electrónico:</label>
+                        <input type="email" name="familiares[{{ $index }}][famEmail]" id="famEmail_{{ $index }}" value="{{ $familiar->familiarCorreo }}">
+
+                        <!-- Cuidador o no -->
+                        <fieldset>
+                            <legend>¿Es cuidador(a)?</legend>
+                            <input type="radio" id="famCuidadorSi_{{ $index }}" name="familiares[{{ $index }}][famCuidador]" value="1" {{ $familiar->familiarCuidador ? 'checked' : '' }}>
+                            <label for="famCuidadorSi_{{ $index }}">Sí</label>
+
+                            <input type="radio" id="famCuidadorNo_{{ $index }}" name="familiares[{{ $index }}][famCuidador]" value="0" {{ !$familiar->familiarCuidador ? 'checked' : '' }}>
+                            <label for="famCuidadorNo_{{ $index }}">No</label>
+                        </fieldset>
+                        <div class="errores" id="errorEsCuidador"></div>
+
+                        <!-- Situación Laboral -->
+                        <label for="famSitLab_{{ $index }}">Situación laboral:</label>
+                        <select name="familiares[{{ $index }}][famSitLab]" id="famSitLab_{{ $index }}">
+                            <option value="Trabajo Estable" {{ $familiar->famSitLab == 'Trabajo Estable' ? 'selected' : '' }}>Trabajo Estable</option>
+                            <option value="Trabajo Ocasional" {{ $familiar->famSitLab == 'Trabajo Ocasional' ? 'selected' : '' }}>Trabajo Ocasional</option>
+                            <option value="Sin trabajo" {{ $familiar->famSitLab == 'Sin trabajo' ? 'selected' : '' }}>Sin trabajo</option>
+                            <option value="Pensionado" {{ $familiar->famSitLab == 'Pensionado' ? 'selected' : '' }}>Pensionado</option>
+                        </select>
+                        <!-- Botón para añadir familiar -->
+                        <div class="fila4">
+                            <button class="boton-primario agregarFamiliar" type="button"><i class='bx bx-user-plus'></i> Añadir Familiar</button>
+                            <button class="boton-secundario eliminarFamiliar" type="button"><i class='bx bx-user-minus' ></i> Eliminar Familiar</button>
+                        </div>
                     </div>
-                    <div>
-                        <label for="famSNombre_0">Segundo Nombre:</label>
-                        <input type="text" name="familiares[0][famSNombre]" id="famSNombre_0">
-                    </div>
-                    <div>
-                        <label for="famApPaterno_0">Apellido Paterno:</label>
-                        <input type="text" name="familiares[0][famApPaterno]" id="famApPaterno_0">
-                    </div>
-                    <div>
-                        <label for="famApMaterno_0">Apellido Materno:</label>
-                        <input type="text" name="familiares[0][famApMaterno]" id="famApMaterno_0">
+                @endforeach
+            @else
+                <div id="contenedorFamiliares">
+                    <div class="separacionFormulario seccion-familiares" id="apartadoFamilia">
+                        <!-- Subtítulo -->
+                        <h3 class="titulo-familiar">Datos Familiar</h3>
+
+                        <!-- Tipo Familiar -->
+                        <label for="famTipo_0">Familiaridad:</label>
+                        <select name="familiares[0][famTipo]" id="famTipo_0">
+                            <option value="Padre">Padre</option>
+                            <option value="Madre">Madre</option>
+                            <option value="Hermano(a)">Hermano(a)</option>
+                        </select>
+
+                        <!-- Rut familiar -->
+                        <section class="layoutTelefono" id="layoutTelefono">
+                            <div>
+                                <label for="famRut_0">Rut:</label>
+                                <input type="number" name="familiares[0][famRut]" id="famRut_0">
+                            </div>
+                            <div>
+                                <label for="famDv_0">Dv:</label>
+                                <input type="text" name="familiares[0][famDv]" id="famDv_0">
+                            </div>
+                        </section>
+
+                        <!-- Nombre familiar -->
+                        <div class="layoutNombre" id="layoutNombre">
+                            <div>
+                                <label for="famPNombre_0">Primer Nombre:</label>
+                                <input type="text" name="familiares[0][famPNombre]" id="famPNombre_0">
+                            </div>
+                            <div>
+                                <label for="famSNombre_0">Segundo Nombre:</label>
+                                <input type="text" name="familiares[0][famSNombre]" id="famSNombre_0">
+                            </div>
+                            <div>
+                                <label for="famApPaterno_0">Apellido Paterno:</label>
+                                <input type="text" name="familiares[0][famApPaterno]" id="famApPaterno_0">
+                            </div>
+                            <div>
+                                <label for="famApMaterno_0">Apellido Materno:</label>
+                                <input type="text" name="familiares[0][famApMaterno]" id="famApMaterno_0">
+                            </div>
+                        </div>
+
+                        <label for="famTel_0">Teléfono:</label>
+                        <input type="number" name="familiares[0][famTel]" id="famTel_0">
+
+                        <label for="famEmail_0">Correo electrónico:</label>
+                        <input type="email" name="familiares[0][famEmail]" id="famEmail_0">
+
+                        <!-- Cuidador o no -->
+                        <fieldset>
+                            <legend>¿Es cuidador(a)?</legend>
+
+                            <input type="radio" id="famCuidadorSi_0" name="familiares[0][famCuidador]" value="1">
+                            <label for="famCuidadorSi_0">Sí</label>
+
+                            <input type="radio" id="famCuidadorNo_0" name="familiares[0][famCuidador]" value="0">
+                            <label for="famCuidadorNo_0">No</label>
+                        </fieldset>
+                        <div class="errores" id="errorEsCuidador"></div>
+
+                        <!-- Situación Laboral -->
+                        <label for="famSitLab_0">Situación laboral:</label>
+                        <select name="familiares[0][famSitLab]" id="famSitLab_0">
+                            <option value="Trabajo Estable">Trabajo Estable</option>
+                            <option value="Trabajo Ocasional">Trabajo Ocasional</option>
+                            <option value="Sin trabajo">Sin trabajo</option>
+                            <option value="Pensionado">Pensionado</option>
+                        </select>
+                        <!-- Botón para añadir familiar -->
+                        <div class="fila4">
+                            <button class="boton-primario agregarFamiliar" type="button"><i class='bx bx-user-plus'></i> Añadir Familiar</button>
+                            <button class="boton-secundario eliminarFamiliar" type="button"><i class='bx bx-user-minus' ></i> Eliminar Familiar</button>
+                        </div>
                     </div>
                 </div>
-
-                <label for="famTel_0">Teléfono:</label>
-                <input type="number" name="familiares[0][famTel]" id="famTel_0">
-
-                <label for="famEmail_0">Correo electrónico:</label>
-                <input type="email" name="familiares[0][famEmail]" id="famEmail_0">
-
-                <!-- Cuidador o no -->
-                <fieldset>
-                    <legend>¿Es cuidador(a)?</legend>
-
-                    <input type="radio" id="famCuidadorSi_0" name="familiares[0][famCuidador]" value="1">
-                    <label for="famCuidadorSi_0">Sí</label>
-
-                    <input type="radio" id="famCuidadorNo_0" name="familiares[0][famCuidador]" value="0">
-                    <label for="famCuidadorNo_0">No</label>
-                </fieldset>
-                <div class="errores" id="errorEsCuidador"></div>
-
-                <!-- Situación Laboral -->
-                <label for="famSitLab_0">Situación laboral:</label>
-                <select name="familiares[0][famSitLab]" id="famSitLab_0">
-                    <option value="Trabajo Estable">Trabajo Estable</option>
-                    <option value="Trabajo Ocasional">Trabajo Ocasional</option>
-                    <option value="Sin trabajo">Sin trabajo</option>
-                    <option value="Pensionado">Pensionado</option>
-                </select>
-                <!-- Botón para añadir familiar -->
-                <div class="fila4">
-                    <button class="boton-primario agregarFamiliar" type="button"><i class='bx bx-user-plus'></i> Añadir Familiar</button>
-                    <button class="boton-secundario eliminarFamiliar" type="button"><i class='bx bx-user-minus' ></i> Eliminar Familiar</button>
-                </div>
-            </div>
+            @endif
         </div>
 
         <!-- form Antecedentes salud -->
@@ -493,7 +578,7 @@
                 <input type="radio" id="benCredDiscSi" name="benCredDisc" value="1" {{ (isset($antSoc) && $antSoc->antSocCredDiscapacidad == 1) ? 'checked' : '' }}>
                 <label for="benCredDiscSi">Sí</label>
 
-                <input type="radio" id="benCredDiscNo" name="benCredDisc" value="0" {{ (isset($antSoc) && $antSoc->antSocCredDiscapacidad == 1) ? 'checked' : '' }}>
+                <input type="radio" id="benCredDiscNo" name="benCredDisc" value="0" {{ (isset($antSoc) && $antSoc->antSocCredDiscapacidad == 0) ? 'checked' : '' }}>
                 <label for="benCredDiscNo">No</label>
             </fieldset>
             <div class="errores" id="errorCredDiscapacidad"></div>

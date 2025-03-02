@@ -57,8 +57,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/views/guardarCobMedica', [cobMedController::class, 'guardarCobMedica'])->name('beneficiarios.guardarCobMedica');
         // PARA ELIMINAR COBERTURA
         Route::delete('/views/eliminarCobMedica/{id}', [cobMedController::class, 'eliminarCobMedica'])->name('beneficiarios.eliminarCobMedica');
-
-      
+            
     // RUTAS DE BENEFICIARIO
         // PAGINA PRINCIPAL DE LOS CRUD BENEFICIARIOS
         Route::get('/views/listarBeneficiarios', [beneficiarioController::class, 'listarBeneficiarios'])->name('beneficiarios.listarBeneficiarios');

@@ -222,8 +222,29 @@ class beneficiarioController extends Controller
         // UNIFICAR BENEFICIOS
         $beneficiosGuardados = implode(', ', $beneficios);
 
+        // Obtener familiares:
+        $familiares = $request->input('familiares');
+
         // SI SE RECIBE UN ID YA EXISTENTE, ACTUALIZAMOS LA NACIONALIDAD, SINO, LA CREAMOS
         if ($request->benId) {
+            foreach ($familiares as $familiar) {
+                $familiarExistente = Familiar::find($familiar['famId']);
+                if ($familiarExistente) {
+                    $familiarExistente->update([
+                        'familiarParentesco' => $familiar['famTipo'],
+                        'familiarRut' => $familiar['famRut'],
+                        'familiarDv' => $familiar['famDv'],
+                        'familiarPNombre' => $familiar['famPNombre'],
+                        'familiarSNombre' => $familiar['famSNombre'],
+                        'familiarApPaterno' => $familiar['famApPaterno'],
+                        'familiarApMaterno' => $familiar['famApMaterno'],
+                        'familiarTelefono' => $familiar['famTel'],
+                        'familiarCorreo' => $familiar['famEmail'],
+                        'familiarCuidador' => $familiar['famCuidador'] ?? 0,
+                        'familiarSitLaboral' => $familiar['famSitLab'],
+                    ]);
+                }
+            }
             $beneficiario = Beneficiario::findOrFail($request->benId);
             $beneficiario->update([
                 'beneficiarioEstado' => $request->benEstado,
@@ -278,9 +299,9 @@ class beneficiarioController extends Controller
                 'antSocBeneficio' => $beneficiosGuardados,
                 'antSocCredDiscapacidad' => $request->benCredDisc,
             ]);
-            // OBTENER ANTECEDENTES DE SALUD PERTINENTES
+            // OBTENER DIAGNOSTICO PERTINENTE
             $diagnostico = Diagnostico::findOrFail($beneficiario->diagnostico_id);
-            // ACTUALIZAR ANTECEDENTES MEDICOS
+            // ACTUALIZAR DIAGNOSTICO
             $diagnostico->update([
                 'diagnosticoDesc' => $request->benDiag,
             ]);
@@ -420,7 +441,7 @@ class beneficiarioController extends Controller
         $antSal = antecedenteSalud::findOrFail($beneficiario->antSal_id);
         $antSoc = antecedenteSocial::findOrFail($beneficiario->antSoc_id);
         $diagnostico = Diagnostico::findOrFail($beneficiario->diagnostico_id);
-
+        $familiares = $beneficiario->familiares;
 
         // PROCESAR LA LISTA DE BENEFICIOS SOCIALES
         $beneficiosConocidos = [
@@ -448,7 +469,8 @@ class beneficiarioController extends Controller
                 'antSoc',
                 'diagnostico',
                 'beneficiosMarcados',
-                'beneficioOtro'
+                'beneficioOtro',
+                'familiares'
             )
         );
     }
