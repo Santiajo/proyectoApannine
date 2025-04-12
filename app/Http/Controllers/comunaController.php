@@ -12,7 +12,7 @@ class comunaController extends Controller
     public function crudComuna()
     {
         $comunas = Comuna::all(); // LISTAR COMUNAS
-        return view('views.beneficiario.comuna.crudComuna', compact('comunas'));
+        return view('beneficiario.comuna.crudComuna', compact('comunas'));
     }
 
     // MÉTODO PARA GUARDAR O ACTUALIZAR UNA COMUNA

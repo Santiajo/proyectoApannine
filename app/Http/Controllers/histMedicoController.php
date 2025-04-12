@@ -22,7 +22,7 @@ class histMedicoController extends Controller
         $beneficiario = Beneficiario::findOrFail($id);
         $antSal = antecedenteSalud::findOrFail($beneficiario->antSal_id);
         $diagnostico = Diagnostico::findOrFail($beneficiario->diagnostico_id);
-        return view('views.beneficiario.histMedico.antMedBeneficiario', compact('beneficiario', 'antSal', 'diagnostico'));
+        return view('beneficiario.histMedico.antMedBeneficiario', compact('beneficiario', 'antSal', 'diagnostico'));
     }
 
     // MÉTODO PARA AÑADIR ARCHIVOS A LOS ANTECEDENTES MÉDICOS DE UN BENEFICIARIO

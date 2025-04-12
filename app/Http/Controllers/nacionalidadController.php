@@ -13,7 +13,7 @@ class nacionalidadController extends Controller
     public function crudNacionalidad()
     {
         $nacionalidades = Nacionalidad::all(); // LISTAR NACIONALIDADES
-        return view('views.beneficiario.nacionalidad.crudNacionalidad', compact('nacionalidades'));
+        return view('beneficiario.nacionalidad.crudNacionalidad', compact('nacionalidades'));
     }
 
     // MÉTODO PARA GUARDAR O ACTUALIZAR UNA NACIONALIDAD

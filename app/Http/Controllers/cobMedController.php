@@ -13,7 +13,7 @@ class cobMedController extends Controller
     public function crudCobMedica()
     {
         $cobMedicas = Cob_Medica::all(); // LISTAR COBERTURAS MEDICAS
-        return view('views.beneficiario.cobMedica.crudCobMedica', compact('cobMedicas'));
+        return view('beneficiario.cobMedica.crudCobMedica', compact('cobMedicas'));
     }
 
     // MÉTODO PARA GUARDAR O ACTUALIZAR UNA COBERTURA MEDICA

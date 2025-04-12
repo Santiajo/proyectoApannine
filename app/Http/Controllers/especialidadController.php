@@ -13,7 +13,7 @@ class especialidadController extends Controller
     public function crudEspecialidad()
     {
         $especialidades = Especialidad::all(); // LISTAR ESPECIALIDADES
-        return view('views.especialistas.formEspecialidad', compact('especialidades'));
+        return view('especialistas.formEspecialidad', compact('especialidades'));
     }
 
     // MÉTODO PARA GUARDAR O ACTUALIZAR UNA ESPECIALIDAD

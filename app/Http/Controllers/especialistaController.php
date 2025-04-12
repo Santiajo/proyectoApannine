@@ -41,7 +41,7 @@ class especialistaController extends Controller
 
     $especialidades = Especialidad::all();
 
-    return view('views.especialistas.fichaEspecialista', compact('especialistas', 'especialidades', 'search', 'itemsPerPage'));
+    return view('especialistas.fichaEspecialista', compact('especialistas', 'especialidades', 'search', 'itemsPerPage'));
 }
 
     
@@ -49,7 +49,7 @@ class especialistaController extends Controller
     public function formularioEspecialista()
     {
         $especialidades = Especialidad::all(); // LISTAR ESPECIALIDADES
-        return view('views.especialistas.formEspecialista', compact('especialidades'));
+        return view('especialistas.formEspecialista', compact('especialidades'));
     }
 
     // MÉTODO PARA MOSTRAR EL FORMULARIO DE ESPECIALISTA RELLENO CON DATOS
@@ -57,7 +57,7 @@ class especialistaController extends Controller
     {
         $especialista = Especialista::findOrFail($id); // BUSCAR ESPECIALISTA POR ID
         $especialidades = Especialidad::all(); // LISTAR ESPECIALIDADES
-        return view('views.especialistas.formEspecialista', compact('especialista'), compact('especialidades'));
+        return view('especialistas.formEspecialista', compact('especialista'), compact('especialidades'));
     }
 
     // MÉTODO PARA VALIDAR RUT

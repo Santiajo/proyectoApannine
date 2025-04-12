@@ -19,217 +19,167 @@ class PostController extends Controller
         return view('posts.show', compact('post'));
     }
 
-    // FORMULARIO PARA EL BENEFICIARIO
-    public function formularioBeneficiario()
-    {
-        return view('views.beneficiario.formulario.formularioBeneficiario'); 
-    }
-
-    // public function formularioBeneficiarioDerivante()
-    // {
-    //     return view('views.beneficiario.formulario.formularioBeneficiarioDerivante'); 
-    // }
-
-    // public function formularioBeneficiarioFamilia()
-    // {
-    //     return view('views.beneficiario.formulario.formularioBeneficiarioFamilia'); 
-    // }
-
-    // public function formularioBeneficiarioAntSalud()
-    // {
-    //     return view('views.beneficiario.formulario.formularioBeneficiarioAntSalud'); 
-    // }
-
-    // public function formularioBeneficiarioAntSocial()
-    // {
-    //     return view('views.beneficiario.formulario.formularioBeneficiarioAntSocial'); 
-    // }
-
-    // public function formularioBeneficiarioDiagnostico()
-    // {
-    //     return view('views.beneficiario.formulario.formularioBeneficiarioDiagnostico'); 
-    // }
-
     // RESTO DE LA VIEW DE BENEFICIARIO
-    public function verBeneficiario()
-    {
-        return view('views.beneficiario.verBeneficiario'); 
-    }
-
-    public function exportarBeneficiario()
-    {
-        return view('views.beneficiario.exportarBeneficiario'); 
-    }
-
     public function beneficiarioAsistencia()
     {
-        return view('views.beneficiario.beneficiarioAsistencia'); 
+        return view('beneficiario.beneficiarioAsistencia'); 
     }
 
     public function registroAsistBeneficiario()
     {
-        return view('views.beneficiario.registroAsistBeneficiario'); 
+        return view('beneficiario.registroAsistBeneficiario'); 
     }
 
     public function actividadBeneficiario()
     {
-        return view('views.beneficiario.actividadBeneficiario'); 
+        return view('beneficiario.actividadBeneficiario'); 
     }
 
     // HISTORIAL MÉDICO DEL BENEFICIARIO
     public function histMedBeneficiario()
     {
-        return view('views.beneficiario.histMedico.histMedBeneficiario'); 
+        return view('beneficiario.histMedico.histMedBeneficiario'); 
     }
 
     public function antMedBeneficiario()
     {
-        return view('views.beneficiario..histMedico.antMedBeneficiario'); 
+        return view('beneficiario..histMedico.antMedBeneficiario'); 
     }
 
     public function diagnosticoBeneficiario()
     {
-        return view('views.beneficiario..histMedico.diagnosticoBeneficiario'); 
+        return view('beneficiario..histMedico.diagnosticoBeneficiario'); 
     }
 
     public function documentosBeneficiario()
     {
-        return view('views.beneficiario..histMedico.documentosBeneficiario'); 
+        return view('beneficiario..histMedico.documentosBeneficiario'); 
     }
 
 
     public function detallesAsistencia()
     {
-        return view('views.beneficiario.detallesAsistencia');
+        return view('beneficiario.detallesAsistencia');
     }
 
     public function detallesAusencia()
     {
-        return view('views.beneficiario.detallesAusencia');
+        return view('beneficiario.detallesAusencia');
     }
 
     public function exportarAsistenciaBen()
     {
-        return view('views.beneficiario.exportarAsistenciaBen');
+        return view('beneficiario.exportarAsistenciaBen');
     }
 
     // VIEWS PARA EL HORARIO DEL BENEFICIARIO
     public function horarioBeneficiario()
     {
-        return view('views.beneficiario.horario.horarioBeneficiario');
+        return view('beneficiario.horario.horarioBeneficiario');
     }
 
     public function formularioHorario()
     {
-        return view('views.beneficiario.horario.formularioHorario');
+        return view('beneficiario.horario.formularioHorario');
     }
 
     public function histMedicoVerHorario() {
-        return view('views.beneficiario.horario.verHorario');
+        return view('beneficiario.horario.verHorario');
     }
 
     public function histMedicoVerCambios() {
-        return view('views.beneficiario.horario.verCambios');
+        return view('beneficiario.horario.verCambios');
     }
 
     // VIEWS DE ASISTENCIA
     public function asistencia()
     {
-        return view('views.asistencia.asistencia'); 
+        return view('asistencia.asistencia'); 
     }
 
     public function registroactividad()
     {
-        return view('views.asistencia.registroactividad'); 
+        return view('asistencia.registroactividad'); 
     }
 
     public function asistenciaBeneficiarios()
     {
-        return view('views.asistencia.asistenciaBeneficiarios'); 
+        return view('asistencia.asistenciaBeneficiarios'); 
     }
 
     public function buscarBeneficiario()
     {
-        return view('views.asistencia.buscarBeneficiario'); 
+        return view('asistencia.buscarBeneficiario'); 
     }
 
     public function asistenciaTallerYoga()
     {
-        return view('views.asistencia.asistenciaTallerYoga'); 
+        return view('asistencia.asistenciaTallerYoga'); 
     }
 
     public function especialistas()
     {
-        return view('views.asistencia.especialistas'); 
+        return view('asistencia.especialistas'); 
     }
 
     public function dia()
     {
-        return view('views.asistencia.dia'); 
+        return view('asistencia.dia'); 
     }
 
     public function registrofecha()
     {
-        return view('views.asistencia.registrofecha'); 
+        return view('asistencia.registrofecha'); 
     }
 
     public function yogaTodos()
     {
-        return view('views.asistencia.yogaTodos'); 
+        return view('asistencia.yogaTodos'); 
     }
     public function yogaDia()
     {
-        return view('views.asistencia.yogaDia'); 
+        return view('asistencia.yogaDia'); 
     }
 
     public function exportarAsistencia()
     {
-        return view('views.asistencia.exportarAsistencia'); 
+        return view('asistencia.exportarAsistencia'); 
     }
 
     // VIEWS DE ESPECIALISTAS
-    public function fichaespecialista()
-    {
-        return view('views.especialistas.fichaespecialista'); 
-    }
-
-    public function formEspecialista()
-    {
-        return view('views.especialistas.formEspecialista'); 
-    }
 
     public function exportarEspecialistas()
     {
-        return view('views.especialistas.exportarEspecialistas'); 
+        return view('especialistas.exportarEspecialistas'); 
     }
 
     // VIEWS DE CRUD USUARIOS
     public function fichausuarios()
     {
-        return view('views.usuarios.fichausuarios'); 
+        return view('usuarios.fichausuarios'); 
     }
 
     public function formulariousuario()
     {
-        return view('views.usuarios.formulariousuario'); 
+        return view('usuarios.formulariousuario'); 
     }
 
     public function vistaUsuario()
     {
-        return view('views.usuarios.vistaUsuario'); 
+        return view('usuarios.vistaUsuario'); 
     }
 
     public function exportarUsuarios()
     {
-        return view('views.usuarios.exportarUsuarios'); 
+        return view('usuarios.exportarUsuarios'); 
     }
 
     // VIEWS PARA REGISTRO DE ASISTENCIA DEL MEDICO
     public function asistenciasEspecialistas() {
-        return view('views.beneficiarioAsistencia.asistenciasEspecialista');
+        return view('beneficiarioAsistencia.asistenciasEspecialista');
     }
 
     public function formAsistenciaMedico() {
-        return view('views.beneficiarioAsistencia.formAsistenciaMedico');
+        return view('beneficiarioAsistencia.formAsistenciaMedico');
     }
 }
