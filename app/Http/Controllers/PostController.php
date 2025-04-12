@@ -154,25 +154,25 @@ class PostController extends Controller
     }
 
     // VIEWS DE CRUD USUARIOS
-    public function fichausuarios()
-    {
-        return view('usuarios.fichausuarios'); 
-    }
+    // public function fichausuarios()
+    // {
+    //     return view('usuarios.fichausuarios'); 
+    // }
 
-    public function formulariousuario()
-    {
-        return view('usuarios.formulariousuario'); 
-    }
+    // public function formulariousuario()
+    // {
+    //     return view('usuarios.formulariousuario'); 
+    // }
 
-    public function vistaUsuario()
-    {
-        return view('usuarios.vistaUsuario'); 
-    }
+    // public function vistaUsuario()
+    // {
+    //     return view('usuarios.vistaUsuario'); 
+    // }
 
-    public function exportarUsuarios()
-    {
-        return view('usuarios.exportarUsuarios'); 
-    }
+    // public function exportarUsuarios()
+    // {
+    //     return view('usuarios.exportarUsuarios'); 
+    // }
 
     // VIEWS PARA REGISTRO DE ASISTENCIA DEL MEDICO
     public function asistenciasEspecialistas() {

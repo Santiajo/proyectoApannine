@@ -7,15 +7,29 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Exports\UsuariosExport;
 use Maatwebsite\Excel\Facades\Excel;
-
+use DB;
 
 
 class CuentaController extends Controller
 {
-    //     public function index()
+    public function fichausuarios()
+    {
+        return view('usuarios.fichausuarios'); 
+    }
+
+    public function formulariousuario()
+    {
+        return view('usuarios.formulariousuario'); 
+    }
+
+    public function vistaUsuario()
+    {
+        return view('usuarios.vistaUsuario'); 
+    }
+
+    // public function exportarUsuarios()
     // {
-    //     $usuarios = User::paginate(10); // 🔹 Pagina los resultados
-    //     return view('usuarios::fichausuarios', compact('usuarios'));
+    //     return view('usuarios.exportarUsuarios'); 
     // }
 
     /**

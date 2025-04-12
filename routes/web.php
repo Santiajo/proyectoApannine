@@ -24,6 +24,9 @@ use App\Http\Controllers\histMedicoController;
 use App\Http\Controllers\CuentaController;
 
 use App\Http\Controllers\LoginController;
+//EXPORTAR BENEFICIARIOS
+use App\Exports\BeneficiariosTablaExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 //Aqui se llama a las rutas
 Route::get('/', [PostController::class, 'login']);
@@ -79,6 +82,18 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/views/eliminarArchivo/{id}', [histMedicoController::class, 'eliminarArchivo'])->name('beneficiarios.eliminarArchivo');
         // PARA EXPORTAR A EXCEL
         Route::get('/exportar-beneficiario/{id}', [BeneficiarioController::class, 'exportarExcel'])->name('beneficiario.exportar');
+        // PARA EXPORTAR TODOS LOS BENEFICIARIOS
+        Route::get('/beneficiarios/exportar', function (Illuminate\Http\Request $request) {
+            $request->validate([
+                'fromDate' => 'required|date',
+                'toDate' => 'required|date|after_or_equal:fromDate',
+            ]);
+        
+            return Excel::download(
+                new BeneficiariosTablaExport($request->fromDate, $request->toDate),
+                'beneficiarios.xlsx'
+            );
+        })->name('beneficiarios.exportar');
 
     // HORARIO DEL BENEFICIARIO
         Route::get('/views/horarioBeneficiario', [PostController::class, 'horarioBeneficiario'])->name('horarioBeneficiario');
@@ -140,15 +155,11 @@ Route::middleware(['auth'])->group(function () {
     // });
 
     // Route::middleware(['checkVista:usuarios'])->group(function () {
-        // RUTAS DEL CRUD PARA EL LOGIN
-        Route::get('/views/fichausuarios', [PostController::class, 'fichausuarios'])->name('fichausuarios');
-        Route::get('/views/formulariousuario', [PostController::class, 'formulariousuario'])->name('formulariousuario');
-        Route::get('/views/vistaUsuario', [PostController::class, 'vistaUsuario'])->name('vistaUsuario');
-        Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
-        Route::get('/views/exportarUsuarios', [PostController::class, 'exportarUsuarios'])->name('exportarUsuarios');
-
-
         // RUTAS PARA USUARIOS
+        Route::get('/views/fichausuarios', [CuentaController::class, 'fichausuarios'])->name('fichausuarios');
+        Route::get('/views/formulariousuario', [CuentaController::class, 'formulariousuario'])->name('formulariousuario');
+        Route::get('/views/vistaUsuario', [CuentaController::class, 'vistaUsuario'])->name('vistaUsuario');
+        Route::get('/views/exportarUsuarios', [CuentaController::class, 'exportarUsuarios'])->name('exportarUsuarios');
         Route::resource('usuarios', CuentaController::class)->except(['show']);
         Route::get('/usuarios/{id}/edit', [CuentaController::class, 'edit'])->name('usuarios.edit');
         Route::put('/usuarios/{id}', [CuentaController::class, 'update'])->name('usuarios.update');

@@ -38,7 +38,22 @@
         </div>
         
         <div id='errorBarraBusqueda' class='errores errores2'></div>
+      </form>
+    </div>
 
+    <div class="fila4" id="fila1Perso">
+      <form class="formularioPiola" id="formTuneado" method="GET" action="{{ route('beneficiarios.exportar') }}">
+          @csrf
+          <div class="separacionFormulario">
+              <label for="fromDate">Desde:</label>
+              <input type="date" id="fromDate" name="fromDate" required>
+
+              <label for="toDate">Hasta:</label>
+              <input type="date" id="toDate" name="toDate" required>
+          </div>
+          <button type="submit" class="boton-secundario">
+              <i class='bx bx-export'></i> Exportar
+          </button>
       </form>
     </div>
     
