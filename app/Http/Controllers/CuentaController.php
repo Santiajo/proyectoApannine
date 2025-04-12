@@ -90,7 +90,7 @@ class CuentaController extends Controller
     {
         $usuario = User::findOrFail($id);
         
-        return view('views.usuarios.formulariousuario', compact('usuario'));
+        return view('usuarios.formulariousuario', compact('usuario'));
     }
 
 
@@ -154,7 +154,7 @@ class CuentaController extends Controller
             ->paginate($itemsPerPage) 
             ->withQueryString();
 
-            return view('views.usuarios.fichausuarios', compact('usuarios', 'search', 'itemsPerPage'));
+            return view('usuarios.fichausuarios', compact('usuarios', 'search', 'itemsPerPage'));
 
     }
 

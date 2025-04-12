@@ -51,7 +51,7 @@ class beneficiarioController extends Controller
             ->paginate($itemsPerPage)
             ->withQueryString();
 
-        return view('views.beneficiario.listarBeneficiarios', compact('beneficiarios', 'search', 'itemsPerPage'));
+        return view('beneficiario.listarBeneficiarios', compact('beneficiarios', 'search', 'itemsPerPage'));
     }
 
     // MÉTODO PARA MOSTRAR EL FORMULARIO DEL CRUD
@@ -60,7 +60,7 @@ class beneficiarioController extends Controller
         $nacionalidades = Nacionalidad::all(); // LISTAR NACIONALIDADES
         $comunas = Comuna::all(); // LISTAR COMUNAS
         $cobMedicas = Cob_Medica::all(); // LISTAR COBERTURAS MEDICAS
-        return view('views.beneficiario.formulario.formularioBeneficiario', compact('nacionalidades', 'comunas', 'cobMedicas'));
+        return view('beneficiario.formulario.formularioBeneficiario', compact('nacionalidades', 'comunas', 'cobMedicas'));
     }
 
     // MÉTODO PARA VALIDAR BOOLEANOS
@@ -414,7 +414,7 @@ class beneficiarioController extends Controller
         $antSoc = antecedenteSocial::findOrFail($beneficiario->antSoc_id);
         $familiares = $beneficiario->familiares;
         return view(
-            'views.beneficiario.fichaBeneficiario',
+            'beneficiario.fichaBeneficiario',
             compact(
                 'beneficiario',
                 'nacionalidad',
@@ -457,7 +457,7 @@ class beneficiarioController extends Controller
         $beneficioOtro = implode(', ', array_diff($beneficiosSeleccionados, $beneficiosConocidos));
 
         return view(
-            'views.beneficiario.formulario.formularioBeneficiario',
+            'beneficiario.formulario.formularioBeneficiario',
             compact(
                 'beneficiario',
                 'nacionalidades',
