@@ -14,8 +14,6 @@
             <a class="boton-primario" id="benAgregar" href="{{ route('formulariousuario') }}">
                 <p><i class='bx bx-user-plus'></i> Agregar usuario</p>
             </a>
-            <a class="boton-secundario" id="benExportar" href="{{ route('exportarUsuarios') }}"><i class='bx bx-export'></i>
-                Exportar</a>
             <!-- Para buscar productos por texto -->
             <form id='formBuscarUser' class='barraBusqueda' method="GET" action="{{ route('usuarios.listar') }}">
                 <div class="inputBarraBusqueda">
@@ -29,6 +27,24 @@
                 @enderror
             </form>
         </div>
+
+        <div class="fila4" id="fila1Perso">
+                    <form class="formularioPiola" id="formTuneado" method="GET"
+                        action="{{ route('usuarios.exportarUsuarios') }}">
+                        @csrf
+                        <div class="separacionFormulario">
+                            <label for="fromDate">Desde:</label>
+                            <input type="date" id="fromDate" name="fromDate" required>
+
+                            <label for="toDate">Hasta:</label>
+                            <input type="date" id="toDate" name="toDate" required>
+                        </div>
+                        <button type="submit" class="boton-secundario">
+                            <i class='bx bx-export'></i> Exportar
+                        </button>
+                    </form>
+        </div>  
+
         <!-- @if(isset($usuarios) && count($usuarios) > 0)
             <p>Usuarios cargados correctamente.</p>
         @else

@@ -156,6 +156,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/usuarios/store', [CuentaController::class, 'store'])->name('usuarios.store');
         Route::get('/usuarios', [CuentaController::class, 'index'])->name('usuarios.listar');
         Route::get('/fichausuarios', [CuentaController::class, 'index'])->name('fichausuarios');
+        Route::get('/usuarios/exportar', [CuentaController::class, 'exportarUsuarios'])->name('usuarios.exportarUsuarios');
+
     // });
 });
 

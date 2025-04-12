@@ -27,8 +27,8 @@ use App\Models\Diagnostico;
 use App\Models\Documento;
 
 // PARA EXPORTAR A EXCEL
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BeneficiariosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class beneficiarioController extends Controller
 {
@@ -477,7 +477,7 @@ class beneficiarioController extends Controller
 
     public function exportarExcel($id)
     {
-        return Excel::download(new BeneficiariosExport($id), 'beneficiario_'.$id.'.xlsx');
+        return Excel::download(new BeneficiariosExport($fromDate, $toDate), 'beneficiarios.xlsx');
     }
 
 }

@@ -1159,7 +1159,7 @@ function validarFormBeneficiario() {
         errorBenPNombre.classList.remove('exito');
         errorBenPNombre.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (pNombreValue.length > 8) {
+    } else if (pNombreValue.length > 10) {
         errorBenPNombre.innerHTML = 'El primer nombre no puede tener más de 20 caracteres!';
         errorBenPNombre.style.display = 'block';
         errorBenPNombre.classList.remove('exito');
@@ -1181,7 +1181,7 @@ function validarFormBeneficiario() {
 
     // VALIDAR SEGUNDO NOMBRE
     const sNombreValue = benSNombre.value.trim();
-    if (sNombreValue.length > 8) {
+    if (sNombreValue.length > 10) {
         errorBenSNombre.innerHTML = 'El segundo nombre no puede tener más de 20 caracteres!';
         errorBenSNombre.style.display = 'block';
         errorBenSNombre.classList.remove('exito');
@@ -1209,7 +1209,7 @@ function validarFormBeneficiario() {
         errorBenApPaterno.classList.remove('exito');
         errorBenApPaterno.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (apPaternoValue.length > 8) {
+    } else if (apPaternoValue.length > 10) {
         errorBenApPaterno.innerHTML = 'El apellido paterno no puede tener más de 20 caracteres!';
         errorBenApPaterno.style.display = 'block';
         errorBenApPaterno.classList.remove('exito');
@@ -1237,7 +1237,7 @@ function validarFormBeneficiario() {
         errorBenApMaterno.classList.remove('exito');
         errorBenApMaterno.classList.remove('exito2');
         camposValidos.push(false);
-    } else if (apMaternoValue.length > 8) {
+    } else if (apMaternoValue.length > 10) {
         errorBenApMaterno.innerHTML = 'El apellido materno no puede tener más de 20 caracteres!';
         errorBenApMaterno.style.display = 'block';
         errorBenApMaterno.classList.remove('exito');

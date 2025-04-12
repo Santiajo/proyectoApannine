@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Exports\UsuariosExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 
 class CuentaController extends Controller
@@ -153,6 +156,20 @@ class CuentaController extends Controller
 
             return view('views.usuarios.fichausuarios', compact('usuarios', 'search', 'itemsPerPage'));
 
+    }
+
+
+    public function exportarUsuarios(Request $request)
+    {
+        $request->validate([
+            'fromDate' => 'required|date',
+            'toDate' => 'required|date|after_or_equal:fromDate',
+        ]);
+
+        $fromDate = $request->fromDate;
+        $toDate = $request->toDate;
+
+        return Excel::download(new UsuariosExport($fromDate, $toDate), 'usuarios.xlsx');
     }
 
 }
