@@ -81,9 +81,7 @@
                             <td data-label="Fecha de registro">{{ $usuario->created_at->format('d/m/Y') }}</td>
                             
                             <td data-label="Acciones">
-                                <!-- <a class="detalles" href="{{ route('vistaUsuario') }}">
-                                    <i class='bx bxs-file-doc'></i>
-                                </a> -->
+                            <a href="{{ route('vistaUsuario', ['id' => $usuario->id]) }}">Ver detalles</a>
                             </td>
                             <td data-label="Modificar">
                                 <a class="boton-quintiario" href="{{ route('usuarios.edit', $usuario->id) }}">Modificar</a>
