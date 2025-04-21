@@ -67,6 +67,7 @@
             <tbody>
                 @if(isset($usuarios) && count($usuarios) > 0)
                     @foreach ($usuarios as $usuario)
+                        <a href="{{ route('vistaUsuario', ['id' => $usuario->id]) }}">Hola</a>
                         <tr>
                             <td data-label="Rut">{{ $usuario->rut }}-{{ $usuario->dv }}</td>
                             <td data-label="Nombre">
@@ -78,10 +79,11 @@
                             <td data-label="Teléfono">{{ $usuario->telefono }}</td>
                             <td data-label="Correo electrónico">{{ $usuario->email }}</td>
                             <td data-label="Fecha de registro">{{ $usuario->created_at->format('d/m/Y') }}</td>
+                            
                             <td data-label="Acciones">
-                                <a class="detalles" href="{{ route('vistaUsuario', $usuario->id) }}">
+                                <!-- <a class="detalles" href="{{ route('vistaUsuario') }}">
                                     <i class='bx bxs-file-doc'></i>
-                                </a>
+                                </a> -->
                             </td>
                             <td data-label="Modificar">
                                 <a class="boton-quintiario" href="{{ route('usuarios.edit', $usuario->id) }}">Modificar</a>

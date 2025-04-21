@@ -17,6 +17,7 @@ class CuentaController extends Controller
         return view('usuarios.fichausuarios'); 
     }
 
+
     public function formulariousuario()
     {
         return view('usuarios.formulariousuario'); 

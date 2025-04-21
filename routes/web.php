@@ -158,7 +158,7 @@ Route::middleware(['auth'])->group(function () {
         // RUTAS PARA USUARIOS
         Route::get('/views/fichausuarios', [CuentaController::class, 'fichausuarios'])->name('fichausuarios');
         Route::get('/views/formulariousuario', [CuentaController::class, 'formulariousuario'])->name('formulariousuario');
-        Route::get('/views/vistaUsuario', [CuentaController::class, 'vistaUsuario'])->name('vistaUsuario');
+        Route::get('/views/vistaUsuario/{id}', [CuentaController::class, 'vistaUsuario'])->name('vistaUsuario');
         Route::get('/views/exportarUsuarios', [CuentaController::class, 'exportarUsuarios'])->name('exportarUsuarios');
         Route::resource('usuarios', CuentaController::class)->except(['show']);
         Route::get('/usuarios/{id}/edit', [CuentaController::class, 'edit'])->name('usuarios.edit');

@@ -19,16 +19,16 @@
         <a class="boton-quintiario" id="benAgregar" href="{{ route('formulariousuario') }}">
             <p>Modificar</p>
         </a>
-        <a class="boton-terciario" id="benEliminar" href="{{ route('vistaUsuario') }}"><i class='bx bx-trash'></i>
+        <!-- <a class="boton-terciario" id="benEliminar" href="{{ route('vistaUsuario') }}"><i class='bx bx-trash'></i> -->
             Eliminar</a>
-        <a class="boton-secundario" id="benExportar" href="{{ route('vistaUsuario') }}"><i
+        <!-- <a class="boton-secundario" id="benExportar" href="{{ route('vistaUsuario') }}"><i
                 class='bx bx-export'></i>
-            Exportar</a>
+            Exportar</a> -->
     </div>
     <div class="cardSimple">
         <div class="separacionFormulario">
-            <h3>Simón Hernández</h3>
-            <p><span class="letraNegrita">Rut: </span> 20880574-6</p>
+            <h3>{{ $usuario->id }}</h3>
+            <p><span class="letraNegrita">Rut: </span> Vaca saturna saturnita</p>
             <p><span class="letraNegrita">Fecha de nacimiento: </span> 16/10/1663</p>
             <p><span class="letraNegrita">Correo electrónico: </span> simon.hernandez.2001@gmail.com</p>
             <p><span class="letraNegrita">Teléfono: </span> 9 6687 6669</p>
@@ -53,7 +53,7 @@
             </fieldset>
         </div>
         <div class="fila2" id="fila1Perso">
-            <a class="boton-cuartiario" href="{{ route('vistaUsuario') }}">Aplicar <i class='bx bx-check'></i></a>
+            <!-- <a class="boton-cuartiario" href="{{ route('vistaUsuario') }}">Aplicar <i class='bx bx-check'></i></a> -->
         </div>
     </form>
 </div>
