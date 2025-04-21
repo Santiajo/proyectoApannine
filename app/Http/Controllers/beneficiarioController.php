@@ -477,7 +477,7 @@ class beneficiarioController extends Controller
 
     public function exportarExcel($id)
     {
-        return Excel::download(new BeneficiariosExport($fromDate, $toDate), 'beneficiarios.xlsx');
+        return Excel::download(new BeneficiariosExport($id), 'beneficiario_'.$id.'.xlsx');
     }
 
 }
