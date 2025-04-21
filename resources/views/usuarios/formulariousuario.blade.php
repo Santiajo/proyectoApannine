@@ -12,7 +12,7 @@
             < Volver
         </a>
     </div>
-    <form method="POST" action="{{ isset($usuario) ? route('usuarios.update', $usuario->id) : route('usuarios.store') }}" class="formularioPiola" onsubmit="return validarFormularioUsuario();">
+    <form method="POST" action="{{ isset($usuario) ? route('usuarios.update', $usuario->id) : route('usuarios.store') }}" class="formularioPiola" id="formUsuario">
     @csrf
     @if(isset($usuario))
         @method('PUT')
@@ -27,6 +27,7 @@
                 <label for="userRut">Rut:</label>
                 <input type="text" name="userRut" id="userRut" pattern="\d{7,8}" title="Ingrese un RUT válido sin puntos ni guion"
                     value="{{ old('userRut', $usuario->rut ?? '') }}"  placeholder="Solo números">
+                <div class="errores errores2" id="errorUserRut"></div>    
                 @error('userRut') 
                 <div class="alert alert-danger alert2">El rut no es válido!</div> 
                 @enderror
@@ -34,6 +35,7 @@
             <div>
                 <label for="userDv">Dv:</label>
                 <input type="text" name="userDv" id="userDv" maxlength="1" value="{{ old('userDv', $usuario->dv ?? '') }}" placeholder="Solo un número o K">
+                <div class="errores errores2" id="errorUserDv"></div>    
                 @error('userDv') 
                 <div class="alert alert-danger alert2">El Dv no cumple con los requisitos!</div> 
                 @enderror
@@ -45,6 +47,7 @@
             <div>
                 <label for="userPNombre">Primer Nombre:</label>
                 <input type="text" name="userPNombre" id="userPNombre" value="{{ old('userPNombre', $usuario->primer_nombre ?? '') }}" placeholder="Menos de 20 caracteres">
+                <div class="errores errores2" id="errorUserPNombre"></div>    
                 @error('userPNombre') 
                 <div class="alert alert-danger alert2">El primer nombre no cumple con los requisitos!</div> 
                 @enderror
@@ -52,6 +55,7 @@
             <div>
                 <label for="userSNombre">Segundo Nombre:</label>
                 <input type="text" name="userSNombre" id="userSNombre" value="{{ old('userSNombre', $usuario->segundo_nombre ?? '') }}" placeholder="(Opcional)">
+                <div class="errores errores2" id="errorUserSNombre"></div>    
                 @error('userSNombre') 
                 <div class="alert alert-danger alert2">El segundo nombre no cumple con los requisitos!</div> 
                 @enderror
@@ -59,6 +63,7 @@
             <div>
                 <label for="userApPaterno">Apellido Paterno:</label>
                 <input type="text" name="userApPaterno" id="userApPaterno" value="{{ old('userApPaterno', $usuario->apellido_paterno ?? '') }}" placeholder="Menos de 20 caracteres">
+                <div class="errores errores2" id="errorUserApPaterno"></div>    
                 @error('userApPaterno') 
                 <div class="alert alert-danger alert2">El primer nombre no cumple con los requisitos!</div> 
                 @enderror
@@ -66,6 +71,7 @@
             <div>
                 <label for="userApMaterno">Apellido Materno:</label>
                 <input type="text" name="userApMaterno" id="userApMaterno" value="{{ old('userApMaterno', $usuario->apellido_materno ?? '') }}" placeholder="Menos de 20 caracteres">
+                <div class="errores errores2" id="errorUserApMaterno"></div>    
                 @error('userApMaterno') 
                 <div class="alert alert-danger alert2">El primer nombre no cumple con los requisitos!</div> 
                 @enderror
@@ -75,7 +81,7 @@
         <!-- Teléfono -->
         <label for="userTel">Teléfono:</label>
         <input type="tel" name="userTel" id="userTel" value="{{ old('userTel', $usuario->telefono ?? '') }}" placeholder="Solo números">
-        <div class="errores" id="errorEspEmail"></div>
+        <div class="errores" id="errorUserTel"></div>
         @error('userTel') 
         <div class="alert alert-danger alert">El primer nombre no cumple con los requisitos!</div> 
         @enderror
@@ -83,7 +89,7 @@
         <!-- Correo usuario -->
         <label for="userEmail">Correo electrónico:</label>
         <input type="email" name="" id="userEmail" value="{{ old('userEmail', $usuario->email ?? '') }}" placeholder="alguien@ejemplo.com">
-        <div class="errores" id="errorEspEmail"></div>
+        <div class="errores" id="errorUserEmail"></div>
         @error('userEmail') 
         <div class="alert alert-danger alert">El primer nombre no cumple con los requisitos!</div> 
         @enderror

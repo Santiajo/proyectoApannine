@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const formComuna = document.getElementById('formComuna');
     const formCobMedica = document.getElementById('formCobMedica');
     const formBeneficiario = document.getElementById('formBeneficiario');
+    const formUsuario = document.getElementById('formUsuario');
 
     // HACEMOS QUE EL ARCHIVO ESCUCHE CUANDO EL FORMULARIO ESPECIALIDADES SE VA A SUBIR
     if (formEspecialidad) {
@@ -125,6 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
         formBuscarBen.addEventListener('submit', function (event) {
             validarBarraBusqueda(event, 'benBuscar', 'errorBarraBusqueda', formBuscarBen);
         });
+    }  else if (formUsuario) {
+        formUsuario.addEventListener('submit', function (event) {
+            event.preventDefault();
+            validarFormUsuario();
+        })
     }
 });
 
@@ -1553,7 +1559,7 @@ function validarFormBeneficiario() {
     }
 }
 
-function validarFormularioUsuario() {
+function validarFormUsuario() {
     let camposValidos = [];
 
     // OBTENEMOS RUT Y DV
