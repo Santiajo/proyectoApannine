@@ -22,10 +22,11 @@ class CuentaController extends Controller
         return view('usuarios.formulariousuario'); 
     }
 
-    public function vistaUsuario()
-    {
-        return view('usuarios.vistaUsuario'); 
-    }
+    public function vistaUsuario($id)
+{
+    $usuario = User::findOrFail($id); // Asegura que existe, o lanza 404
+    return view('usuarios.vistaUsuario', compact('usuario'));
+}
 
     // public function exportarUsuarios()
     // {
