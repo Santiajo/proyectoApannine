@@ -23,7 +23,7 @@
             Eliminar</a>
         <a class="boton-secundario" id="benExportar" href="{{ route('vistaUsuario', ['id' => $usuario->id]) }}"><i
                 class='bx bx-export'></i>
-            Exportar</a> -->
+            Exportar</a> 
     </div>
     <div class="cardSimple">
         <div class="separacionFormulario">
